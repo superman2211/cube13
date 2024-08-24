@@ -1,0 +1,42 @@
+{
+	"name": "cube13",
+	"version": "0.1.0",
+	"description": "Cube13 game for js13kgames 2024",
+	"private": true,
+	"repository": "https://github.com/superman2211/cube13",
+	"author": "Sergey Antonov <superflasher22@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"clean": "rimraf ./dist",
+		"watch:ts": "tsc -w",
+		"watch:rollup": "rollup -c rollup.config.dev.js -w",
+		"build": "yarn clean && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn create-advzip",
+		"build-roadroller": "yarn clean && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn apply-roadroller && yarn create-advzip",
+		"serve": "http-server ./dist/build",
+		"lint": "eslint --fix",
+		"build-resources": "node scripts/build-resources.js",
+		"apply-roadroller": "roadroller -O2 dist/build/s.js -o dist/build/s.js",
+		"create-advzip": "advzip --shrink-insane --iter=1000 --add dist/cube13.zip dist/build/index.html dist/build/s.js"
+	},
+	"dependencies": {
+		"svg-path": "^0.2.1",
+		"xml2js": "^0.4.23"
+	},
+	"devDependencies": {
+		"@rollup/plugin-html": "^0.2.3",
+		"@rollup/plugin-replace": "^4.0.0",
+		"@typescript-eslint/eslint-plugin": "^4.29.3",
+		"@typescript-eslint/parser": "^4.29.3",
+		"eslint": "^7.32.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-plugin-import": "^2.24.1",
+		"http-server": "^13.0.1",
+		"rimraf": "^3.0.2",
+		"roadroller": "^2.1.0",
+		"rollup": "^2.56.3",
+		"rollup-plugin-filesize": "^9.1.1",
+		"rollup-plugin-sourcemaps": "^0.6.3",
+		"rollup-plugin-terser": "^7.0.2",
+		"typescript": "^4.3.5"
+	}
+}
