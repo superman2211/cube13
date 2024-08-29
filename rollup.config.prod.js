@@ -108,8 +108,8 @@ export default {
 	...base,
 	plugins: [
 		...base.plugins,
-		// terser({ mangle: { properties: { builtins: true } } }),
-		terser({ mangle: { properties: { builtins: true, regex } } }),
+		terser({ }),
+		// terser({ mangle: { properties: { builtins: true, regex } } }),
 		// terser(),
 		filesize(),
 		replace({
