@@ -10,17 +10,18 @@
 		"clean": "rimraf ./dist",
 		"watch:ts": "tsc -w",
 		"watch:rollup": "rollup -c rollup.config.dev.js -w",
-		"build": "yarn clean && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn create-advzip",
-		"build-roadroller": "yarn clean && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn apply-roadroller && yarn create-advzip",
+		"build-dev": "yarn clean && tsc && rollup -c rollup.config.dev.js && yarn build-resources &&  yarn create-advzip",
+		"build": "yarn clean && tsc && rollup -c rollup.config.prod.js && yarn build-resources &&  yarn create-advzip",
+		"build-roadroller": "yarn clean && tsc && rollup -c rollup.config.prod.js && yarn apply-roadroller && yarn build-resources && yarn create-advzip",
 		"serve": "http-server ./dist/build",
 		"lint": "eslint --fix",
 		"build-resources": "node scripts/build-resources.js",
 		"apply-roadroller": "roadroller -O2 dist/build/s.js -o dist/build/s.js",
-		"create-advzip": "advzip --shrink-insane --iter=1000 --add dist/cube13.zip dist/build/index.html dist/build/s.js"
+		"create-advzip": "advzip --shrink-insane --iter=1000 --add dist/cube13.zip dist/build/index.html dist/build/s.js dist/build/r"
 	},
 	"dependencies": {
-		"svg-path": "^0.2.1",
-		"xml2js": "^0.4.23"
+		"apng-js": "^1.1.2",
+		"pngjs": "^7.0.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-html": "^0.2.3",
