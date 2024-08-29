@@ -50,7 +50,7 @@ function update() {
 	const scale = Math.min(screen.canvas.width / world.canvas.width, screen.canvas.height / world.canvas.height);
 
 	screen.clearRect(0, 0, screen.canvas.width, screen.canvas.height);
-	screen.transform(scale, 0, 0, scale, 0, 0);
+	screen.setTransform(scale, 0, 0, scale, 0, 0);
 	screen.shadowBlur = 0;
 	screen.imageSmoothingEnabled = false;
 	screen.drawImage(world.canvas, 0, 0);
