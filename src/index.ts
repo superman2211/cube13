@@ -1,6 +1,6 @@
 import { cells, cellSize } from "./config";
 import { Data } from "./data";
-import { images, loadResources } from "./resources";
+import { images, loadResources } from "./resources/loader";
 
 let data: Data;
 
@@ -24,15 +24,12 @@ function update() {
 
 	let x = 0;
 	let y = 0;
-	let z = 0;
 
-	for (let z = 0; z < 3; z++) {
-		for (let x = 0; x < cells; x++) {
-			for (let y = 0; y < cells; y++) {
-				const i = (y * cells + x) % images.length;
-				let image = images[i];
-				world.drawImage(image, x * cellSize, y * cellSize);
-			}
+	for (let x = 0; x < cells; x++) {
+		for (let y = 0; y < cells; y++) {
+			const i = (y * cells + x) % images.length;
+			let image = images[i];
+			world.drawImage(image, x * cellSize, y * cellSize);
 		}
 	}
 
