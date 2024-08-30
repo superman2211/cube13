@@ -1,4 +1,4 @@
-export const images: HTMLCanvasElement[] = [];
+import { images } from "./images";
 
 export async function loadResources() {
     const response = await fetch('r');

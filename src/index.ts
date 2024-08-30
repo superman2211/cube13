@@ -1,6 +1,10 @@
 import { cells, cellSize } from "./config";
 import { Data } from "./data";
-import { images, loadResources } from "./resources/loader";
+import { brightness, colorTransformConcat, tint } from "./resources/color";
+import { floor0, floor1, floor2, man0 } from "./resources/ids";
+import { getImage } from "./resources/images";
+import { loadResources } from "./resources/loader";
+import { createContext2d, dpr, getContext2d } from "./utils/browser";
 
 let data: Data;
 
@@ -22,19 +26,31 @@ function update() {
 
 	world.clearRect(0, 0, world.canvas.width, world.canvas.height);
 
-	let x = 0;
-	let y = 0;
 
-	for (let x = 0; x < cells; x++) {
-		for (let y = 0; y < cells; y++) {
-			const i = (y * cells + x) % images.length;
-			let image = images[i];
+	const floorColorTransform = tint(0xff508CCC, 0.5);
+
+	const floors = [floor0, floor1, floor2, floor0];
+	let f = 0;
+
+	for (let y = 0; y < cells; y++) {
+		for (let x = 0; x < cells; x++) {
+			const colorTransform = colorTransformConcat(
+				brightness(1.0 - x / cells), floorColorTransform
+			);
+			let image = getImage(floors[f++ % floors.length], colorTransform);
 			world.drawImage(image, x * cellSize, y * cellSize);
 		}
 	}
 
-	const screenWidth = innerWidth * devicePixelRatio;
-	const screenHeight = innerHeight * devicePixelRatio;
+	for (let y = 3; y < 5; y++) {
+		for (let x = 0; x < cells; x++) {
+			let image = getImage(man0, brightness(1.0 - x / cells));
+			world.drawImage(image, x * cellSize, y * cellSize);
+		}
+	}
+
+	const screenWidth = innerWidth * dpr;
+	const screenHeight = innerHeight * dpr;
 
 	if (screen.canvas.width != screenWidth) {
 		screen.canvas.width = screenWidth;
@@ -65,13 +81,11 @@ function update() {
 }
 
 function init() {
-	const worldCanvas = document.createElement('canvas');
-	worldCanvas.width = cellSize * cells;
-	worldCanvas.height = cellSize * cells;
+	const world = createContext2d();
+	world.canvas.width = cellSize * cells;
+	world.canvas.height = cellSize * cells;
 
-	const world = worldCanvas.getContext('2d')!;
-
-	const screen = (document.getElementById('c') as HTMLCanvasElement).getContext('2d')!;
+	const screen = getContext2d(document.getElementById('c') as HTMLCanvasElement);
 
 	data = {
 		world,

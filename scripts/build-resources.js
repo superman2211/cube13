@@ -102,7 +102,7 @@ function writeResources(data) {
         stream.push(image.width, image.height);
         stream.push(...image.data);
 
-        ids += `export const  ${image.name} = ${i};\n`;
+        ids += `export const ${image.name} = ${i};\n`;
     }
 
     console.log('resources size ' + stream.length + ' bytes');
@@ -114,13 +114,13 @@ function writeResources(data) {
 }
 
 function createDirectories() {
-	if (!fs.existsSync(path.resolve('dist'))) {
-		fs.mkdirSync(path.resolve('dist'));
-	}
+    if (!fs.existsSync(path.resolve('dist'))) {
+        fs.mkdirSync(path.resolve('dist'));
+    }
 
-	if (!fs.existsSync(path.resolve('dist/build'))) {
-		fs.mkdirSync(path.resolve('dist/build'));
-	}
+    if (!fs.existsSync(path.resolve('dist/build'))) {
+        fs.mkdirSync(path.resolve('dist/build'));
+    }
 }
 
 async function main() {
