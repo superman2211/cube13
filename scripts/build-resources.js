@@ -12,6 +12,7 @@ async function readAnimations(data) {
     let pixel = new Uint32Array(1);
 
     const files = fs.readdirSync(path.resolve('resources/animations'));
+
     for (var file of files) {
         let file_path = path.join('resources/animations', file);
 
@@ -19,13 +20,12 @@ async function readAnimations(data) {
             console.log(file_path);
             let buffer = fs.readFileSync(file_path);
 
-            console.log(parseAPNG);
-
             const result = parseAPNG(buffer);
             if (result instanceof Error) {
                 console.error(result);
             } else {
-                for (frame of result.frames) {
+                for (let f in result.frames) {
+                    const frame = result.frames[f];
                     const arrayBuffer = await frame.imageData.arrayBuffer();
                     const pixels = await readPngData(arrayBuffer);
 
@@ -38,6 +38,7 @@ async function readAnimations(data) {
                         data: [],
                         width: pixels.width,
                         height: pixels.height,
+                        name: path.basename(file).replace('.png', f),
                     }
 
                     while (i < pixels.data.length) {
@@ -45,25 +46,25 @@ async function readAnimations(data) {
                         const g = pixels.data[i++];
                         const b = pixels.data[i++];
                         const a = pixels.data[i++];
+
                         pixel[0] = r | (g << 8) | (b << 16) | (a << 24);
                         let color = pixel[0];
-                        // console.log(color);
 
                         let index = data.pallette.indexOf(color);
                         if (index === -1) {
                             index = data.pallette.length
                             data.pallette.push(color);
-                            console.log("pallette", data.pallette);
                         }
                         image.data[p++] = index;
                     }
 
-                    console.log(image);
                     data.images.push(image);
                 }
             }
         }
     }
+
+    console.log('images ' + data.images.length);
 }
 
 function readPngData(arrayBuffer) {
@@ -79,7 +80,9 @@ function readPngData(arrayBuffer) {
 }
 
 function writeResources(data) {
-    let stream = [];
+    let ids = '';
+
+    const stream = [];
 
     stream.push(data.pallette.length);
 
@@ -88,29 +91,42 @@ function writeResources(data) {
         const g = (color >> 8) & 0xff;
         const b = (color >> 16) & 0xff;
         const a = (color >> 24) & 0xff;
-        console.log(color.toString(16), r, g, b, a);
         stream.push(r, g, b, a);
     }
 
     stream.push(data.images.length);
 
-    for (let image of data.images) {
+    for (let i in data.images) {
+        let image = data.images[i];
+
         stream.push(image.width, image.height);
         stream.push(...image.data);
+
+        ids += `export const  ${image.name} = ${i};\n`;
     }
 
-    console.log('stream.length', stream.length);
+    console.log('resources size ' + stream.length + ' bytes');
 
     let buffer = Buffer.from(new Uint8Array(stream));
 
-    console.log(buffer);
-
     fs.writeFileSync(path.resolve("dist/build/r"), buffer);
+    fs.writeFileSync(path.resolve("src/resources/ids.ts"), ids);
+}
+
+function createDirectories() {
+	if (!fs.existsSync(path.resolve('dist'))) {
+		fs.mkdirSync(path.resolve('dist'));
+	}
+
+	if (!fs.existsSync(path.resolve('dist/build'))) {
+		fs.mkdirSync(path.resolve('dist/build'));
+	}
 }
 
 async function main() {
     let data = {};
     init(data);
+    createDirectories();
     await readAnimations(data);
     writeResources(data);
 }
