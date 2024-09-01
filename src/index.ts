@@ -1,8 +1,7 @@
-import { cells, cellSize } from "./config";
+import { border, cells, cellSize } from "./config";
 import { Data } from "./data";
-import { brightness, colorTransformConcat, tint } from "./resources/color";
-import { floor0, floor1, floor2, man0 } from "./resources/ids";
-import { getImage } from "./resources/images";
+import { level0 } from "./levels/level0";
+import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
 import { createContext2d, dpr, getContext2d } from "./utils/browser";
 
@@ -26,26 +25,21 @@ function update() {
 
 	world.clearRect(0, 0, world.canvas.width, world.canvas.height);
 
+	const offsetX = 0;
+	const offsetY = cellSize * 2;
 
-	const floorColorTransform = tint(0xff508CCC, 0.5);
-
-	const floors = [floor0, floor1, floor2, floor0];
-	let f = 0;
-
-	for (let y = 0; y < cells; y++) {
-		for (let x = 0; x < cells; x++) {
-			const colorTransform = colorTransformConcat(
-				brightness(1.0 - x / cells), floorColorTransform
-			);
-			let image = getImage(floors[f++ % floors.length], colorTransform);
-			world.drawImage(image, x * cellSize, y * cellSize);
+	for (let cube of data.stage.cubes) {
+		const x = cube.x + offsetX;
+		const y = cube.y + offsetY;
+		const z = cube.z;
+		const type = cube.t;
+		if (type.f !== undefined) {
+			let image = images[type.f];
+			world.drawImage(image, x, y - z);
 		}
-	}
-
-	for (let y = 3; y < 5; y++) {
-		for (let x = 0; x < cells; x++) {
-			let image = getImage(man0, brightness(1.0 - x / cells));
-			world.drawImage(image, x * cellSize, y * cellSize);
+		if (type.t !== undefined) {
+			let image = images[type.t];
+			world.drawImage(image, x, y - z - cellSize);
 		}
 	}
 
@@ -82,19 +76,23 @@ function update() {
 
 function init() {
 	const world = createContext2d();
-	world.canvas.width = cellSize * cells;
-	world.canvas.height = cellSize * cells;
+	world.canvas.width = cellSize * (cells + border * 2);
+	world.canvas.height = cellSize * (cells + border * 2);
 
 	const screen = getContext2d(document.getElementById('c') as HTMLCanvasElement);
 
+	const stage = level0();
+
 	data = {
 		world,
-		screen
+		screen,
+		stage,
 	};
 }
 
 async function main() {
 	await loadResources();
+	generateImages();
 	init();
 	update();
 }

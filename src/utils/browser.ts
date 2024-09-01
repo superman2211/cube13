@@ -6,8 +6,12 @@ export function getContext2d(canvas: HTMLCanvasElement): CanvasRenderingContext2
 	return canvas.getContext('2d')!;
 }
 
+export function createCanvas() {
+	return domDocument.createElement('canvas');
+}
+
 export function createContext2d() {
-	return getContext2d(domDocument.createElement('canvas'));
+	return getContext2d(createCanvas());
 }
 
 // export async function timeout(time: number) {
