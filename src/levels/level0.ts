@@ -1,53 +1,61 @@
 import { border, cells, cellSize } from "../config";
-import { door0, floor0, floor1, man0, man5, roof0, roof1, roof2, wall0, wall5 } from "../resources/ids";
-import { blueFoor0, blueFoor1, violetRoof0, violetRoof1, violetRoof2, violetWall0, violetWall1 } from "../resources/images";
+import { door0, floor0, floor1, floor2, man0, man5, roof0, roof1, roof2, roof5, wall0, wall1, wall2, wall5, wall7 } from "../resources/ids";
+import { roof0_270, roof0_90, roof2_h } from "../resources/images";
 import { Cube, CubeType, Stage } from "../stage";
 
 export function level0(): Stage {
     const cubes: Cube[] = [];
 
     let types: { [key: string]: CubeType } = {
-        A: { f: violetWall0, t: violetRoof0 },
-        B: { f: violetWall1, t: violetRoof1 },
-        C: { t: violetRoof2 },
-        D: { t: violetRoof0 },
-        E: { t: violetRoof1 },
-        F: { t: blueFoor0 },
-        G: { t: blueFoor1 },
-        J: { f: door0, t: violetRoof0 },
+        A: { f: wall0, t: roof0 },
+        B: { f: wall1, t: roof1 },
+        C: { t: roof2 },
+        D: { t: roof0_270 },
+        E: { t: roof0_90 },
+        F: { t: floor0 },
+        G: { t: floor1 },
+        H: { f: wall1, t: roof0_270 },
+        I: { f: wall1, t: roof0_90 },
+        J: { f: door0, t: roof0 },
+        K: { t: roof2_h },
+        L: { f: wall0, t: roof5 },
+        M: { t: floor2 },
     };
 
-    let layers = [`
-               
- FFFFFFFFFFFFF 
- FFFFFFFFFFFFF 
- FFFFFFGGGFFFF 
- FFFFFFFFFFFFF 
- FFFGFFFFFFFFF 
- FFFFFFFFFFFFF 
- FFFFFFFFFFFFF 
- FFFFFFGGGFFFF 
- FFFFFFFFFFFFF 
- FFFGFFFFFFFFF 
- FFFGFFFFFFFFF 
- FFFGFFFFFFFFF 
- FFFGFFFFFFFFF 
-`, `
-CAABBABJAABAAAC
-D             E
-E             E
-E             E
-D             E
-E      ABB    D
-E    AAA      D
-E             D
-E             D
-E             D
-E             D
-E             D
-A             B
-A             B
-`];
+    let layers = [
+        [
+            '               ',
+            ' FFFFFFFFFFFFF ',
+            ' FFFFFFFFFFFFF ',
+            ' FMFFFFGGGFFFF ',
+            ' FFFMFFFFFFFFF ',
+            ' FFFGFFFFFFFFF ',
+            ' FFFFFFFFFFFFF ',
+            ' FFFFFFFFFFFFF ',
+            ' FMFFFFGGGFFFF ',
+            ' FFFFFFFFFMFFF ',
+            ' FFFGFFFFFFFFF ',
+            ' FFFGFFFFFFFFF ',
+            ' FFFGFFFFFFFFF ',
+            ' FFFGFFFFFFFFF ',
+        ],
+        [
+            'CAABBABJAABAAAK',
+            'D             E',
+            'D             E',
+            'D             E',
+            'D             E',
+            'D      LLL    E',
+            'D    LLL      E',
+            'D             E',
+            'D             E',
+            'D             E',
+            'D             E',
+            'D             E',
+            'D             E',
+            'H             I',
+        ]
+    ];
 
     let z = 0;
 
@@ -55,12 +63,8 @@ A             B
         let x = 0;
         let y = 0;
 
-        const rows = layer.split('\n');
-        rows.splice(0, 1);
-
-        for (const row of rows) {
+        for (const row of layer) {
             for (const s of row) {
-
                 if (s !== ' ') {
                     let type = types[s];
 
@@ -79,9 +83,9 @@ A             B
         z += cellSize;
     }
 
-    cubes.push({ x: cellSize * 5, y: cellSize * 4.5, z: cellSize, t: { f: man0 } });
-    
-    cubes.push({ x: cellSize * 4, y: cellSize * 7, z: cellSize, t: { f: man5 } });
+    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 4.6) , z: cellSize, t: { f: man0 } });
+
+    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 7.6), z: cellSize, t: { f: man5 } });
 
     return { cubes };
 }

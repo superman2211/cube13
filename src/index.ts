@@ -3,6 +3,7 @@ import { Data } from "./data";
 import { level0 } from "./levels/level0";
 import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
+import { Cube } from "./stage";
 import { createContext2d, dpr, getContext2d } from "./utils/browser";
 
 let data: Data;
@@ -16,6 +17,10 @@ function calculateTime(): number {
 	return time / 1000;
 }
 
+function sortCubes(c0: Cube, c1: Cube): number {
+	return (c0.y + c0.z) - (c1.y + c1.z);
+}
+
 function update() {
 	const time = calculateTime();
 
@@ -27,6 +32,8 @@ function update() {
 
 	const offsetX = 0;
 	const offsetY = cellSize * 2;
+
+	data.stage.cubes.sort(sortCubes);
 
 	for (let cube of data.stage.cubes) {
 		const x = cube.x + offsetX;
