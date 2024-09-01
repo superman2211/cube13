@@ -12,7 +12,7 @@
 		"watch:rollup": "rollup -c rollup.config.dev.js -w",
 		"build-dev": "yarn clean && yarn build-resources && tsc && rollup -c rollup.config.dev.js",
 		"build": "yarn clean  && yarn build-resources && tsc && rollup -c rollup.config.prod.js &&  yarn create-advzip && yarn zip-info",
-		"build-roadroller": "yarn clean  && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn apply-roadroller && yarn create-advzip",
+		"build-roadroller": "yarn clean  && yarn build-resources && tsc && rollup -c rollup.config.prod.js && yarn apply-roadroller && yarn create-advzip && yarn zip-info",
 		"serve": "http-server ./dist/build",
 		"lint": "eslint --fix",
 		"zip-info": "node scripts/zip-info.js",
