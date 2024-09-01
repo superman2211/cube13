@@ -44,10 +44,10 @@ export function level0(): Stage {
             'D             E',
             'D             E',
             'D             E',
-            'D             E',
+            'D    LLLLL    E',
+            'D        L    E',
             'D      LLL    E',
-            'D    LLL      E',
-            'D             E',
+            'DLLLLLLL      E',
             'D             E',
             'D             E',
             'D             E',
@@ -83,7 +83,7 @@ export function level0(): Stage {
         z += cellSize;
     }
 
-    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 4.6) , z: cellSize, t: { f: man0 } });
+    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 5.6) , z: cellSize, t: { f: man0 } });
 
     cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 7.6), z: cellSize, t: { f: man5 } });
 
