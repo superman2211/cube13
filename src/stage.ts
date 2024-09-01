@@ -6,7 +6,8 @@ export interface Cube {
     x: number,
     y: number,
     z: number,
-    t: CubeType
+    id?: number
+    t: CubeType,
 }
 
 export interface CubeType {

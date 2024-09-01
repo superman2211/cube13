@@ -85,7 +85,7 @@ export function level0(): Stage {
 
     cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 5.6) , z: cellSize, t: { f: man0 } });
 
-    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 7.6), z: cellSize, t: { f: man5 } });
+    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 7.6), z: cellSize, id: 0, t: { f: man5 } });
 
     return { cubes };
 }

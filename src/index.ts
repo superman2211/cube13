@@ -1,6 +1,8 @@
 import { border, cells, cellSize } from "./config";
 import { Data } from "./data";
+import { initInput, isKeyPressed, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "./input";
 import { level0 } from "./levels/level0";
+import { initPlayer, updatePlayer } from "./player";
 import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
 import { Cube } from "./stage";
@@ -24,7 +26,9 @@ function sortCubes(c0: Cube, c1: Cube): number {
 function update() {
 	const time = calculateTime();
 
-	const startTime = performance.now();;
+	const startTime = performance.now();
+
+	updatePlayer(data, time);
 
 	const { world, screen } = data;
 
@@ -97,11 +101,15 @@ function init() {
 	};
 }
 
+
 async function main() {
 	await loadResources();
 	generateImages();
+	initInput();
 	init();
+	initPlayer(data);
 	update();
 }
 
 main();
+
