@@ -64,6 +64,7 @@ async function readAnimations(data) {
         }
     }
 
+    console.log('pallette ' + data.pallette.length);
     console.log('images ' + data.images.length);
 }
 
