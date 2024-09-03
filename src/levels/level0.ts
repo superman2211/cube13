@@ -1,6 +1,7 @@
 import { border, cells, cellSize } from "../config";
 import { door0, floor0, floor1, floor2, man0, man5, roof0, roof1, roof2, wall0, wall1, wall2, wall3, wall5, wall7 } from "../resources/ids";
 import { Cube, CubeInfo, rotate180, rotate270, rotate90 } from "../stage";
+import { mathFloor } from "../utils/math";
 
 export function level0(cubes: Cube[]) {
     cubes.splice(0, cubes.length);
@@ -50,7 +51,7 @@ export function level0(cubes: Cube[]) {
             'D             E',
             'D             E',
             'D             E',
-            'D    MLONM    E',
+            'D    LMNOL    E',
             'D        L    E',
             'D        O    E',
             'D      LMN    E',
@@ -89,7 +90,9 @@ export function level0(cubes: Cube[]) {
         z += cellSize;
     }
 
-    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 5.6), z: cellSize, info: { front: { id: man0 } } });
+    cubes.push({ x: mathFloor(cellSize * 4.6), y: mathFloor(cellSize * 5.6), z: cellSize, info: { front: { id: man0 } } });
 
-    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 8.6), z: cellSize, id: 0, info: { front: { id: man5 } } });
+    cubes.push({ x: cellSize * 4, y: mathFloor(cellSize * 8.6), z: cellSize, id: 0, info: { front: { id: man5 } } });
+
+    cubes.push({ x: cellSize * 6, y: mathFloor(cellSize * 11), z: 8, info: types['L'] });
 }

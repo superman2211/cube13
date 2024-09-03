@@ -2,6 +2,7 @@ import { Point, point, pointAdd, pointNormalize } from "./geom/point";
 import { isKeyPressed, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "./input";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4, man5, man6, man7, man8, man9 } from "./resources/ids";
 import { cubes } from "./stage";
+import { mathFloor } from "./utils/math";
 
 const animationDown = [man0, man1, man2, man3];
 const animationRight = [man4, man5, man6, man7];
@@ -53,14 +54,14 @@ export function updatePlayer(time: number) {
 
         if (animation) {
             player.frame += time * 10.0;
-            let frame = Math.floor((player.frame) % animation.length);
+            let frame = mathFloor((player.frame) % animation.length);
             cube.info.front!.id = animation[frame];
 
             pointNormalize(direction, time * 30.0);
             pointAdd(player.position, direction);
 
-            cube.x = Math.floor(player.position.x);
-            cube.y = Math.floor(player.position.y);
+            cube.x = mathFloor(player.position.x);
+            cube.y = mathFloor(player.position.y);
         }
     }
 }

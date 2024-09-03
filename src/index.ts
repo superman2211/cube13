@@ -7,6 +7,7 @@ import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
 import { Cube, cubes, identity, Image } from "./stage";
 import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, setHeight, setWidth } from "./utils/browser";
+import { mathMin } from "./utils/math";
 
 let oldTime = now();
 
@@ -61,7 +62,7 @@ function update() {
 	const screenWidth = getWidth(screen);
 	const screenHeight = getHeight(screen);
 
-	const scale = Math.min(screenWidth / worldWidth, screenHeight / worldHeight);
+	const scale = mathMin(screenWidth / worldWidth, screenHeight / worldHeight);
 
 	screen.clearRect(0, 0, screenWidth, screenHeight);
 	screen.setTransform(scale, 0, 0, scale, 0, 0);
