@@ -6,7 +6,7 @@ import { initPlayer, updatePlayer } from "./player";
 import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
 import { Cube } from "./stage";
-import { createContext2d, dpr, getContext2d } from "./utils/browser";
+import { createContext, dpr, getContext } from "./utils/browser";
 
 let data: Data;
 
@@ -86,11 +86,11 @@ function update() {
 }
 
 function init() {
-	const world = createContext2d();
+	const world = createContext();
 	world.canvas.width = cellSize * (cells + border * 2);
 	world.canvas.height = cellSize * (cells + border * 2);
 
-	const screen = getContext2d(document.getElementById('c') as HTMLCanvasElement);
+	const screen = getContext(document.getElementById('c') as HTMLCanvasElement);
 
 	const stage = level0();
 
