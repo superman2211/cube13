@@ -1,31 +1,31 @@
 import { border, cells, cellSize } from "../config";
-import { door0, floor0, floor1, floor2, man0, man5, roof0, roof1, roof2, roof3, roof4, roof5, roof6, wall0, wall1, wall2, wall5, wall7 } from "../resources/ids";
-import { Cube, CubeType, Stage } from "../stage";
+import { door0, floor0, floor1, floor2, man0, man5, roof0, roof1, roof2, wall0, wall1, wall2, wall3, wall5, wall7 } from "../resources/ids";
+import { Cube, CubeInfo, rotate180, rotate270, rotate90 } from "../stage";
 
-export function level0(): Stage {
-    const cubes: Cube[] = [];
+export function level0(cubes: Cube[]) {
+    cubes.splice(0, cubes.length);
 
-    let types: { [key: string]: CubeType } = {
-        A: { f: wall0, t: roof0 }, // top
-        B: { f: wall1, t: roof1 }, // top
-        
-        C: { t: roof4 }, // left top
-        K: { t: roof5 }, // right top
-        
-        D: { t: roof2 }, // left
-        E: { t: roof3 }, // right
+    let types: { [key: string]: CubeInfo } = {
+        A: { front: { id: wall0 }, top: { id: roof0 } }, // top
 
-        F: { t: floor0 },
-        G: { t: floor1 },
-        
-        H: { f: wall1, t: roof2 }, // left bottom 
-        I: { f: wall1, t: roof3 }, // right bottom
-        
-        J: { f: door0, t: roof0 }, // door
+        C: { top: { id: roof1 } }, // left top
+        K: { top: { id: roof1, transformation: rotate90 } }, // right top
 
-        L: { f: wall0, t: roof6 }, // wall
-        
-        M: { t: floor2 },
+        D: { top: { id: roof0, transformation: rotate270 } }, // left
+        E: { top: { id: roof0, transformation: rotate90 } }, // right
+
+        F: { top: { id: floor0 } },
+        G: { top: { id: floor1 } },
+
+        H: { front: { id: wall1 }, top: { id: roof0, transformation: rotate270 } }, // left bottom 
+        I: { front: { id: wall1 }, top: { id: roof0, transformation: rotate90 } }, // right bottom
+
+        J: { front: { id: door0 }, top: { id: roof0 } }, // door
+
+        L: { front: { id: wall0 }, top: { id: roof2 } }, // wall
+        M: { front: { id: wall1 }, top: { id: roof2, transformation: rotate90 } }, // wall
+        N: { front: { id: wall2 }, top: { id: roof2, transformation: rotate180 } }, // wall
+        O: { front: { id: wall3 }, top: { id: roof2, transformation: rotate270 } }, // wall
     };
 
     let layers = [
@@ -33,28 +33,28 @@ export function level0(): Stage {
             '               ',
             ' FFFFFFFFFFFFF ',
             ' FFFFFFFFFFFFF ',
-            ' FMFFFFGGGFFFF ',
-            ' FFFMFFFFFFFFF ',
+            ' FFFFFFGGGFFFF ',
+            ' FFFFFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
             ' FFFFFFFFFFFFF ',
             ' FFFFFFFFFFFFF ',
-            ' FMFFFFGGGFFFF ',
-            ' FFFFFFFFFMFFF ',
+            ' FFFFFFGGGFFFF ',
+            ' FFFFFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
         ],
         [
-            'CAABBABJAABAAAK',
+            'CAAAAAAJAAAAAAK',
             'D             E',
             'D             E',
             'D             E',
-            'D    LLLLL    E',
+            'D    MLONM    E',
             'D        L    E',
-            'D        L    E',
-            'D      LLL    E',
-            'DLLLLLLL      E',
+            'D        O    E',
+            'D      LMN    E',
+            'DLMNOLMN      E',
             'D             E',
             'D             E',
             'D             E',
@@ -74,8 +74,8 @@ export function level0(): Stage {
                 if (s !== ' ') {
                     let type = types[s];
 
-                    if (type.f || type.t) {
-                        cubes.push({ x, y, z, t: type });
+                    if (type.front || type.top) {
+                        cubes.push({ x, y, z, info: type });
                     }
                 }
 
@@ -89,9 +89,7 @@ export function level0(): Stage {
         z += cellSize;
     }
 
-    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 5.6) , z: cellSize, t: { f: man0 } });
+    cubes.push({ x: Math.ceil(cellSize * 4.6), y: Math.ceil(cellSize * 5.6), z: cellSize, info: { front: { id: man0 } } });
 
-    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 8.6), z: cellSize, id: 0, t: { f: man5 } });
-
-    return { cubes };
+    cubes.push({ x: cellSize * 4, y: Math.ceil(cellSize * 8.6), z: cellSize, id: 0, info: { front: { id: man5 } } });
 }

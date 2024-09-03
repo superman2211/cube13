@@ -1,6 +1,6 @@
 import { domDocument } from "./utils/browser";
 
-const keys: string [] = [];
+const keys: { [key: string]: boolean | undefined } = {};
 
 export const KEY_UP = 'ArrowUp';
 export const KEY_DOWN = 'ArrowDown';
@@ -8,23 +8,15 @@ export const KEY_LEFT = 'ArrowLeft';
 export const KEY_RIGHT = 'ArrowRight';
 
 export function isKeyPressed(code: string): boolean {
-    return keys.includes(code);
+    return !!keys[code];
 }
 
 export function initInput() {
-    function keyHandler(e: KeyboardEvent, type: number) {
-        e.preventDefault();
-    }
-
     domDocument.onkeydown = (e) => {
-        if (!keys.includes(e.code)) {
-            keys.push(e.code);
-        }
+        keys[e.code] = true;
     }
 
     domDocument.onkeyup = (e) => {
-        if (keys.includes(e.code)) {
-            keys.splice(keys.indexOf(e.code), 1);
-        }
+        keys[e.code] = undefined;
     }
 }

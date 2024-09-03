@@ -1,19 +1,17 @@
 import { border, cells, cellSize } from "./config";
-import { Data } from "./data";
+import { world, screen } from "./graphics";
 import { initInput, isKeyPressed, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "./input";
 import { level0 } from "./levels/level0";
 import { initPlayer, updatePlayer } from "./player";
 import { generateImages, images } from "./resources/images";
 import { loadResources } from "./resources/loader";
-import { Cube } from "./stage";
-import { createContext, dpr, getContext } from "./utils/browser";
+import { Cube, cubes, identity, Image } from "./stage";
+import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, setHeight, setWidth } from "./utils/browser";
 
-let data: Data;
-
-let oldTime = performance.now();
+let oldTime = now();
 
 function calculateTime(): number {
-	const currentTime = performance.now();
+	const currentTime = now();
 	const time = currentTime - oldTime;
 	oldTime = currentTime;
 	return time / 1000;
@@ -26,54 +24,52 @@ function sortCubes(c0: Cube, c1: Cube): number {
 function update() {
 	const time = calculateTime();
 
-	const startTime = performance.now();
+	const startTime = now();
 
-	updatePlayer(data, time);
+	updatePlayer(time);
 
-	const { world, screen } = data;
+	const worldWidth = getWidth(world);
+	const worldHeight = getHeight(world);
+	const worldCanvas = getCanvas(world);
 
-	world.clearRect(0, 0, world.canvas.width, world.canvas.height);
+	world.clearRect(0, 0, worldWidth, worldHeight);
 
 	const offsetX = 0;
 	const offsetY = cellSize * 2;
 
-	data.stage.cubes.sort(sortCubes);
+	cubes.sort(sortCubes);
 
-	for (let cube of data.stage.cubes) {
+	for (let cube of cubes) {
 		const x = cube.x + offsetX;
-		const y = cube.y + offsetY;
-		const z = cube.z;
-		const type = cube.t;
-		if (type.f !== undefined) {
-			let image = images[type.f];
-			world.drawImage(image, x, y - z);
-		}
-		if (type.t !== undefined) {
-			let image = images[type.t];
-			world.drawImage(image, x, y - z - cellSize);
-		}
+		const y = cube.y + offsetY - cube.z;
+		const type = cube.info;
+		drawImage(world, x, y, type.front);
+		drawImage(world, x, y - cellSize, type.top);
 	}
 
-	const screenWidth = innerWidth * dpr;
-	const screenHeight = innerHeight * dpr;
+	const windowWidth = innerWidth * dpr;
+	const windowHeight = innerHeight * dpr;
 
-	if (screen.canvas.width != screenWidth) {
-		screen.canvas.width = screenWidth;
+	if (getWidth(screen) != windowWidth) {
+		setWidth(screen, windowWidth);
 	}
 
-	if (screen.canvas.height != screenHeight) {
-		screen.canvas.height = screenHeight;
+	if (getHeight(screen) != windowHeight) {
+		setHeight(screen, windowHeight);
 	}
 
-	const scale = Math.min(screen.canvas.width / world.canvas.width, screen.canvas.height / world.canvas.height);
+	const screenWidth = getWidth(screen);
+	const screenHeight = getHeight(screen);
 
-	screen.clearRect(0, 0, screen.canvas.width, screen.canvas.height);
+	const scale = Math.min(screenWidth / worldWidth, screenHeight / worldHeight);
+
+	screen.clearRect(0, 0, screenWidth, screenHeight);
 	screen.setTransform(scale, 0, 0, scale, 0, 0);
 	screen.shadowBlur = 0;
 	screen.imageSmoothingEnabled = false;
-	screen.drawImage(world.canvas, 0, 0);
+	screen.drawImage(worldCanvas, 0, 0);
 
-	const frameTime = (performance.now() - startTime).toFixed();
+	const frameTime = (now() - startTime).toFixed();
 	const fps = (1 / time).toFixed();
 
 	screen.shadowBlur = 10;
@@ -85,31 +81,30 @@ function update() {
 	requestAnimationFrame(update);
 }
 
-function init() {
-	const world = createContext();
-	world.canvas.width = cellSize * (cells + border * 2);
-	world.canvas.height = cellSize * (cells + border * 2);
-
-	const screen = getContext(document.getElementById('c') as HTMLCanvasElement);
-
-	const stage = level0();
-
-	data = {
-		world,
-		screen,
-		stage,
-	};
+function initStage() {
+	level0(cubes);
 }
-
 
 async function main() {
 	await loadResources();
 	generateImages();
 	initInput();
-	init();
-	initPlayer(data);
+	initStage();
+	initPlayer();
 	update();
 }
 
 main();
+
+function drawImage(context: CanvasRenderingContext2D, x: number, y: number, image?: Image) {
+	if (image) {
+		const canvas = images[image.id];
+		const transform = image.transformation || identity;
+		context.setTransform(
+			transform.a, transform.b, transform.c, transform.d,
+			transform.e + x, transform.f + y
+		);
+		context.drawImage(canvas, 0, 0);
+	}
+}
 

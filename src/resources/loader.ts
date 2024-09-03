@@ -1,3 +1,4 @@
+import { createContext, getCanvas, setHeight, setWidth } from "../utils/browser";
 import { images } from "./images";
 
 export async function loadResources() {
@@ -23,11 +24,9 @@ export async function loadResources() {
         const pixels = stream.slice(p, p + imageSize);
         p += imageSize;
 
-        let image = document.createElement("canvas");
-        image.width = width;
-        image.height = height;
-
-        let context = image.getContext('2d')!;
+        let context = createContext();
+        setWidth(context, width);
+        setHeight(context, height);
 
         let imageData = context.getImageData(0, 0, width, height);
 
@@ -44,6 +43,6 @@ export async function loadResources() {
 
         context.putImageData(imageData, 0, 0);
 
-        images.push(image);
+        images.push(getCanvas(context));
     }
 }
