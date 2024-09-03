@@ -5,6 +5,8 @@ import base from './rollup.config';
 
 const properties = [
 	'transformation',
+	'position',
+	'frame'
 ];
 
 const regex = new RegExp(properties.join('|'));
