@@ -19,7 +19,7 @@ function createWorld(): CanvasRenderingContext2D {
     return world;
 }
 
-const sortCubes = (c0: Cube, c1: Cube): number => (c0.y + c0.z) - (c1.y + c1.z);
+const sortCubes = (c0: Cube, c1: Cube): number => c0.y + c0.z - c1.y - c1.z;
 
 export const render = () => {
     const worldWidth = getWidth(world);

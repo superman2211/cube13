@@ -3,7 +3,7 @@ import { Cube } from "./cube";
 import { Box, boxesIntersects } from "./geom/box";
 import { point, pointNormalize, vector } from "./geom/point";
 import { cubes } from "./stage"
-import { mathAbs } from "./utils/math";
+import { mathAbs, mathFloor, mathRound } from "./utils/math";
 
 export const bodies: Cube[] = []
 
@@ -63,11 +63,6 @@ export const updatePhysics = () => {
 }
 
 const checkCollision = (body0: Cube, body1: Cube, reaction0: number, reaction1: number): boolean => {
-    // const hasCollision = body0.x <= body1.x + cellSize
-    //     && body0.y <= body1.y + cellSize
-    //     && body1.x <= body0.x + cellSize
-    //     && body1.y <= body0.y + cellSize;
-
     const hasCollision = boxesIntersects(body0.info.body!.box, body0, body1.info.body!.box, body1);
 
     if (hasCollision) {
@@ -77,9 +72,15 @@ const checkCollision = (body0: Cube, body1: Cube, reaction0: number, reaction1: 
         if (mathAbs(direction.x) > mathAbs(direction.y)) {
             body0.x -= direction.x * reaction0;
             body1.x += direction.x * reaction1;
+
+            body0.y = mathFloor(body0.y);
+            body1.y = mathFloor(body1.y);
         } else {
             body0.y -= direction.y * reaction0;
             body1.y += direction.y * reaction1;
+
+            body0.x = mathFloor(body0.x);
+            body1.x = mathFloor(body1.x);
         }
     }
 

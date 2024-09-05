@@ -1,4 +1,5 @@
-import { Point, point, pointAdd, pointNormalize } from "./geom/point";
+import { playerSpeed } from "./config";
+import { point, pointAdd, pointNormalize } from "./geom/point";
 import { isKeyPressed, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "./input";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4, man5, man6, man7, man8, man9 } from "./resources/ids";
 import { cubes } from "./stage";
@@ -51,7 +52,7 @@ export const updatePlayer = () => {
             let frame = mathFloor((player.frame) % animation.length);
             cube.info.front!.id = animation[frame];
 
-            pointNormalize(direction, delta * 30.0);
+            pointNormalize(direction, delta * playerSpeed);
             pointAdd(cube, direction);
         }
     }
