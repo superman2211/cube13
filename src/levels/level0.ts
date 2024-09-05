@@ -98,4 +98,5 @@ export function level0(cubes: Cube[]) {
     cubes.push({ x: cellSize * 7, y: cellSize * 13, z: cellSize, id: 0, info: { body: playerBody, front: { id: man8 } } });
 
     cubes.push({ x: cellSize * 6, y: cellSize * 11, z: cellSize, info: { body: dynamicBody, front: { id: box0 }, top: { id: box1, transformation: halfDown } } });
+    cubes.push({ x: cellSize * 7, y: cellSize * 11, z: cellSize, info: { body: dynamicBody, front: { id: box0 }, top: { id: box1, transformation: halfDown } } });
 }
