@@ -31,8 +31,8 @@ export const render = () => {
     cubes.sort(sortCubes);
 
     for (let cube of cubes) {
-        const x = mathRound(cube.x + offsetX);
-        const y = mathRound(cube.y + offsetY - cube.z);
+        const x = mathFloor(cube.x + offsetX);
+        const y = mathFloor(cube.y + offsetY - cube.z);
         const type = cube.info;
         drawImage(world, x, y, type.front);
         drawImage(world, x, y - cellSize, type.top);

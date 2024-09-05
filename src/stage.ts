@@ -20,7 +20,7 @@ export interface CubeInfo {
 
 export interface Body {
     static?: boolean,
-    box?: Box,
+    box: Box,
 }
 
 export interface Transform {

@@ -1,4 +1,5 @@
 import { cellSize } from "./config";
+import { boxesIntersects } from "./geom/box";
 import { point, pointNormalize, vector } from "./geom/point";
 import { Cube, cubes } from "./stage"
 import { mathAbs } from "./utils/math";
@@ -56,10 +57,12 @@ export const updatePhysics = () => {
 }
 
 const checkCollision = (body0: Cube, body1: Cube, reaction0: number, reaction1: number): boolean => {
-    const hasCollision = body0.x <= body1.x + cellSize
-        && body0.y <= body1.y + cellSize
-        && body1.x <= body0.x + cellSize
-        && body1.y <= body0.y + cellSize;
+    // const hasCollision = body0.x <= body1.x + cellSize
+    //     && body0.y <= body1.y + cellSize
+    //     && body1.x <= body0.x + cellSize
+    //     && body1.y <= body0.y + cellSize;
+
+    const hasCollision = boxesIntersects(body0.info.body!.box, body0, body1.info.body!.box, body1);
 
     if (hasCollision) {
         const direction = vector(body0, body1);
