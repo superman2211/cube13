@@ -5,30 +5,23 @@ export interface Point {
 	y: number,
 }
 
-export function point(x: number = 0, y: number = 0): Point {
-	return { x, y };
-}
+export const point = (x: number = 0, y: number = 0): Point => ({ x, y });
 
-export function pointDistanceSquared(p0: Point, p1: Point): number {
+export const vector = (start: Point, end: Point): Point => ({ x: end.x - start.x, y: end.y - start.y });
+
+export const pointDistanceSquared = (p0: Point, p1: Point): number => {
 	const dx = p0.x - p1.x;
 	const dy = p0.y - p1.y;
 	return dx * dx + dy * dy;
 }
 
-export function pointDistance(p0: Point, p1: Point): number {
-	return mathHypot(p0.x - p1.x, p0.y - p1.y);
-}
+export const pointDistance = (p0: Point, p1: Point): number => mathHypot(p0.x - p1.x, p0.y - p1.y);
 
-export function pointLength(point: Point): number {
-	return mathHypot(point.x, point.y);
-}
+export const pointLength = (point: Point): number => mathHypot(point.x, point.y);
 
-export function pointLengthSquared(p: Point): number {
-	const { x, y } = p;
-	return x * x + y * y;
-}
+export const pointLengthSquared = (p: Point): number => p.x * p.x + p.y * p.y;
 
-export function pointNormalize(point: Point, thickness: number) {
+export const pointNormalize = (point: Point, thickness: number) => {
 	let value = pointLength(point);
 	if (value > 0) {
 		value = thickness / value;
@@ -37,12 +30,12 @@ export function pointNormalize(point: Point, thickness: number) {
 	}
 }
 
-export function pointCopy(source: Point, target: Point) {
+export const pointCopy = (source: Point, target: Point) => {
 	target.x = source.x;
 	target.y = source.y;
 }
 
-export function pointAdd(p0: Point, p1: Point) {
+export const pointAdd = (p0: Point, p1: Point) => {
 	p0.x += p1.x;
 	p0.y += p1.y;
 }
