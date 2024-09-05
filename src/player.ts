@@ -18,9 +18,7 @@ export const player: Player = {
     frame: 0,
 }
 
-export function initPlayer() {
-    
-}
+export const initPlayer = () => { }
 
 export const updatePlayer = () => {
     const delta = time.delta;

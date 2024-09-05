@@ -1,8 +1,11 @@
 import { border, cells, cellSize } from "./config";
+import { Cube } from "./cube";
 import { DEBUG } from "./debug";
+import { identity } from "./geom/transform";
 import { images } from "./resources/images";
-import { Cube, cubes, identity, Image } from "./stage";
+import { cubes } from "./stage";
 import { time } from "./time";
+import { Image } from "./image";
 import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, setHeight, setWidth } from "./utils/browser";
 import { mathFloor, mathMin, mathRound } from "./utils/math";
 

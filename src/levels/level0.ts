@@ -1,8 +1,9 @@
 import { border, cells, cellSize } from "../config";
 import { box, Box } from "../geom/box";
 import { box0, box1, door0, floor0, floor1, floor2, man0, man5, man8, roof0, roof1, roof2, wall0, wall1, wall2, wall3, wall5, wall7 } from "../resources/ids";
-import { Cube, CubeInfo, halfDown, rotate180, rotate270, rotate90, Body } from "../stage";
-import { mathFloor } from "../utils/math";
+import { Body } from "../physics";
+import { Cube, CubeInfo } from "../cube";
+import { halfDown, rotate180, rotate270, rotate90 } from "../geom/transform";
 
 const staticBody: Body = { static: true, box: box(0, 0, cellSize, cellSize) };
 const dynamicBody: Body = { box: box(0, 0, cellSize, cellSize) };

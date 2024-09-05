@@ -1,4 +1,4 @@
-import { point, Point } from "./point";
+import { Point } from "./point";
 
 export interface Box {
     minX: number,

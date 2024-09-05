@@ -1,10 +1,16 @@
 import { cellSize } from "./config";
-import { boxesIntersects } from "./geom/box";
+import { Cube } from "./cube";
+import { Box, boxesIntersects } from "./geom/box";
 import { point, pointNormalize, vector } from "./geom/point";
-import { Cube, cubes } from "./stage"
+import { cubes } from "./stage"
 import { mathAbs } from "./utils/math";
 
 export const bodies: Cube[] = []
+
+export interface Body {
+    static?: boolean,
+    box: Box,
+}
 
 export const getPhysicsObjects = () => {
     bodies.splice(0, bodies.length);
