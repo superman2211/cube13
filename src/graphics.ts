@@ -1,4 +1,5 @@
 import { border, cells, cellSize } from "./config";
+import { DEBUG } from "./debug";
 import { images } from "./resources/images";
 import { Cube, cubes, identity, Image } from "./stage";
 import { time } from "./time";
@@ -59,14 +60,16 @@ export const render = () => {
     screen.imageSmoothingEnabled = false;
     screen.drawImage(worldCanvas, 0, 0);
 
-    const frameTime = (now() - time.now).toFixed();
-    const fps = (1 / time.delta).toFixed();
+    if (DEBUG) {
+        const frameTime = (now() - time.now).toFixed();
+        const fps = (1 / time.delta).toFixed();
 
-    screen.shadowBlur = 10;
-    screen.shadowColor = 'black';
-    screen.fillStyle = 'white';
-    screen.font = 'arial 20px';
-    screen.fillText('FPS ' + fps + ' TIME ' + frameTime + ' ms', 0, 20);
+        screen.shadowBlur = 10;
+        screen.shadowColor = 'black';
+        screen.fillStyle = 'white';
+        screen.font = 'arial 20px';
+        screen.fillText('FPS ' + fps + ' TIME ' + frameTime + ' ms', 0, 20);
+    }
 }
 
 
