@@ -1,6 +1,6 @@
 import { topLayer } from "./top";
 
-export const level1 = [
+export const level2 = [
     [
         '       S       ',
         ' FFFFFFFFFFFFF ',
@@ -13,7 +13,7 @@ export const level1 = [
         ' FFFFFFGGGFFFF ',
         ' FFFFFFFFFFFsF ',
         ' FFFGFFFFFFFFF ',
-        ' FFFGFFFPFFFFF ',
+        ' FFFGFFEPFFFFF ',
         ' FFFGFFFFFFFFF ',
         ' FFFGFFFFFFPFF ',
     ],
@@ -21,14 +21,14 @@ export const level1 = [
         ' YYYYYYdYYYYYY ',
         'X             X',
         'X             X',
-        'X        NOLMNX',
-        'X        M    X',
-        'X        L    X',
-        'X        O    X',
-        'X      LMN    X',
-        'XLMNaLMN      X',
-        'X         b   X',
         'X             X',
+        'X             X',
+        'X             X',
+        'X             X',
+        'X     aaaa    X',
+        'X     a       X',
+        'X     a   b   X',
+        'X     a       X',
         'X    aa       X',
         'X             X',
         'U      u      U',

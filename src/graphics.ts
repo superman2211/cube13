@@ -1,6 +1,6 @@
 import { border, cells, cellSize } from "./config";
 import { Cube } from "./cube";
-import { DEBUG } from "./debug";
+import { DEBUG, FPS } from "./debug";
 import { identity } from "./geom/transform";
 import { images } from "./resources/images";
 import { cubes } from "./stage";
@@ -60,22 +60,20 @@ export const render = () => {
 
     screen.clearRect(0, 0, screenWidth, screenHeight);
     screen.setTransform(scale, 0, 0, scale, 0, 0);
-    screen.shadowBlur = 0;
     screen.imageSmoothingEnabled = false;
     screen.drawImage(worldCanvas, 0, 0);
 
-    if (DEBUG) {
+    if (FPS) {
         const frameTime = (now() - time.nowMS).toFixed();
         const fps = (1 / time.deltaS).toFixed();
 
-        screen.shadowBlur = 10;
-        screen.shadowColor = 'black';
+        const mode = DEBUG ? 'DEBUG' : 'RELEASE';
+
         screen.fillStyle = 'white';
         screen.font = 'arial 20px';
-        screen.fillText('FPS ' + fps + ' TIME ' + frameTime + ' ms', 0, 20);
+        screen.fillText(`FPS ${fps}   TIME ${frameTime} ms   ${mode}`, 0, 20);
     }
 }
-
 
 const drawImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
     if (image) {

@@ -1,5 +1,5 @@
 export const topLayer = [
-    'CAAAAAATAAAAAAK',
+    'CAAAAAAtAAAAAAK',
     'D             E',
     'D             E',
     'D             E',

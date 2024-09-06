@@ -11,7 +11,6 @@ const playerBody: Body = { box: box(3, 10, cellSize - 7, cellSize - 9) };
 
 export const infos: { [key: string]: CubeInfo } = {
     A: { front: { id: wall8 }, top: { id: roof0 } }, // top
-    T: { front: { id: wall9 }, top: { id: roof0 }, id: Id.DoorExit }, // top exit
     Y: { front: { id: wall0 }, body: staticBody }, // top
 
     C: { top: { id: roof1 } }, // left top
@@ -23,14 +22,12 @@ export const infos: { [key: string]: CubeInfo } = {
     F: { top: { id: floor0 } }, // floor
     G: { top: { id: floor1 } }, // floor
     P: { top: { id: floor2 } }, // floor
-    R: { top: { id: floor3 }, id: Id.SunFloor }, // floor
     S: { top: { id: floor5 } }, // floor
 
     U: { front: { id: wall8 }, body: staticBody }, // left-right bottom
     H: { front: { id: wall8 }, top: { id: roof0, transformation: rotate270 } }, // left bottom 2
     I: { front: { id: wall8 }, top: { id: roof0, transformation: rotate90 } }, // right bottom 2
 
-    J: { front: { id: door0 }, top: { id: roof0 }, body: staticBody, id: Id.Door }, // door
 
     L: { front: { id: wall0 }, top: { id: roof2 }, body: staticBody }, // wall
     M: { front: { id: wall1 }, top: { id: roof2, transformation: rotate90 }, body: staticBody }, // wall
@@ -39,7 +36,15 @@ export const infos: { [key: string]: CubeInfo } = {
 
     X: { body: staticBody }, // empty physics block
 
+    // dynamic
+
     a: { body: dynamicBody, front: { id: box0 }, top: { id: box1 }, cubeHeight: cellSizeHalf }, // box
     b: { body: dynamicBody, front: { id: box2 }, top: { id: box3 }, cubeHeight: cellSizeHalf, id: Id.SunCube }, // sun box
-    u: { body: playerBody, front: { id: man8 }, id: Id.Player },
+
+    u: { body: playerBody, front: { id: man8 }, id: Id.Player }, // user player
+
+    s: { top: { id: floor3 }, id: Id.SunFloor }, // floor
+
+    t: { front: { id: wall9 }, top: { id: roof0 }, id: Id.DoorExit }, // top exit
+    d: { front: { id: door0 }, top: { id: roof0 }, body: staticBody, id: Id.Door }, // door
 };
