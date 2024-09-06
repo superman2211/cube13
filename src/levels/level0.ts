@@ -1,8 +1,8 @@
 import { border, cells, cellSize } from "../config";
 import { box, Box } from "../geom/box";
-import { box0, box1, door0, floor0, floor1, floor2, man0, man5, man8, roof0, roof1, roof2, wall0, wall1, wall2, wall3, wall5, wall7 } from "../resources/ids";
+import { box0, box1, box2, box3, door0, floor0, floor1, floor2, floor3, man0, man5, man8, roof0, roof1, roof2, wall0, wall1, wall2, wall3, wall5, wall7 } from "../resources/ids";
 import { Body } from "../physics";
-import { Cube, CubeInfo } from "../cube";
+import { Cube, CubeInfo, Id } from "../cube";
 import { halfDown, rotate180, rotate270, rotate90 } from "../geom/transform";
 
 const staticBody: Body = { static: true, box: box(0, 0, cellSize, cellSize) };
@@ -21,13 +21,15 @@ export function level0(cubes: Cube[]) {
         D: { top: { id: roof0, transformation: rotate270 }, body: staticBody }, // left
         E: { top: { id: roof0, transformation: rotate90 }, body: staticBody }, // right
 
-        F: { top: { id: floor0 } },
-        G: { top: { id: floor1 } },
+        F: { top: { id: floor0 } }, // floor
+        G: { top: { id: floor1 } }, // floor
+        P: { top: { id: floor2 } }, // floor
+        R: { top: { id: floor3 }, id: Id.SunFloor }, // floor
 
         H: { front: { id: wall1 }, top: { id: roof0, transformation: rotate270 }, body: staticBody }, // left bottom
         I: { front: { id: wall1 }, top: { id: roof0, transformation: rotate90 }, body: staticBody }, // right bottom
 
-        J: { front: { id: door0 }, top: { id: roof0 } }, // door
+        J: { front: { id: door0 }, top: { id: roof0 }, id: Id.Door }, // door
 
         L: { front: { id: wall0 }, top: { id: roof2 }, body: staticBody }, // wall
         M: { front: { id: wall1 }, top: { id: roof2, transformation: rotate90 }, body: staticBody }, // wall
@@ -39,9 +41,9 @@ export function level0(cubes: Cube[]) {
 
     let layers = [
         [
-            '               ',
+            '       F       ',
             ' FFFFFFFFFFFFF ',
-            ' FFFFFFFFFFFFF ',
+            ' FFPFFFFFFFRFF ',
             ' FFFFFFGGGFFFF ',
             ' FFFFFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
@@ -50,9 +52,9 @@ export function level0(cubes: Cube[]) {
             ' FFFFFFGGGFFFF ',
             ' FFFFFFFFFFFFF ',
             ' FFFGFFFFFFFFF ',
+            ' FFFGFFFPFFFFF ',
             ' FFFGFFFFFFFFF ',
-            ' FFFGFFFFFFFFF ',
-            ' FFFGFFFFFFFFF ',
+            ' FFFGFFFFFFPFF ',
         ],
         [
             'CAAAAAAJAAAAAAK',
@@ -96,8 +98,10 @@ export function level0(cubes: Cube[]) {
         z += cellSize;
     }
 
-    cubes.push({ x: cellSize * 7, y: cellSize * 13, z: cellSize, id: 0, info: { body: playerBody, front: { id: man8 } } });
+    cubes.push({ x: cellSize * 7, y: cellSize * 13, z: cellSize, info: { body: playerBody, front: { id: man8 }, id: Id.Player } });
 
     cubes.push({ x: cellSize * 6, y: cellSize * 11, z: cellSize, info: { body: dynamicBody, front: { id: box0 }, top: { id: box1, transformation: halfDown } } });
     cubes.push({ x: cellSize * 7, y: cellSize * 11, z: cellSize, info: { body: dynamicBody, front: { id: box0 }, top: { id: box1, transformation: halfDown } } });
+
+    cubes.push({ x: cellSize * 12, y: cellSize * 5, z: cellSize, info: { body: dynamicBody, front: { id: box2 }, top: { id: box3, transformation: halfDown }, id: Id.SunCube } });
 }

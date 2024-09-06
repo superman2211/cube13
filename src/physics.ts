@@ -5,14 +5,14 @@ import { point, pointNormalize, vector } from "./geom/point";
 import { cubes } from "./stage"
 import { mathAbs, mathFloor, mathRound } from "./utils/math";
 
-export const bodies: Cube[] = []
+export const bodies: Cube[] = [];
 
 export interface Body {
     static?: boolean,
     box: Box,
 }
 
-export const getPhysicsObjects = () => {
+export const getBodies = () => {
     bodies.splice(0, bodies.length);
 
     for (const cube of cubes) {
