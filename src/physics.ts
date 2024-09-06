@@ -13,7 +13,7 @@ export interface Body {
     box: Box,
 }
 
-export const getBodies = () => {
+export const updateBodies = () => {
     bodies.splice(0, bodies.length);
 
     for (const cube of cubes) {

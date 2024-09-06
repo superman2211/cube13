@@ -1,0 +1,16 @@
+export const topLayer = [
+    'CAAAAAATAAAAAAK',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'D             E',
+    'H             I',
+];

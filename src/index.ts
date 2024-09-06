@@ -3,8 +3,9 @@ import { checkCubePlace } from "./cube-place";
 import { updateDoor } from "./door";
 import { render } from "./graphics";
 import { initInput } from "./input";
-import { level0 } from "./levels/level0";
-import { getBodies, updatePhysics } from "./physics";
+import { buildLevel } from "./levels/builder";
+import { level1 } from "./levels/level1";
+import { updateBodies, updatePhysics } from "./physics";
 import { initPlayer, updatePlayer } from "./player";
 import { generateImages } from "./resources/images";
 import { loadResources } from "./resources/loader";
@@ -23,8 +24,7 @@ function update() {
 }
 
 function initStage() {
-	level0(cubes);
-	getBodies();
+	buildLevel(level1);
 }
 
 async function main() {

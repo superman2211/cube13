@@ -1,6 +1,6 @@
 import { doorAnimationSpeed } from "./config";
 import { Id } from "./cube";
-import { getBodies } from "./physics";
+import { updateBodies } from "./physics";
 import { door0, door1, door2, door3, wall10 } from "./resources/ids";
 import { getCubeById } from "./stage";
 import { time } from "./time";
@@ -29,7 +29,7 @@ export const updateDoor = () => {
                 cube.info.front = undefined;
 
                 cube.info.body = undefined;
-                getBodies();
+                updateBodies();
 
                 const exit = getCubeById(Id.DoorExit);
                 if (exit) {

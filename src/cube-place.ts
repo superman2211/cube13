@@ -3,7 +3,7 @@ import { cellSize, cellSizeHalf } from "./config";
 import { Cube, Id } from "./cube";
 import { door } from "./door";
 import { pointCopy, pointDistance } from "./geom/point";
-import { getBodies } from "./physics";
+import { updateBodies } from "./physics";
 import { floor3, floor4 } from "./resources/ids";
 import { cubes, getCubeById, removeCube } from "./stage";
 
@@ -16,7 +16,7 @@ export const checkCubePlace = () => {
             pointCopy(floor, cube);
 
             cube.info.body = undefined;
-            getBodies();
+            updateBodies();
 
             animate(cube, 'z', cellSizeHalf, 0.5, () => {
                 floor.info.top!.id = floor4;
