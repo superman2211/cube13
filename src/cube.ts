@@ -15,7 +15,7 @@ export interface CubeInfo {
     id?: Id,
 }
 
-export enum Id {
+export const enum Id {
     Player,
     SunFloor,
     SunCube,

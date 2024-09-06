@@ -5,7 +5,7 @@ import { Body } from "../physics";
 import { Cube, CubeInfo, Id } from "../cube";
 import { halfDown, rotate180, rotate270, rotate90 } from "../geom/transform";
 
-const staticBody: Body = { static: true, box: box(0, 0, cellSize, cellSize) };
+const staticBody: Body = { isStatic: true, box: box(0, 0, cellSize, cellSize) };
 const dynamicBody: Body = { box: box(0, 0, cellSize, cellSize) };
 const playerBody: Body = { box: box(3, 10, cellSize - 7, cellSize - 9) };
 

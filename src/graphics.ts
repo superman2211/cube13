@@ -9,10 +9,7 @@ import { Image } from "./image";
 import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, setHeight, setWidth } from "./utils/browser";
 import { mathFloor, mathMin, mathRound } from "./utils/math";
 
-export const world: CanvasRenderingContext2D = createWorld();
-export const screen: CanvasRenderingContext2D = getContext(domDocument.getElementById('c') as HTMLCanvasElement);
-
-function createWorld(): CanvasRenderingContext2D {
+const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
     setWidth(world, cellSize * (cells + border * 2));
     setHeight(world, cellSize * (cells + border * 2));
@@ -20,6 +17,10 @@ function createWorld(): CanvasRenderingContext2D {
 }
 
 const sortCubes = (c0: Cube, c1: Cube): number => c0.y + c0.z - c1.y - c1.z;
+
+export const world: CanvasRenderingContext2D = createWorld();
+export const screen: CanvasRenderingContext2D = getContext(domDocument.getElementById('c') as HTMLCanvasElement);
+
 
 export const render = () => {
     const worldWidth = getWidth(world);
@@ -64,8 +65,8 @@ export const render = () => {
     screen.drawImage(worldCanvas, 0, 0);
 
     if (DEBUG) {
-        const frameTime = (now() - time.now).toFixed();
-        const fps = (1 / time.delta).toFixed();
+        const frameTime = (now() - time.nowMS).toFixed();
+        const fps = (1 / time.deltaS).toFixed();
 
         screen.shadowBlur = 10;
         screen.shadowColor = 'black';

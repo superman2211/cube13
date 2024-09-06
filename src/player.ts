@@ -1,7 +1,7 @@
 import { playerAnimationSpeed, playerSpeed } from "./config";
 import { Id } from "./cube";
 import { point, pointAdd, pointNormalize } from "./geom/point";
-import { isKeyPressed, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "./input";
+import { isKeyPressed, Key } from "./input";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4, man5, man6, man7, man8, man9 } from "./resources/ids";
 import { getCubeById } from "./stage";
 import { time } from "./time";
@@ -23,7 +23,7 @@ export const player: Player = {
 export const initPlayer = () => { }
 
 export const updatePlayer = () => {
-    const delta = time.delta;
+    const delta = time.deltaS;
 
     const cube = getCubeById(Id.Player);
 
@@ -32,18 +32,18 @@ export const updatePlayer = () => {
 
         const direction = point();
 
-        if (isKeyPressed(KEY_LEFT)) {
+        if (isKeyPressed(Key.Left)) {
             animation = animationLeft;
             direction.x = -1;
-        } else if (isKeyPressed(KEY_RIGHT)) {
+        } else if (isKeyPressed(Key.Right)) {
             animation = animationRight;
             direction.x = 1;
         }
 
-        if (isKeyPressed(KEY_UP)) {
+        if (isKeyPressed(Key.Up)) {
             animation = animationUp;
             direction.y = -1;
-        } else if (isKeyPressed(KEY_DOWN)) {
+        } else if (isKeyPressed(Key.Down)) {
             animation = animationDown;
             direction.y = 1;
         }

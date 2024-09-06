@@ -6,7 +6,27 @@ import base from './rollup.config';
 const properties = [
 	'transformation',
 	'position',
-	'frame'
+	'frame',
+	'box',
+	'info',
+	'body',
+	'minX',
+	'minY',
+	'maxX',
+	'maxY',
+	'open',
+	'isStatic',
+	'front',
+	'top',
+	'nowMS',
+	'deltaS',
+	'targetObject',
+	'property',
+	'srcValue',
+	'dstValue',
+	'timeS',
+	'duration',
+	'callback',
 ];
 
 const regex = new RegExp(properties.join('|'));

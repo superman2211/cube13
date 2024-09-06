@@ -16,7 +16,7 @@ const doorOpenAnimation = [door0, door1, door2, door3];
 
 export const updateDoor = () => {
     if (door.open && door.frame < doorOpenAnimation.length) {
-        door.frame += time.delta * doorAnimationSpeed;
+        door.frame += time.deltaS * doorAnimationSpeed;
 
         const frame = mathFloor(door.frame);
 

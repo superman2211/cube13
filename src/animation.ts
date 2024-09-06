@@ -1,47 +1,46 @@
-import { Cube } from "./cube";
 import { time } from "./time";
 
 interface Animation {
-    o: any,
-    p: string,
-    s: number,
-    d: number,
-    t: number,
-    f: number,
-    c?: () => void,
+    targetObject: any,
+    property: string,
+    srcValue: number,
+    dstValue: number,
+    timeS: number,
+    duration: number,
+    callback?: () => void,
 }
 
 let animations: Animation[] = [];
 
-export const animate = (o: any, p: string, d: number, f: number, c?: () => void) => {
-    const s = o[p];
+export const animate = (targetObject: any, property: string, dstValue: number, duration: number, callback?: () => void) => {
+    const srcValue = targetObject[property];
 
     animations.push({
-        o,
-        p,
-        d,
-        s,
-        t: 0,
-        f,
-        c
+        targetObject,
+        property,
+        srcValue,
+        dstValue,
+        timeS: 0,
+        duration,
+        callback
     });
 }
 
 export const updateAnimations = () => {
-    const delta = time.delta;
+    const delta = time.deltaS;
 
     animations = animations.filter((animation) => {
-        animation.t += delta;
-        const { o, p, s, d, f, c } = animation;
-        if (animation.t > f) {
-            o[p] = d;
-            if (c) {
-                c();
+        animation.timeS += delta;
+        const { targetObject, property, srcValue, dstValue, duration, callback } = animation;
+        if (animation.timeS > duration) {
+            targetObject[property] = dstValue;
+            if (callback) {
+                callback();
             }
             return false;
         } else {
-            let value = (animation.t / f);
-            o[p] = s + (d - s) * value;
+            let value = (animation.timeS / duration);
+            targetObject[property] = srcValue + (dstValue - srcValue) * value;
             return true;
         }
     });

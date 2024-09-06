@@ -8,7 +8,7 @@ import { mathAbs, mathFloor, mathRound } from "./utils/math";
 export const bodies: Cube[] = [];
 
 export interface Body {
-    static?: boolean,
+    isStatic?: boolean,
     box: Box,
 }
 
@@ -36,14 +36,14 @@ export const updatePhysics = () => {
 
                 let hasCollision = false;
 
-                if (body0.info.body!.static) {
-                    if (body1.info.body!.static) {
+                if (body0.info.body!.isStatic) {
+                    if (body1.info.body!.isStatic) {
                         // nothing
                     } else {
                         hasCollision = checkCollision(body0, body1, 0, 1);
                     }
                 } else {
-                    if (body1.info.body!.static) {
+                    if (body1.info.body!.isStatic) {
                         hasCollision = checkCollision(body0, body1, 1, 0);
                     } else {
                         hasCollision = checkCollision(body0, body1, 0.5, 0.5);
