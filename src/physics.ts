@@ -1,5 +1,6 @@
 import { cellSize } from "./config";
 import { Cube } from "./cube";
+import { DEBUG } from "./debug";
 import { Box, boxesIntersects } from "./geom/box";
 import { point, pointNormalize, vector } from "./geom/point";
 import { cubes } from "./stage"
@@ -19,6 +20,10 @@ export const getBodies = () => {
         if (cube.info.body) {
             bodies.push(cube);
         }
+    }
+
+    if (DEBUG) {
+        console.log('bodies', bodies.length);
     }
 }
 

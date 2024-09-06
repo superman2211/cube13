@@ -12,7 +12,7 @@ import { mathFloor, mathMin, mathRound } from "./utils/math";
 const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
     setWidth(world, cellSize * (cells + border * 2));
-    setHeight(world, cellSize * (cells + border * 2));
+    setHeight(world, cellSize * (cells + border * 5));
     return world;
 }
 
@@ -20,7 +20,6 @@ const sortCubes = (c0: Cube, c1: Cube): number => c0.y + c0.z - c1.y - c1.z;
 
 export const world: CanvasRenderingContext2D = createWorld();
 export const screen: CanvasRenderingContext2D = getContext(domDocument.getElementById('c') as HTMLCanvasElement);
-
 
 export const render = () => {
     const worldWidth = getWidth(world);
@@ -30,16 +29,17 @@ export const render = () => {
     world.clearRect(0, 0, worldWidth, worldHeight);
 
     const offsetX = 0;
-    const offsetY = cellSize * 2;
+    const offsetY = cellSize * 4;
 
     cubes.sort(sortCubes);
 
     for (let cube of cubes) {
         const x = mathFloor(cube.x + offsetX);
         const y = mathFloor(cube.y + offsetY - cube.z);
-        const type = cube.info;
-        drawImage(world, x, y, type.front);
-        drawImage(world, x, y - cellSize, type.top);
+        const info = cube.info;
+        const height = info.cubeHeight || cellSize;
+        drawImage(world, x, y, info.front);
+        drawImage(world, x, y - height, info.top);
     }
 
     const windowWidth = innerWidth * dpr;

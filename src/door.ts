@@ -1,6 +1,7 @@
 import { doorAnimationSpeed } from "./config";
 import { Id } from "./cube";
-import { door0, door1, door2, door3 } from "./resources/ids";
+import { getBodies } from "./physics";
+import { door0, door1, door2, door3, wall10 } from "./resources/ids";
 import { getCubeById } from "./stage";
 import { time } from "./time";
 import { mathFloor, mathMax, mathMin } from "./utils/math";
@@ -26,6 +27,14 @@ export const updateDoor = () => {
                 cube.info.front!.id = doorOpenAnimation[frame];
             } else {
                 cube.info.front = undefined;
+
+                cube.info.body = undefined;
+                getBodies();
+
+                const exit = getCubeById(Id.DoorExit);
+                if (exit) {
+                    exit.info.front!.id = wall10;
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ export interface CubeInfo {
     front?: Image,
     top?: Image,
     id?: Id,
+    cubeHeight?: number, 
 }
 
 export const enum Id {
@@ -20,4 +21,5 @@ export const enum Id {
     SunFloor,
     SunCube,
     Door,
+    DoorExit,
 }
