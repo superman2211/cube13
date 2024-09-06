@@ -1,15 +1,15 @@
 import { animate } from "./animation";
-import { cellSize, cellSizeHalf } from "./config";
-import { Cube, Id } from "./cube";
+import { cellSizeHalf } from "./config";
+import { Id } from "./cube";
 import { door } from "./door";
 import { pointCopy, pointDistance } from "./geom/point";
 import { updateBodies } from "./physics";
-import { floor3, floor4 } from "./resources/ids";
-import { cubes, getCubeById, removeCube } from "./stage";
+import { floor4 } from "./resources/ids";
+import { getCube, removeCube } from "./stage";
 
 export const checkCubePlace = () => {
-    const cube = getCubeById(Id.SunCube);
-    const floor = getCubeById(Id.SunFloor);
+    const cube = getCube(Id.SunCube);
+    const floor = getCube(Id.SunFloor);
 
     if (cube && cube.info.body && floor) {
         if (pointDistance(cube, floor) < 2.0) {

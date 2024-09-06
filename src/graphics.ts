@@ -67,7 +67,7 @@ export const render = () => {
         const frameTime = (now() - time.nowMS).toFixed();
         const fps = (1 / time.deltaS).toFixed();
 
-        const mode = DEBUG ? 'DEBUG' : 'RELEASE';
+        const mode = DEBUG ? 'DEBUG' : '';
 
         screen.fillStyle = 'white';
         screen.font = 'arial 20px';

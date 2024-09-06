@@ -3,7 +3,7 @@ import { Id } from "./cube";
 import { point, pointAdd, pointNormalize } from "./geom/point";
 import { isKeyPressed, Key } from "./input";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4, man5, man6, man7, man8, man9 } from "./resources/ids";
-import { getCubeById } from "./stage";
+import { getCube } from "./stage";
 import { time } from "./time";
 import { mathFloor } from "./utils/math";
 
@@ -20,12 +20,10 @@ export const player: Player = {
     frame: 0,
 }
 
-export const initPlayer = () => { }
-
 export const updatePlayer = () => {
     const delta = time.deltaS;
 
-    const cube = getCubeById(Id.Player);
+    const cube = getCube(Id.Player);
 
     if (cube) {
         let animation = undefined;

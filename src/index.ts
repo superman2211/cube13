@@ -1,16 +1,15 @@
 import { updateAnimations } from "./animation";
 import { checkCubePlace } from "./cube-place";
 import { updateDoor } from "./door";
+import { start } from "./game";
 import { render } from "./graphics";
 import { initInput } from "./input";
-import { buildLevel } from "./levels/builder";
-import { level1 } from "./levels/level1";
-import { updateBodies, updatePhysics } from "./physics";
-import { initPlayer, updatePlayer } from "./player";
+import { updatePhysics } from "./physics";
+import { updatePlayer } from "./player";
 import { generateImages } from "./resources/images";
 import { loadResources } from "./resources/loader";
-import { cubes } from "./stage";
 import { calculateTime } from "./time";
+import { checkWin } from "./win";
 
 function update() {
 	calculateTime();
@@ -19,20 +18,16 @@ function update() {
 	checkCubePlace();
 	updateDoor();
 	updateAnimations();
+	checkWin();
 	render();
 	requestAnimationFrame(update);
-}
-
-function initStage() {
-	buildLevel(level1);
 }
 
 async function main() {
 	await loadResources();
 	generateImages();
 	initInput();
-	initStage();
-	initPlayer();
+	start();
 	update();
 }
 
