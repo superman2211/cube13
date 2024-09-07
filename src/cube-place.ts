@@ -4,7 +4,8 @@ import { Id } from "./cube";
 import { door } from "./door";
 import { pointCopy, pointDistance } from "./geom/point";
 import { updateBodies } from "./physics";
-import { floor4 } from "./resources/ids";
+import { floor4, sound_cube_place } from "./resources/ids";
+import { playSound } from "./resources/sounds";
 import { getCube, removeCube } from "./stage";
 
 export const checkCubePlace = () => {
@@ -22,6 +23,8 @@ export const checkCubePlace = () => {
                 floor.info.top!.id = floor4;
                 removeCube(cube);
                 door.open = true;
+
+                playSound(sound_cube_place, 1.0);
             });
         }
     }

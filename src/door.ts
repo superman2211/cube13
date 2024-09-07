@@ -1,7 +1,8 @@
 import { doorAnimationSpeed } from "./config";
 import { Id } from "./cube";
 import { updateBodies } from "./physics";
-import { door0, door1, door2, door3, wall10 } from "./resources/ids";
+import { door0, door1, door2, door3, sound_door_open, wall10 } from "./resources/ids";
+import { playSound } from "./resources/sounds";
 import { getCube } from "./stage";
 import { time } from "./time";
 import { mathFloor, mathMax, mathMin } from "./utils/math";
@@ -34,6 +35,8 @@ export const updateDoor = () => {
                 const exit = getCube(Id.DoorExit);
                 if (exit) {
                     exit.info.front!.id = wall10;
+
+                    playSound(sound_door_open, 1.0);
                 }
             }
         }

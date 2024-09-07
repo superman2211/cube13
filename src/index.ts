@@ -9,7 +9,8 @@ import { updatePlayer } from "./player";
 import { generateImages } from "./resources/images";
 import { loadResources } from "./resources/loader";
 import { calculateTime } from "./time";
-import { checkWin } from "./win";
+import { checkNextLevel } from "./next-level";
+import { checkGameTimer } from "./timer";
 
 function update() {
 	calculateTime();
@@ -18,7 +19,8 @@ function update() {
 	checkCubePlace();
 	updateDoor();
 	updateAnimations();
-	checkWin();
+	checkNextLevel();
+	checkGameTimer();
 	render();
 	requestAnimationFrame(update);
 }
