@@ -9,8 +9,7 @@ import { Image } from "./image";
 import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
 import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
 import { isKeyPressed, Key } from "./input";
-import { font0 } from "./resources/ids";
-import { font } from "./font";
+import { getIdByCharCode } from "./font";
 
 const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
@@ -49,9 +48,23 @@ export const render = () => {
     }
 
     resetTransform(world);
+    const text = 'NUMEBS 01234567890';
+    for (let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        const id = getIdByCharCode(code);
+        if (id !== undefined) {
+            const char = getColoredImage(id, 0xffffff);
+            drawImage(world, char, 1 + 8 * i, 1);
+        }
+    }
+    const font = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     for (let i = 0; i < font.length; i++) {
-        const char = getColoredImage(font[i], 0xffffff);
-        drawImage(world, char, 2 + 8 * i, 2);
+        const code = font.charCodeAt(i);
+        const id = getIdByCharCode(code);
+        if (id !== undefined) {
+            const char = getColoredImage(id, 0xff9999);
+            drawImage(world, char, 1 + 8 * i, 1 + 8);
+        }
     }
 
     const windowWidth = innerWidth * dpr;
@@ -84,7 +97,7 @@ export const render = () => {
 
         screen.fillStyle = 'white';
         screen.font = 'arial 20px';
-        screen.fillText(`FPS ${fps}   TIME ${frameTime} ms   ${mode}`, 0, 20);
+        screen.fillText(`FPS ${fps}   TIME ${frameTime} ms   ${mode}`, 0, 27);
     }
 }
 
@@ -101,20 +114,6 @@ const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, 
 }
 
 const updateCubesShading = () => {
-    if (DEBUG) {
-        let offset = 0;
-        if (isKeyPressed(Key.S)) {
-            offset = -1;
-        }
-        if (isKeyPressed(Key.W)) {
-            offset = +1;
-        }
-
-        for (let cube of cubes) {
-            cube.z += offset;
-        }
-    }
-
     const start = -cellSize * 3;
     const end = -cellSize * 0;
     const range = end - start;
