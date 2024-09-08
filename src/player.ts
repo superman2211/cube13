@@ -31,18 +31,18 @@ export const updatePlayer = () => {
 
         const direction = point();
 
-        if (isKeyPressed(Key.Left)) {
+        if (isKeyPressed(Key.Left) || isKeyPressed(Key.A)) {
             animation = animationLeft;
             direction.x = -1;
-        } else if (isKeyPressed(Key.Right)) {
+        } else if (isKeyPressed(Key.Right) || isKeyPressed(Key.D)) {
             animation = animationRight;
             direction.x = 1;
         }
 
-        if (isKeyPressed(Key.Up)) {
+        if (isKeyPressed(Key.Up) || isKeyPressed(Key.W)) {
             animation = animationUp;
             direction.y = -1;
-        } else if (isKeyPressed(Key.Down)) {
+        } else if (isKeyPressed(Key.Down) || isKeyPressed(Key.S)) {
             animation = animationDown;
             direction.y = 1;
         }
