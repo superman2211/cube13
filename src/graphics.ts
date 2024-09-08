@@ -10,6 +10,7 @@ import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, getH
 import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
 import { isKeyPressed, Key } from "./input";
 import { getIdByCharCode } from "./font";
+import { game } from "./game";
 
 const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
@@ -48,7 +49,7 @@ export const render = () => {
     }
 
     resetTransform(world);
-    const text = 'NUMEBS 01234567890';
+    const text = '01234567890 LEVEL ' + game.level + ' TIME ' + mathFloor(game.timeS);
     for (let i = 0; i < text.length; i++) {
         const code = text.charCodeAt(i);
         const id = getIdByCharCode(code);
