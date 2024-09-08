@@ -7,6 +7,8 @@ export const enum Key {
     Down = 40,
     Left = 37,
     Right = 39,
+    W = 87,
+    S = 83,
 }
 
 export const isKeyPressed = (code: Key): boolean | undefined => keys[code];

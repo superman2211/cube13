@@ -2,5 +2,6 @@ import { Transform } from "./geom/transform";
 
 export interface Image {
     id: number,
-    transformation?: Transform
+    transformation?: Transform,
+    brigthness?: number,
 }

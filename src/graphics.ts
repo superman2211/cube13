@@ -2,12 +2,13 @@ import { border, cells, cellSize } from "./config";
 import { Cube } from "./cube";
 import { DEBUG, FPS } from "./debug";
 import { identity } from "./geom/transform";
-import { images } from "./resources/images";
+import { getImage, images } from "./resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "./image";
-import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, setHeight, setWidth } from "./utils/browser";
-import { mathFloor, mathMin, mathRound } from "./utils/math";
+import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
+import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
+import { isKeyPressed, Key } from "./input";
 
 const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
@@ -26,12 +27,15 @@ export const render = () => {
     const worldHeight = getHeight(world);
     const worldCanvas = getCanvas(world);
 
-    world.clearRect(0, 0, worldWidth, worldHeight);
+    resetTransform(world);
+    world.fillRect(0, 0, worldWidth, worldHeight);
 
     const offsetX = 0;
     const offsetY = cellSize * 4;
 
     cubes.sort(sortCubes);
+
+    updateCubesShading();
 
     for (let cube of cubes) {
         const x = mathFloor(cube.x + offsetX);
@@ -58,6 +62,7 @@ export const render = () => {
 
     const scale = mathMin(screenWidth / worldWidth, screenHeight / worldHeight);
 
+    resetTransform(screen);
     screen.clearRect(0, 0, screenWidth, screenHeight);
     screen.setTransform(scale, 0, 0, scale, 0, 0);
     screen.imageSmoothingEnabled = false;
@@ -77,12 +82,42 @@ export const render = () => {
 
 const drawImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
     if (image) {
-        const canvas = images[image.id];
+        const canvas = getImage(image.id, image.brigthness);
         const transform = image.transformation || identity;
         context.setTransform(
             transform.a, transform.b, transform.c, transform.d,
             transform.e + x, transform.f + y
         );
         context.drawImage(canvas, 0, 0);
+    }
+}
+
+const updateCubesShading = () => {
+    if (DEBUG) {
+        let offset = 0;
+        if (isKeyPressed(Key.S)) {
+            offset = -1;
+        }
+        if (isKeyPressed(Key.W)) {
+            offset = +1;
+        }
+
+        for (let cube of cubes) {
+            cube.z += offset;
+        }
+    }
+
+    const start = -cellSize * 3;
+    const end = -cellSize * 0;
+    const range = end - start;
+    for (let cube of cubes) {
+        const brigthness = limit(0, 1, (cube.z - start) / range);
+        const info = cube.info;
+        if (info.front) {
+            info.front.brigthness = brigthness;
+        }
+        if (info.top) {
+            info.top.brigthness = brigthness;
+        }
     }
 }

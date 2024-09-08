@@ -12,6 +12,7 @@ export const getWidth = (context: CanvasRenderingContext2D) => getCanvas(context
 export const getHeight = (context: CanvasRenderingContext2D) => getCanvas(context).height;
 export const setWidth = (context: CanvasRenderingContext2D, width: number) => getCanvas(context).width = width;
 export const setHeight = (context: CanvasRenderingContext2D, height: number) => getCanvas(context).height = height;
+export const resetTransform = (context: CanvasRenderingContext2D) => context.resetTransform();
 
 export const now = () => performance.now();
 

@@ -1,10 +1,7 @@
 import { cellSize } from "../config";
 import { CubeInfo, Id } from "../cube";
 import { DEBUG } from "../debug";
-import { resetDoor } from "../door";
-import { updateBodies } from "../physics";
 import { cubes } from "../stage";
-import { resetGameTimer } from "../timer";
 import { cloneObject } from "../utils/browser";
 import { infos } from "./infos";
 import { level1 } from "./level1";
@@ -59,10 +56,6 @@ export const buildLevel = (levelIndex: number) => {
 
         z += cellSize;
     }
-
-    updateBodies();
-    resetDoor();
-    resetGameTimer();
 }
 
 // test levels

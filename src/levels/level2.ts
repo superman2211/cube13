@@ -2,7 +2,7 @@ import { topLayer } from "./top";
 
 export const level2 = [
     [
-        '       S       ',
+        ' WWWWWWSWWWWWW ',
         ' FFFFFFFFFFFFF ',
         ' FFPFFFFFFFFFF ',
         ' FFFFFFGGGFFFF ',
@@ -15,7 +15,7 @@ export const level2 = [
         ' FFFGFFFFFFFFF ',
         ' FFFGFFFPFFFFF ',
         ' FFFGFFFFFFFFF ',
-        ' FFFGFFFFFFPFF ',
+        'WFFFGFFFFFFPFFW',
     ],
     [
         ' YYYYYYdYYYYYY ',

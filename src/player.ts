@@ -1,5 +1,6 @@
 import { playerAnimationSpeed, playerSpeed } from "./config";
 import { Id } from "./cube";
+import { game, GameState } from "./game";
 import { point, pointAdd, pointNormalize } from "./geom/point";
 import { isKeyPressed, Key } from "./input";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4, man5, man6, man7, man8, man9 } from "./resources/ids";
