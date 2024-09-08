@@ -1,3 +1,4 @@
+import { DEBUG } from "./debug";
 import { resetDoor } from "./door";
 import { fallCubes } from "./fall-cubes";
 import { buildLevel, levels } from "./levels/builder"
@@ -51,7 +52,9 @@ export const checkGameTimer = () => {
     const newTime = mathFloor(game.time);
 
     if (oldTime != newTime && newTime <= 13) {
-        console.log("timer ", newTime);
+        if (DEBUG) {
+            console.log("timer ", newTime);
+        }
 
         const start = 5;
         const total = 13;
@@ -62,7 +65,10 @@ export const checkGameTimer = () => {
 
     if (game.time >= 13) {
         game.state = GameState.GameOver;
-        console.log("game over");
+
+        if (DEBUG) {
+            console.log("game over");
+        }
 
         fallCubes();
     }

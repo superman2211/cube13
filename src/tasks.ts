@@ -1,4 +1,5 @@
 import { cellSize } from "./config";
+import { DEBUG } from "./debug";
 import { brightnessQuality, getImage } from "./resources/images";
 import { cubes } from "./stage";
 
@@ -34,7 +35,9 @@ export const prepareImagesTasks = () => {
         }
     }
 
-    console.log(`prepareImagesTasks ${tasks.length}`);
+    if (DEBUG) {
+        console.log(`prepareImagesTasks ${tasks.length}`);
+    }
 }
 
 export const runNextTask = () => {
@@ -42,6 +45,8 @@ export const runNextTask = () => {
     if (task) {
         task.run();
 
-        console.log(`tasks ${tasks.length}`);
+        if (DEBUG) {
+            console.log(`tasks ${tasks.length}`);
+        }
     }
 }
