@@ -12,10 +12,10 @@ import { limit, mathFloor, mathMin } from "./utils/math";
 export interface Game {
     level: number,
     state: GameState,
-    time: number,
+    timeS: number,
 }
 
-export enum GameState {
+export const enum GameState {
     MainMenu,
     Game,
     NextLevel,
@@ -25,7 +25,7 @@ export enum GameState {
 export const game: Game = {
     level: 0,
     state: GameState.Game,
-    time: 0,
+    timeS: 0,
 }
 
 export const start = () => {
@@ -33,7 +33,7 @@ export const start = () => {
     updateBodies();
     resetDoor();
     prepareImagesTasks();
-    game.time = 0;
+    game.timeS = 0;
 }
 
 export const nextLevel = () => {
@@ -45,11 +45,11 @@ export const nextLevel = () => {
 export const checkGameTimer = () => {
     const delta = time.deltaS;
 
-    const oldTime = mathFloor(game.time);
+    const oldTime = mathFloor(game.timeS);
 
-    game.time += delta;
+    game.timeS += delta;
 
-    const newTime = mathFloor(game.time);
+    const newTime = mathFloor(game.timeS);
 
     if (oldTime != newTime && newTime <= 13) {
         if (DEBUG) {
@@ -63,7 +63,7 @@ export const checkGameTimer = () => {
         playSound(sound_timer, volume);
     }
 
-    if (game.time >= 13) {
+    if (game.timeS >= 13) {
         game.state = GameState.GameOver;
 
         if (DEBUG) {
