@@ -33,5 +33,5 @@ export const fallCubes = () => {
         }
     }
 
-    playSound(sound_explosion, 1.0);
+    playSound(sound_explosion);
 }

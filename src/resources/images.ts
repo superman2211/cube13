@@ -18,7 +18,7 @@ export const getImage = (id: number, brightness?: number): HTMLCanvasElement => 
             imageCache = cache[id];
         }
 
-        const brightnessId = mathFloor(brightness * 0xff);
+        const brightnessId = mathFloor(brightness * 32);
 
         let target = imageCache[brightnessId];
 

@@ -3,7 +3,9 @@ import { audioContext, createAudioBuffer } from "./sfxr";
 export const soundsBuffers: ArrayBuffer[] = [];
 const sounds: AudioBuffer[] = [];
 
-export function playSound(id: number, volume: number) {
+const masterVolume = 0.5;
+
+export function playSound(id: number, volume: number = 1.0) {
     if (!sounds[id]) {
         sounds[id] = createAudioBuffer(new Float32Array(soundsBuffers[id]));
     }
@@ -12,7 +14,7 @@ export function playSound(id: number, volume: number) {
     source.buffer = sounds[id];
 
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = volume;
+    gainNode.gain.value = masterVolume * volume;
     source.connect(gainNode)
     gainNode.connect(audioContext.destination)
 

@@ -36,7 +36,7 @@ export const updateDoor = () => {
                 if (exit) {
                     exit.info.front!.id = wall10;
 
-                    playSound(sound_door_open, 1.0);
+                    playSound(sound_door_open);
                 }
             }
         }

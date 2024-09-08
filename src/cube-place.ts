@@ -19,12 +19,12 @@ export const checkCubePlace = () => {
             cube.info.body = undefined;
             updateBodies();
 
-            animate(cube, 'z', cellSizeHalf, 0, 0.5, bounceOut, () => {
+            animate(cube, 'z', cellSizeHalf, 0, 0.4, bounceOut, () => {
                 floor.info.top!.id = floor4;
                 removeCube(cube);
                 door.open = true;
 
-                playSound(sound_cube_place, 1.0);
+                playSound(sound_cube_place);
             });
         }
     }

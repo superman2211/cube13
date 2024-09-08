@@ -5,7 +5,7 @@ import { updateBodies } from "./physics";
 import { sound_timer } from "./resources/ids";
 import { playSound } from "./resources/sounds";
 import { time } from "./time";
-import { mathFloor, mathMin } from "./utils/math";
+import { limit, mathFloor, mathMin } from "./utils/math";
 
 export interface Game {
     level: number,
@@ -48,16 +48,14 @@ export const checkGameTimer = () => {
 
     const newTime = mathFloor(game.time);
 
-    if (oldTime != newTime) {
+    if (oldTime != newTime && newTime <= 13) {
         console.log("timer ", newTime);
 
         const start = 5;
         const total = 13;
-        if (newTime >= start && newTime <= total) {
-            const volume = 0.5 * mathMin((newTime - start) / (total - start), 1);
-            console.log('volume', volume);
-            playSound(sound_timer, volume);
-        }
+
+        const volume = 0.1 + 0.5 * limit(0, 1, (newTime - start) / (total - start));
+        playSound(sound_timer, volume);
     }
 
     if (game.time >= 13) {

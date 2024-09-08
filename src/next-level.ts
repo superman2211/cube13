@@ -16,7 +16,7 @@ export const checkNextLevel = () => {
 
             nextLevel();
 
-            playSound(sound_next_level, 1.0);
+            playSound(sound_next_level);
         }
     }
 }
