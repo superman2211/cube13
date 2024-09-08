@@ -9,6 +9,7 @@ import { updatePlayer } from "./player";
 import { loadResources } from "./resources/loader";
 import { calculateTime } from "./time";
 import { checkNextLevel } from "./next-level";
+import { runNextTask } from "./tasks";
 
 function update() {
 	calculateTime();
@@ -21,6 +22,8 @@ function update() {
 		checkNextLevel();
 		checkGameTimer();
 	}
+
+	runNextTask();
 
 	updateAnimations();
 

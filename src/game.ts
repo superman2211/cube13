@@ -4,6 +4,7 @@ import { buildLevel, levels } from "./levels/builder"
 import { updateBodies } from "./physics";
 import { sound_timer } from "./resources/ids";
 import { playSound } from "./resources/sounds";
+import { prepareImagesTasks } from "./tasks";
 import { time } from "./time";
 import { limit, mathFloor, mathMin } from "./utils/math";
 
@@ -30,6 +31,7 @@ export const start = () => {
     buildLevel(game.level);
     updateBodies();
     resetDoor();
+    prepareImagesTasks();
     game.time = 0;
 }
 
@@ -65,3 +67,5 @@ export const checkGameTimer = () => {
         fallCubes();
     }
 }
+
+

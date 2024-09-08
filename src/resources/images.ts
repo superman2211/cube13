@@ -7,6 +7,8 @@ export const images: HTMLCanvasElement[] = [];
 
 const cache: { [key: string]: { [key: string]: HTMLCanvasElement } } = {};
 
+export const brightnessQuality = 32;
+
 export const getImage = (id: number, brightness?: number): HTMLCanvasElement => {
     if (brightness === undefined || brightness === 1) {
         return images[id];
@@ -18,7 +20,7 @@ export const getImage = (id: number, brightness?: number): HTMLCanvasElement => 
             imageCache = cache[id];
         }
 
-        const brightnessId = mathFloor(brightness * 32);
+        const brightnessId = mathFloor(brightness * brightnessQuality);
 
         let target = imageCache[brightnessId];
 
