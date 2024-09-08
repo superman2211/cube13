@@ -17,6 +17,19 @@ let animations: Animation[] = [];
 export const linear = (value: number): number => value;
 export const quadraticIn = (value: number): number => (value * value);
 export const quadraticOut = (value: number): number => (value * (2 - value));
+export const bounceIn = (value: number): number => (1 - bounceOut(1 - value));
+export const bounceOut = (value: number): number => {
+    if (value < 1 / 2.75) {
+        return 7.5625 * value * value;
+    }
+    if (value < 2 / 2.75) {
+        return 7.5625 * (value -= 1.5 / 2.75) * value + 0.75;
+    }
+    if (value < 2.5 / 2.75) {
+        return 7.5625 * (value -= 2.25 / 2.75) * value + 0.9375;
+    }
+    return 7.5625 * (value -= 2.625 / 2.75) * value + 0.984375;
+};
 
 export const animate = (
     targetObject: any,

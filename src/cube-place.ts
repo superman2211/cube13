@@ -1,4 +1,4 @@
-import { animate, linear } from "./animation";
+import { animate, bounceIn, bounceOut, linear } from "./animation";
 import { cellSizeHalf } from "./config";
 import { Id } from "./cube";
 import { door } from "./door";
@@ -19,7 +19,7 @@ export const checkCubePlace = () => {
             cube.info.body = undefined;
             updateBodies();
 
-            animate(cube, 'z', cellSizeHalf, 0, 0.5, linear, () => {
+            animate(cube, 'z', cellSizeHalf, 0, 0.5, bounceOut, () => {
                 floor.info.top!.id = floor4;
                 removeCube(cube);
                 door.open = true;
