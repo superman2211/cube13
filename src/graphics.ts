@@ -2,13 +2,15 @@ import { border, cells, cellSize } from "./config";
 import { Cube } from "./cube";
 import { DEBUG, FPS } from "./debug";
 import { identity } from "./geom/transform";
-import { getImage, images } from "./resources/images";
+import { getColoredImage, getImage, images } from "./resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "./image";
 import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
 import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
 import { isKeyPressed, Key } from "./input";
+import { font0 } from "./resources/ids";
+import { font } from "./font";
 
 const createWorld = (): CanvasRenderingContext2D => {
     const world = createContext();
@@ -44,6 +46,12 @@ export const render = () => {
         const height = info.cubeHeight || cellSize;
         drawImage(world, x, y, info.front);
         drawImage(world, x, y - height, info.top);
+    }
+
+    resetTransform(world);
+    for (let i = 0; i < font.length; i++) {
+        const char = getColoredImage(font[i], 0xffffff);
+        world.drawImage(char, 2 + 8 * i, 2);
     }
 
     const windowWidth = innerWidth * dpr;
