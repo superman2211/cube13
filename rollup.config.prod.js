@@ -29,6 +29,9 @@ const properties = [
 	'callback',
 	'cubeHeight',
 	'level',
+	'state',
+	'offsetS',
+	'easing',
 ];
 
 const regex = new RegExp(properties.join('|'));
