@@ -6,7 +6,7 @@ import { getColoredImage, getImage, images } from "./resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "./image";
-import { createContext, domDocument, dpr, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
+import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
 import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
 import { isKeyPressed, Key } from "./input";
 import { font0 } from "./resources/ids";
@@ -44,14 +44,14 @@ export const render = () => {
         const y = mathFloor(cube.y + offsetY - cube.z);
         const info = cube.info;
         const height = info.cubeHeight || cellSize;
-        drawImage(world, x, y, info.front);
-        drawImage(world, x, y - height, info.top);
+        drawCubeImage(world, x, y, info.front);
+        drawCubeImage(world, x, y - height, info.top);
     }
 
     resetTransform(world);
     for (let i = 0; i < font.length; i++) {
         const char = getColoredImage(font[i], 0xffffff);
-        world.drawImage(char, 2 + 8 * i, 2);
+        drawImage(world, char, 2 + 8 * i, 2);
     }
 
     const windowWidth = innerWidth * dpr;
@@ -74,7 +74,7 @@ export const render = () => {
     screen.clearRect(0, 0, screenWidth, screenHeight);
     screen.setTransform(scale, 0, 0, scale, 0, 0);
     screen.imageSmoothingEnabled = false;
-    screen.drawImage(worldCanvas, 0, 0);
+    drawImage(screen, worldCanvas, 0, 0);
 
     if (FPS) {
         const frameTime = (now() - time.nowMS).toFixed();
@@ -88,7 +88,7 @@ export const render = () => {
     }
 }
 
-const drawImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
+const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
     if (image) {
         const canvas = getImage(image.id, image.brigthness);
         const transform = image.transformation || identity;
@@ -96,7 +96,7 @@ const drawImage = (context: CanvasRenderingContext2D, x: number, y: number, imag
             transform.a, transform.b, transform.c, transform.d,
             transform.e + x, transform.f + y
         );
-        context.drawImage(canvas, 0, 0);
+        drawImage(context, canvas, 0, 0);
     }
 }
 

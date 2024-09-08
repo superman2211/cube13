@@ -1,5 +1,6 @@
 import { animate, quadraticIn, quadraticOut } from "./animation"
 import { cells, cellSize } from "./config"
+import { Cube } from "./cube";
 import { DEBUG } from "./debug";
 import { sound_explosion } from "./resources/ids";
 import { playSound } from "./resources/sounds";
@@ -7,7 +8,6 @@ import { cubes } from "./stage"
 import { mathFloor, randomRange } from "./utils/math";
 
 export const fallCubes = () => {
-
     const offsets = [];
 
     for (let x = 1; x < 14; x++) {
@@ -19,11 +19,7 @@ export const fallCubes = () => {
     const duration = 0.5;
 
     for (const cube of cubes) {
-        if (cube.x > 0 &&
-            cube.x < cellSize * 14 &&
-            cube.y > 0 &&
-            cube.y < cellSize * 14
-        ) {
+        if (isFloorCube(cube)) {
             const x = mathFloor(cube.x / cellSize);
             const y = mathFloor(cube.y / cellSize);
 
@@ -35,3 +31,5 @@ export const fallCubes = () => {
 
     playSound(sound_explosion);
 }
+
+export const isFloorCube = (cube: Cube): boolean => cube.x > 0 && cube.x < cellSize * 14 && cube.y > 0 && cube.y < cellSize * 14;
