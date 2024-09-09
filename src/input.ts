@@ -28,14 +28,10 @@ export const initInput = () => {
         // }
 
         keys[e.keyCode] = true;
-
-        initSound();
     }
 
     domDocument.onkeyup = (e) => {
         delete keys[e.keyCode];
-
-        initSound();
     }
 
     const screenCanvas = getCanvas(screen);
@@ -47,8 +43,6 @@ export const initInput = () => {
                 const { clientX, clientY, identifier } = changedTouches[i];
                 handler(identifier, point(clientX * dpr, clientY * dpr));
             }
-
-            initSound();
         };
 
         const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
@@ -60,8 +54,5 @@ export const initInput = () => {
         screenCanvas.ontouchcancel = removeTouch;
     }
 
-    screenCanvas.onmousedown = () => initSound();
-    screenCanvas.onmousemove = () => initSound();
-    screenCanvas.onmouseup = () => initSound();
-    screenCanvas.onmouseleave = () => initSound();
+    screenCanvas.onclick = () => initSound();
 }
