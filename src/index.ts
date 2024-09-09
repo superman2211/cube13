@@ -10,11 +10,15 @@ import { loadResources } from "./resources/loader";
 import { calculateTime } from "./time";
 import { checkNextLevel } from "./next-level";
 import { runNextTask } from "./tasks";
+import { updateJoystick } from "./joystick";
+import { updateScreen } from "./screen";
 
 function update() {
 	calculateTime();
+	updateScreen();
+	updateJoystick();
 
-	if (game.state == GameState.Game) {	
+	if (game.state == GameState.Game) {
 		updatePlayer();
 		updatePhysics();
 		checkCubePlace();
@@ -24,11 +28,8 @@ function update() {
 	}
 
 	runNextTask();
-
 	updateAnimations();
-
 	render();
-
 	requestAnimationFrame(update);
 }
 

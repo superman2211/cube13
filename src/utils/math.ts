@@ -7,6 +7,8 @@ export const mathMax = math.max;
 export const mathHypot = math.hypot;
 export const mathAbs = math.abs;
 export const mathRandom = math.random;
+export const mathPI = math.PI;
+export const mathPI2 = mathPI * 2;
 
 export const limit = (min: number, max: number, value: number) => mathMin(max, mathMax(min, value));
 export const lerp = (min: number, max: number, value: number) => min + value * (max - min);

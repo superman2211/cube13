@@ -1,7 +1,11 @@
 import { DEBUG } from "./debug";
-import { domDocument } from "./utils/browser";
+import { domDocument, dpr, getCanvas, hasTouch } from "./utils/browser";
+import { screen } from "./screen";
+import { point, Point } from "./geom/point";
 
-const keys: { [key: string]: boolean | undefined } = {};
+const keys: { [key: string]: boolean } = {};
+
+export const touches: { [key: string]: Point } = {};
 
 export const enum Key {
     Up = 38,
@@ -26,6 +30,28 @@ export const initInput = () => {
     }
 
     domDocument.onkeyup = (e) => {
-        keys[e.keyCode] = undefined;
+        delete keys[e.keyCode];
+    }
+
+    if (hasTouch) {
+        const forTouch = (e: TouchEvent, handler: (id: number, t: Point) => void) => {
+            const changedTouches = e.changedTouches;
+            for (let i = 0; i < changedTouches.length; i++) {
+                const { clientX, clientY, identifier } = changedTouches[i];
+                handler(identifier, point(clientX * dpr, clientY * dpr));
+            }
+        };
+
+        const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
+        const removeTouch = (e: TouchEvent) => forTouch(e, (id, t) => { delete touches[id]; });
+
+        const screenCanvas = getCanvas(screen);
+
+        screenCanvas.ontouchstart = addTouch;
+        screenCanvas.ontouchmove = addTouch;
+        screenCanvas.ontouchend = removeTouch;
+        screenCanvas.ontouchcancel = removeTouch;
+    } else {
+
     }
 }

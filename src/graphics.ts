@@ -1,4 +1,4 @@
-import { border, cells, cellSize } from "./config";
+import { cells, cellSize, joystickBaseRadius, joystickStickRadius } from "./config";
 import { Cube } from "./cube";
 import { DEBUG, FPS } from "./debug";
 import { identity } from "./geom/transform";
@@ -6,33 +6,32 @@ import { getColoredImage, getImage, images } from "./resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "./image";
-import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, now, resetTransform, setHeight, setWidth } from "./utils/browser";
-import { limit, mathFloor, mathMin, mathRound } from "./utils/math";
-import { isKeyPressed, Key } from "./input";
+import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "./utils/browser";
+import { limit, mathFloor, mathMin, mathPI2 } from "./utils/math";
 import { getIdByCharCode } from "./font";
 import { game } from "./game";
+import { joystick } from "./joystick";
+import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
 
-const createWorld = (): CanvasRenderingContext2D => {
-    const world = createContext();
-    setWidth(world, cellSize * (cells + border * 2));
-    setHeight(world, cellSize * (cells + border * 5));
-    return world;
-}
+export const world: CanvasRenderingContext2D = createContext();
 
 const sortCubes = (c0: Cube, c1: Cube): number => c0.y + c0.z - c1.y - c1.z;
 
-export const world: CanvasRenderingContext2D = createWorld();
-export const screen: CanvasRenderingContext2D = getContext(domDocument.getElementById('c') as HTMLCanvasElement);
-
 export const render = () => {
-    const worldWidth = getWidth(world);
-    const worldHeight = getHeight(world);
+    setWidth(screen, windowWidth);
+    setHeight(screen, windowHeight);
+
+    const worldWidth = mathFloor(windowWidth / gameScale);
+    const worldHeight = mathFloor(windowHeight / gameScale);
     const worldCanvas = getCanvas(world);
 
-    resetTransform(world);
-    world.fillRect(0, 0, worldWidth, worldHeight);
+    setWidth(world, worldWidth);
+    setHeight(world, worldHeight);
 
-    const offsetX = 0;
+    resetTransform(world);
+    world.clearRect(0, 0, worldWidth, worldHeight);
+
+    const offsetX = mathFloor((worldWidth - stageWidth) / 2);
     const offsetY = cellSize * 4;
 
     cubes.sort(sortCubes);
@@ -55,7 +54,7 @@ export const render = () => {
         const id = getIdByCharCode(code);
         if (id !== undefined) {
             const char = getColoredImage(id, 0xffffff);
-            drawImage(world, char, 1 + 8 * i, 1);
+            drawImage(world, char, 1 + 8 * i + offsetX, 1);
         }
     }
     const font = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -64,29 +63,18 @@ export const render = () => {
         const id = getIdByCharCode(code);
         if (id !== undefined) {
             const char = getColoredImage(id, 0xff9999);
-            drawImage(world, char, 1 + 8 * i, 1 + 8);
+            drawImage(world, char, 1 + 8 * i + offsetX, 1 + 8);
         }
     }
 
-    const windowWidth = innerWidth * dpr;
-    const windowHeight = innerHeight * dpr;
-
-    if (getWidth(screen) != windowWidth) {
-        setWidth(screen, windowWidth);
+    if (joystick) {
+        drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 'rgba(255,255,255,0.3)');
+        drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 'rgba(255,255,255,0.5)');
     }
-
-    if (getHeight(screen) != windowHeight) {
-        setHeight(screen, windowHeight);
-    }
-
-    const screenWidth = getWidth(screen);
-    const screenHeight = getHeight(screen);
-
-    const scale = mathMin(screenWidth / worldWidth, screenHeight / worldHeight);
 
     resetTransform(screen);
-    screen.clearRect(0, 0, screenWidth, screenHeight);
-    screen.setTransform(scale, 0, 0, scale, 0, 0);
+    screen.clearRect(0, 0, windowWidth, windowHeight);
+    screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
     screen.imageSmoothingEnabled = false;
     drawImage(screen, worldCanvas, 0, 0);
 
@@ -100,6 +88,21 @@ export const render = () => {
         screen.font = 'arial 20px';
         screen.fillText(`FPS ${fps}   TIME ${frameTime} ms   ${mode}`, 0, 27);
     }
+}
+
+const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) => {
+    resetTransform(world);
+
+    world.beginPath();
+    world.arc(
+        mathFloor(x),
+        mathFloor(y),
+        mathFloor(radius),
+        0, mathPI2, false
+    );
+    world.lineWidth = 2;
+    world.strokeStyle = color;
+    world.stroke();
 }
 
 const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
