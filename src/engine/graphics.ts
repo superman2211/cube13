@@ -6,10 +6,10 @@ import { getColoredImage, getImage, images } from "../resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "../resources/image";
-import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "../utils/browser";
+import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, hasTouch, now, resetTransform, setHeight, setWidth } from "../utils/browser";
 import { limit, mathFloor, mathMax, mathMin, mathPI2, mathRound } from "../utils/math";
 import { getIdByCharCode } from "../resources/font";
-import { game } from "../game/game";
+import { game, GameState } from "../game/game";
 import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
 import { icon0, icon1 } from "../resources/ids";
@@ -37,6 +37,12 @@ export const render = () => {
     drawCubes(offsetX, offsetY);
     drawIndicators(offsetX, worldHeight);
     drawJoystick();
+
+    if (game.state == GameState.LevelFail) {
+        drawWindow(0x660000, 'LEVEL FAIL TRY AGAIN');
+    } else if (game.state == GameState.LevelWin) {
+        drawWindow(0x006600, `NEXT LEVEL ${game.level} OF ${levels.length}`);
+    }
 
     clear(screen);
     screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
@@ -153,3 +159,36 @@ const updateCubesShading = () => {
     }
 }
 
+function drawWindow(color: number, text: string) {
+    const width = cellSize * 14;
+    const height = cellSize * 10;
+    const x = mathFloor((getWidth(world) - width) / 2);
+    const y = mathFloor((getHeight(world) - height) / 2);
+
+    resetTransform(world);
+
+    const r = (color >> 16) & 0xff;
+    const g = (color >> 8) & 0xff;
+    const b = color & 0xff;
+
+    world.fillStyle = `rgba(${r},${g},${b},0.8)`;
+    world.fillRect(x, y, width, height);
+
+    drawText(
+        world,
+        mathFloor(x + (width - text.length * 8) / 2),
+        y + cellSize * 3,
+        text,
+        0xffffff
+    );
+
+    const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+
+    drawText(
+        world,
+        mathFloor(x + (width - continueText.length * 8) / 2),
+        y + cellSize * 6,
+        continueText,
+        0xffffff
+    );
+}

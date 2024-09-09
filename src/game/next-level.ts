@@ -1,7 +1,7 @@
 import { cellSizeHalf } from "../config";
 import { Id } from "./cube"
 import { DEBUG } from "../debug";
-import { nextLevel } from "./game";
+import { game, GameState, nextLevel } from "./game";
 import { sound_next_level } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { getCube } from "../engine/stage"
@@ -20,6 +20,8 @@ export const checkNextLevel = () => {
             nextLevel();
 
             playSound(sound_next_level);
+
+            game.state = GameState.LevelWin;
         }
     }
 }

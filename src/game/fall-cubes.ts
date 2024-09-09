@@ -7,7 +7,7 @@ import { playSound } from "../resources/sounds";
 import { cubes } from "../engine/stage"
 import { mathFloor, randomRange } from "../utils/math";
 
-export const fallCubes = () => {
+export const fallCubes = async () => {
     const offsets = [];
 
     for (let x = 1; x < 14; x++) {

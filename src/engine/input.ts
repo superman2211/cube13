@@ -8,6 +8,12 @@ const keys: { [key: string]: boolean } = {};
 
 export const touches: { [key: string]: Point } = {};
 
+export function getFirstTouch(): Point | undefined {
+    for (const t in touches) {
+        return touches[t];
+    }
+}
+
 export const enum Key {
     Up = 38,
     Down = 40,
@@ -17,6 +23,7 @@ export const enum Key {
     D = 68,
     W = 87,
     S = 83,
+    Space = 32,
 }
 
 export const isKeyPressed = (code: Key): boolean | undefined => keys[code];

@@ -8,6 +8,7 @@ import { playSound } from "../resources/sounds";
 import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
 import { limit, mathFloor, mathMin } from "../utils/math";
+import { timeout } from "../utils/browser";
 
 export interface Game {
     level: number,
@@ -19,7 +20,8 @@ export interface Game {
 export const enum GameState {
     MainMenu,
     Game,
-    NextLevel,
+    Fall,
+    LevelWin,
     LevelFail,
     GameOver,
     GameWin,
@@ -35,10 +37,9 @@ export const game: Game = {
 export const startGame = () => {
     game.level = 0;
     game.lives = 13;
-    startLevel();
 }
 
-const startLevel = () => {
+export const startLevel = () => {
     game.timeS = 0;
 
     buildLevel(game.level);
@@ -50,8 +51,6 @@ const startLevel = () => {
 export const nextLevel = () => {
     game.level++;
     game.level = game.level % levels.length;
-
-    startLevel();
 }
 
 export const checkGameTimer = () => {
@@ -72,7 +71,7 @@ export const checkGameTimer = () => {
     }
 
     if (game.timeS >= 13) {
-        game.state = GameState.LevelFail;
+        game.state = GameState.Fall;
         game.lives--;
 
         if (DEBUG) {
@@ -80,7 +79,15 @@ export const checkGameTimer = () => {
         }
 
         fallCubes();
+
+        checkGameOver();
     }
+}
+
+async function checkGameOver() {
+    await timeout(2500);
+
+    game.state = game.lives > 0 ? GameState.LevelFail : GameState.GameOver;
 }
 
 

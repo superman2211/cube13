@@ -1,7 +1,7 @@
 import { updateAnimations } from "./engine/animation";
 import { checkCubePlace } from "./game/cube-place";
 import { updateDoor } from "./game/door";
-import { checkGameTimer, game, GameState, startGame } from "./game/game";
+import { checkGameTimer, game, GameState, startGame, startLevel } from "./game/game";
 import { render } from "./engine/graphics";
 import { initInput } from "./engine/input";
 import { updatePhysics } from "./engine/physics";
@@ -12,6 +12,7 @@ import { checkNextLevel } from "./game/next-level";
 import { runNextTask } from "./engine/tasks";
 import { updateJoystick } from "./engine/joystick";
 import { updateScreen } from "./engine/screen";
+import { checkContinue as checkStartGame } from "./game/start-game";
 
 function update() {
 	calculateTime();
@@ -27,6 +28,7 @@ function update() {
 		checkGameTimer();
 	}
 
+	checkStartGame();
 	runNextTask();
 	updateAnimations();
 	render();
@@ -37,6 +39,7 @@ async function main() {
 	await loadResources();
 	initInput();
 	startGame();
+	startLevel();
 	update();
 }
 

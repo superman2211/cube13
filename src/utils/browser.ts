@@ -20,8 +20,8 @@ export const now = () => performance.now();
 
 export const cloneObject = (source: any): any => JSON.parse(JSON.stringify(source));
 
-// export async function timeout(time: number) {
-// 	return new Promise((resolve) => {
-// 		setTimeout(resolve, time);
-// 	})
-// }
+export async function timeout(time: number) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time);
+    })
+}
