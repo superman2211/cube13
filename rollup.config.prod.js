@@ -32,6 +32,9 @@ const properties = [
 	'state',
 	'offsetS',
 	'easing',
+	'stick',
+	'base',
+	'lives',
 ];
 
 const regex = new RegExp(properties.join('|'));
