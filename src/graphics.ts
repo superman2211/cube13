@@ -6,12 +6,14 @@ import { getColoredImage, getImage, images } from "./resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "./image";
-import { createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "./utils/browser";
-import { limit, mathFloor, mathMin, mathPI2 } from "./utils/math";
+import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "./utils/browser";
+import { limit, mathFloor, mathMax, mathMin, mathPI2, mathRound } from "./utils/math";
 import { getIdByCharCode } from "./font";
 import { game } from "./game";
 import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
+import { icon0, icon1 } from "./resources/ids";
+import { levels } from "./levels/builder";
 
 export const world: CanvasRenderingContext2D = createContext();
 
@@ -23,17 +25,26 @@ export const render = () => {
 
     const worldWidth = mathFloor(windowWidth / gameScale);
     const worldHeight = mathFloor(windowHeight / gameScale);
-    const worldCanvas = getCanvas(world);
 
     setWidth(world, worldWidth);
     setHeight(world, worldHeight);
 
-    resetTransform(world);
-    world.clearRect(0, 0, worldWidth, worldHeight);
+    clear(world);
 
     const offsetX = mathFloor((worldWidth - stageWidth) / 2);
     const offsetY = cellSize * 4;
 
+    drawCubes(offsetX, offsetY);
+    drawIndicators(offsetX, worldHeight);
+    drawJoystick();
+
+    clear(screen);
+    screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
+    screen.imageSmoothingEnabled = false;
+    drawImage(screen, getCanvas(world), 0, 0);
+}
+
+function drawCubes(offsetX: number, offsetY: number) {
     cubes.sort(sortCubes);
 
     updateCubesShading();
@@ -46,31 +57,31 @@ export const render = () => {
         drawCubeImage(world, x, y, info.front);
         drawCubeImage(world, x, y - height, info.top);
     }
+}
 
-    // resetTransform(world);
-    // const text = '01234567890 LEVEL ' + game.level + ' TIME ' + mathFloor(game.timeS);
-    // for (let i = 0; i < text.length; i++) {
-    //     const code = text.charCodeAt(i);
-    //     const id = getIdByCharCode(code);
-    //     if (id !== undefined) {
-    //         const char = getColoredImage(id, 0xffffff);
-    //         drawImage(world, char, 1 + 8 * i + offsetX, 1);
-    //     }
-    // }
-    // const font = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // for (let i = 0; i < font.length; i++) {
-    //     const code = font.charCodeAt(i);
-    //     const id = getIdByCharCode(code);
-    //     if (id !== undefined) {
-    //         const char = getColoredImage(id, 0xff9999);
-    //         drawImage(world, char, 1 + 8 * i + offsetX, 1 + 8);
-    //     }
-    // }
-
+function drawJoystick() {
     if (joystick) {
         drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 'rgba(255,255,255,0.3)');
         drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 'rgba(255,255,255,0.5)');
     }
+}
+
+const drawIndicators = (offsetX: number, worldHeight: number) => {
+    resetTransform(world);
+    for (let i = 0; i < game.lives; i++) {
+        drawImage(world, images[icon0], offsetX + 1 + i * 8, 10);
+    }
+    drawText(world, offsetX, 1, 'LIVES ' + game.lives, 0xFF2600);
+
+    const times = mathRound(13 - game.timeS);
+    for (let i = 0; i < times; i++) {
+        drawImage(world, images[icon1], offsetX + cellSize * 14 + 8 - i * 8, 10);
+    }
+    const timesText = mathMax(0, times) + ' TIME';
+    drawText(world, offsetX + 15 * cellSize - 1 - timesText.length * 8, 1, timesText, 0x0096FF);
+
+    const levelsText = 'LEVEL ' + (game.level + 1);
+    drawText(world, mathFloor(offsetX + (cellSize * 15 - levelsText.length * 8) / 2), 1, levelsText, 0xffffff);
 
     if (FPS) {
         const frameTime = (now() - time.nowMS).toFixed();
@@ -85,12 +96,6 @@ export const render = () => {
             0xffffff
         );
     }
-
-    resetTransform(screen);
-    screen.clearRect(0, 0, windowWidth, windowHeight);
-    screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
-    screen.imageSmoothingEnabled = false;
-    drawImage(screen, worldCanvas, 0, 0);
 }
 
 const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text: string, color: number) => {
@@ -106,18 +111,18 @@ const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text:
 }
 
 const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) => {
-    resetTransform(world);
+    resetTransform(context);
 
-    world.beginPath();
-    world.arc(
+    context.beginPath();
+    context.arc(
         mathFloor(x),
         mathFloor(y),
         mathFloor(radius),
         0, mathPI2, false
     );
-    world.lineWidth = 2;
-    world.strokeStyle = color;
-    world.stroke();
+    context.lineWidth = 2;
+    context.strokeStyle = color;
+    context.stroke();
 }
 
 const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
@@ -147,3 +152,4 @@ const updateCubesShading = () => {
         }
     }
 }
+

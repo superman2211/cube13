@@ -1,7 +1,7 @@
 import { updateAnimations } from "./animation";
 import { checkCubePlace } from "./cube-place";
 import { updateDoor } from "./door";
-import { checkGameTimer, game, GameState, start } from "./game";
+import { checkGameTimer, game, GameState, startGame } from "./game";
 import { render } from "./graphics";
 import { initInput } from "./input";
 import { updatePhysics } from "./physics";
@@ -36,7 +36,7 @@ function update() {
 async function main() {
 	await loadResources();
 	initInput();
-	start();
+	startGame();
 	update();
 }
 

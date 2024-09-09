@@ -13,33 +13,45 @@ export interface Game {
     level: number,
     state: GameState,
     timeS: number,
+    lives: number,
 }
 
 export const enum GameState {
     MainMenu,
     Game,
     NextLevel,
+    LevelFail,
     GameOver,
+    GameWin,
 }
 
 export const game: Game = {
     level: 0,
     state: GameState.Game,
     timeS: 0,
+    lives: 0,
 }
 
-export const start = () => {
+export const startGame = () => {
+    game.level = 0;
+    game.lives = 13;
+    startLevel();
+}
+
+const startLevel = () => {
+    game.timeS = 0;
+
     buildLevel(game.level);
     updateBodies();
     resetDoor();
     prepareImagesTasks();
-    game.timeS = 0;
 }
 
 export const nextLevel = () => {
     game.level++;
     game.level = game.level % levels.length;
-    start();
+
+    startLevel();
 }
 
 export const checkGameTimer = () => {
@@ -60,10 +72,11 @@ export const checkGameTimer = () => {
     }
 
     if (game.timeS >= 13) {
-        game.state = GameState.GameOver;
+        game.state = GameState.LevelFail;
+        game.lives--;
 
         if (DEBUG) {
-            console.log("game over");
+            console.log("level fail");
         }
 
         fallCubes();
