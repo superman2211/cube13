@@ -47,29 +47,43 @@ export const render = () => {
         drawCubeImage(world, x, y - height, info.top);
     }
 
-    resetTransform(world);
-    const text = '01234567890 LEVEL ' + game.level + ' TIME ' + mathFloor(game.timeS);
-    for (let i = 0; i < text.length; i++) {
-        const code = text.charCodeAt(i);
-        const id = getIdByCharCode(code);
-        if (id !== undefined) {
-            const char = getColoredImage(id, 0xffffff);
-            drawImage(world, char, 1 + 8 * i + offsetX, 1);
-        }
-    }
-    const font = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    for (let i = 0; i < font.length; i++) {
-        const code = font.charCodeAt(i);
-        const id = getIdByCharCode(code);
-        if (id !== undefined) {
-            const char = getColoredImage(id, 0xff9999);
-            drawImage(world, char, 1 + 8 * i + offsetX, 1 + 8);
-        }
-    }
+    // resetTransform(world);
+    // const text = '01234567890 LEVEL ' + game.level + ' TIME ' + mathFloor(game.timeS);
+    // for (let i = 0; i < text.length; i++) {
+    //     const code = text.charCodeAt(i);
+    //     const id = getIdByCharCode(code);
+    //     if (id !== undefined) {
+    //         const char = getColoredImage(id, 0xffffff);
+    //         drawImage(world, char, 1 + 8 * i + offsetX, 1);
+    //     }
+    // }
+    // const font = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    // for (let i = 0; i < font.length; i++) {
+    //     const code = font.charCodeAt(i);
+    //     const id = getIdByCharCode(code);
+    //     if (id !== undefined) {
+    //         const char = getColoredImage(id, 0xff9999);
+    //         drawImage(world, char, 1 + 8 * i + offsetX, 1 + 8);
+    //     }
+    // }
 
     if (joystick) {
         drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 'rgba(255,255,255,0.3)');
         drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 'rgba(255,255,255,0.5)');
+    }
+
+    if (FPS) {
+        const frameTime = (now() - time.nowMS).toFixed();
+        const fps = (1 / time.deltaS).toFixed();
+        const mode = DEBUG ? 'DEBUG' : '';
+
+        drawText(
+            world,
+            1,
+            worldHeight - 9,
+            `FPS ${fps}  TIME ${frameTime}  ${mode}`,
+            0xffffff
+        );
     }
 
     resetTransform(screen);
@@ -77,16 +91,17 @@ export const render = () => {
     screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
     screen.imageSmoothingEnabled = false;
     drawImage(screen, worldCanvas, 0, 0);
+}
 
-    if (FPS) {
-        const frameTime = (now() - time.nowMS).toFixed();
-        const fps = (1 / time.deltaS).toFixed();
-
-        const mode = DEBUG ? 'DEBUG' : '';
-
-        screen.fillStyle = 'white';
-        screen.font = 'arial 20px';
-        screen.fillText(`FPS ${fps}   TIME ${frameTime} ms   ${mode}`, 0, 27);
+const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text: string, color: number) => {
+    resetTransform(context);
+    for (let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        const id = getIdByCharCode(code);
+        if (id !== undefined) {
+            const char = getColoredImage(id, color);
+            drawImage(context, char, x + i * 8, y);
+        }
     }
 }
 
