@@ -1,7 +1,7 @@
 import { cellSize } from "../config";
-import { CubeInfo, Id } from "../cube";
+import { CubeInfo, Id } from "../game/cube";
 import { DEBUG } from "../debug";
-import { cubes } from "../stage";
+import { cubes } from "../engine/stage";
 import { cloneObject } from "../utils/browser";
 import { infos } from "./infos";
 import { level1 } from "./level1";

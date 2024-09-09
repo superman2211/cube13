@@ -1,19 +1,19 @@
-import { cells, cellSize, joystickBaseRadius, joystickStickRadius } from "./config";
-import { Cube } from "./cube";
-import { DEBUG, FPS } from "./debug";
-import { identity } from "./geom/transform";
-import { getColoredImage, getImage, images } from "./resources/images";
+import { cells, cellSize, joystickBaseRadius, joystickStickRadius } from "../config";
+import { Cube } from "../game/cube";
+import { DEBUG, FPS } from "../debug";
+import { identity } from "../geom/transform";
+import { getColoredImage, getImage, images } from "../resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
-import { Image } from "./image";
-import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "./utils/browser";
-import { limit, mathFloor, mathMax, mathMin, mathPI2, mathRound } from "./utils/math";
-import { getIdByCharCode } from "./font";
-import { game } from "./game";
+import { Image } from "../resources/image";
+import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, now, resetTransform, setHeight, setWidth } from "../utils/browser";
+import { limit, mathFloor, mathMax, mathMin, mathPI2, mathRound } from "../utils/math";
+import { getIdByCharCode } from "../resources/font";
+import { game } from "../game/game";
 import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
-import { icon0, icon1 } from "./resources/ids";
-import { levels } from "./levels/builder";
+import { icon0, icon1 } from "../resources/ids";
+import { levels } from "../levels/builder";
 
 export const world: CanvasRenderingContext2D = createContext();
 

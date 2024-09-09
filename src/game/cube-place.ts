@@ -1,12 +1,12 @@
-import { animate, bounceIn, bounceOut, linear } from "./animation";
-import { cellSizeHalf } from "./config";
+import { animate, bounceIn, bounceOut, linear } from "../engine/animation";
+import { cellSizeHalf } from "../config";
 import { Id } from "./cube";
 import { door } from "./door";
-import { pointCopy, pointDistance } from "./geom/point";
-import { updateBodies } from "./physics";
-import { floor4, sound_cube_place } from "./resources/ids";
-import { playSound } from "./resources/sounds";
-import { getCube, removeCube } from "./stage";
+import { pointCopy, pointDistance } from "../geom/point";
+import { updateBodies } from "../engine/physics";
+import { floor4, sound_cube_place } from "../resources/ids";
+import { playSound } from "../resources/sounds";
+import { getCube, removeCube } from "../engine/stage";
 
 export const checkCubePlace = () => {
     const cube = getCube(Id.SunCube);

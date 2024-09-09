@@ -1,4 +1,4 @@
-import { Transform } from "./geom/transform";
+import { Transform } from "../geom/transform";
 
 export interface Image {
     id: number,

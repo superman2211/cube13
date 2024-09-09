@@ -1,8 +1,8 @@
-import { joystickBaseRadius } from "./config";
-import { Point, pointLength, pointNormalize, vector } from "./geom/point";
+import { joystickBaseRadius } from "../config";
+import { Point, pointLength, pointNormalize, vector } from "../geom/point";
 import { touches } from "./input";
 import { gameScale } from "./screen";
-import { hasTouch } from "./utils/browser";
+import { hasTouch } from "../utils/browser";
 
 export interface Joystick {
     id: string,

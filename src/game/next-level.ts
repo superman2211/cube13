@@ -1,11 +1,11 @@
-import { cellSizeHalf } from "./config";
+import { cellSizeHalf } from "../config";
 import { Id } from "./cube"
-import { DEBUG } from "./debug";
+import { DEBUG } from "../debug";
 import { nextLevel } from "./game";
-import { sound_next_level } from "./resources/ids";
-import { playSound } from "./resources/sounds";
-import { getCube } from "./stage"
-import { mathAbs } from "./utils/math";
+import { sound_next_level } from "../resources/ids";
+import { playSound } from "../resources/sounds";
+import { getCube } from "../engine/stage"
+import { mathAbs } from "../utils/math";
 
 export const checkNextLevel = () => {
     const player = getCube(Id.Player);

@@ -1,17 +1,17 @@
-import { updateAnimations } from "./animation";
-import { checkCubePlace } from "./cube-place";
-import { updateDoor } from "./door";
-import { checkGameTimer, game, GameState, startGame } from "./game";
-import { render } from "./graphics";
-import { initInput } from "./input";
-import { updatePhysics } from "./physics";
-import { updatePlayer } from "./player";
+import { updateAnimations } from "./engine/animation";
+import { checkCubePlace } from "./game/cube-place";
+import { updateDoor } from "./game/door";
+import { checkGameTimer, game, GameState, startGame } from "./game/game";
+import { render } from "./engine/graphics";
+import { initInput } from "./engine/input";
+import { updatePhysics } from "./engine/physics";
+import { updatePlayer } from "./game/player";
 import { loadResources } from "./resources/loader";
-import { calculateTime } from "./time";
-import { checkNextLevel } from "./next-level";
-import { runNextTask } from "./tasks";
-import { updateJoystick } from "./joystick";
-import { updateScreen } from "./screen";
+import { calculateTime } from "./engine/time";
+import { checkNextLevel } from "./game/next-level";
+import { runNextTask } from "./engine/tasks";
+import { updateJoystick } from "./engine/joystick";
+import { updateScreen } from "./engine/screen";
 
 function update() {
 	calculateTime();

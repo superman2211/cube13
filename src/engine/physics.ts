@@ -1,10 +1,9 @@
-import { cellSize } from "./config";
-import { Cube } from "./cube";
-import { DEBUG } from "./debug";
-import { Box, boxesIntersects } from "./geom/box";
-import { point, pointNormalize, vector } from "./geom/point";
+import { Cube } from "../game/cube";
+import { DEBUG } from "../debug";
+import { Box, boxesIntersects } from "../geom/box";
+import { pointNormalize, vector } from "../geom/point";
 import { cubes } from "./stage"
-import { mathAbs, mathFloor, mathRound } from "./utils/math";
+import { mathAbs, mathFloor, mathRound } from "../utils/math";
 
 export const bodies: Cube[] = [];
 

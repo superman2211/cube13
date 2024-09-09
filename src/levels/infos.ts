@@ -1,8 +1,8 @@
 import { cellSize, cellSizeHalf } from "../config";
 import { box, } from "../geom/box";
 import { box0, box1, box2, box3, door0, floor0, floor1, floor2, floor3, floor5, man8, roof0, roof1, roof2, wall0, wall1, wall11, wall12, wall2, wall3, wall8, wall9 } from "../resources/ids";
-import { Body } from "../physics";
-import { CubeInfo, Id } from "../cube";
+import { Body } from "../engine/physics";
+import { CubeInfo, Id } from "../game/cube";
 import { rotate180, rotate270, rotate90 } from "../geom/transform";
 
 const staticBody: Body = { isStatic: true, box: box(0, 0, cellSize, cellSize) };

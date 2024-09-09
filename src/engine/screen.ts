@@ -1,6 +1,6 @@
-import { cells, cellSize } from "./config";
-import { domDocument, dpr, getContext } from "./utils/browser";
-import { mathMin } from "./utils/math";
+import { cells, cellSize } from "../config";
+import { domDocument, dpr, getContext } from "../utils/browser";
+import { mathMin } from "../utils/math";
 
 export const screen: CanvasRenderingContext2D = getContext(domDocument.getElementById('c') as HTMLCanvasElement);
 

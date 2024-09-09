@@ -1,7 +1,7 @@
-import { cellSize } from "./config";
-import { DEBUG } from "./debug";
-import { isFloorCube } from "./fall-cubes";
-import { brightnessQuality, getImage } from "./resources/images";
+import { cellSize } from "../config";
+import { DEBUG } from "../debug";
+import { isFloorCube } from "../game/fall-cubes";
+import { brightnessQuality, getImage } from "../resources/images";
 import { cubes } from "./stage";
 
 export interface Task {

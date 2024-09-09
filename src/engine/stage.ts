@@ -1,4 +1,4 @@
-import { Cube, Id } from "./cube";
+import { Cube, Id } from "../game/cube";
 
 export const cubes: Cube[] = [];
 

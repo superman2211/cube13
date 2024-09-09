@@ -1,4 +1,4 @@
-import { now } from "./utils/browser";
+import { now } from "../utils/browser";
 
 export interface Time {
     nowMS: number,

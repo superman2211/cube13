@@ -1,13 +1,13 @@
-import { DEBUG } from "./debug";
+import { DEBUG } from "../debug";
 import { resetDoor } from "./door";
 import { fallCubes } from "./fall-cubes";
-import { buildLevel, levels } from "./levels/builder"
-import { updateBodies } from "./physics";
-import { sound_timer } from "./resources/ids";
-import { playSound } from "./resources/sounds";
-import { prepareImagesTasks } from "./tasks";
-import { time } from "./time";
-import { limit, mathFloor, mathMin } from "./utils/math";
+import { buildLevel, levels } from "../levels/builder"
+import { updateBodies } from "../engine/physics";
+import { sound_timer } from "../resources/ids";
+import { playSound } from "../resources/sounds";
+import { prepareImagesTasks } from "../engine/tasks";
+import { time } from "../engine/time";
+import { limit, mathFloor, mathMin } from "../utils/math";
 
 export interface Game {
     level: number,

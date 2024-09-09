@@ -1,5 +1,5 @@
-import { Image } from './image';
-import { Body } from './physics';
+import { Image } from '../resources/image';
+import { Body } from '../engine/physics';
 
 export interface Cube {
     x: number,
@@ -13,7 +13,7 @@ export interface CubeInfo {
     front?: Image,
     top?: Image,
     id?: Id,
-    cubeHeight?: number, 
+    cubeHeight?: number,
 }
 
 export const enum Id {

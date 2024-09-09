@@ -1,11 +1,11 @@
-import { doorAnimationSpeed } from "./config";
+import { doorAnimationSpeed } from "../config";
 import { Id } from "./cube";
-import { updateBodies } from "./physics";
-import { door0, door1, door2, door3, sound_door_open, wall10 } from "./resources/ids";
-import { playSound } from "./resources/sounds";
-import { getCube } from "./stage";
-import { time } from "./time";
-import { mathFloor, mathMax, mathMin } from "./utils/math";
+import { updateBodies } from "../engine/physics";
+import { door0, door1, door2, door3, sound_door_open, wall10 } from "../resources/ids";
+import { playSound } from "../resources/sounds";
+import { getCube } from "../engine/stage";
+import { time } from "../engine/time";
+import { mathFloor, mathMax, mathMin } from "../utils/math";
 
 export interface Door {
     open: boolean,

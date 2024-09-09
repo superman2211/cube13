@@ -1,8 +1,8 @@
-import { DEBUG } from "./debug";
-import { domDocument, dpr, getCanvas, hasTouch } from "./utils/browser";
+import { DEBUG } from "../debug";
+import { domDocument, dpr, getCanvas, hasTouch } from "../utils/browser";
 import { screen } from "./screen";
-import { point, Point } from "./geom/point";
-import { initSound } from "./resources/sounds";
+import { point, Point } from "../geom/point";
+import { initSound } from "../resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
 

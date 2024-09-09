@@ -1,11 +1,11 @@
-import { animate, quadraticIn, quadraticOut } from "./animation"
-import { cells, cellSize } from "./config"
+import { animate, quadraticIn, quadraticOut } from "../engine/animation"
+import { cells, cellSize } from "../config"
 import { Cube } from "./cube";
-import { DEBUG } from "./debug";
-import { sound_explosion } from "./resources/ids";
-import { playSound } from "./resources/sounds";
-import { cubes } from "./stage"
-import { mathFloor, randomRange } from "./utils/math";
+import { DEBUG } from "../debug";
+import { sound_explosion } from "../resources/ids";
+import { playSound } from "../resources/sounds";
+import { cubes } from "../engine/stage"
+import { mathFloor, randomRange } from "../utils/math";
 
 export const fallCubes = () => {
     const offsets = [];
