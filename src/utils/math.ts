@@ -7,6 +7,7 @@ export const mathMax = math.max;
 export const mathHypot = math.hypot;
 export const mathAbs = math.abs;
 export const mathRandom = math.random;
+export const mathAtan2 = math.atan2;
 export const mathPI = math.PI;
 export const mathPI2 = mathPI * 2;
 

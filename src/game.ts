@@ -52,10 +52,6 @@ export const checkGameTimer = () => {
     const newTime = mathFloor(game.timeS);
 
     if (oldTime != newTime && newTime <= 13) {
-        if (DEBUG) {
-            console.log("timer ", newTime);
-        }
-
         const start = 5;
         const total = 13;
 

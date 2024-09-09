@@ -1,4 +1,4 @@
-import { mathHypot } from "../utils/math";
+import { mathAtan2, mathHypot } from "../utils/math";
 
 export interface Point {
 	x: number,
@@ -39,3 +39,5 @@ export const pointAdd = (p0: Point, p1: Point) => {
 	p0.x += p1.x;
 	p0.y += p1.y;
 }
+
+export const pointAngle = (p: Point): number => mathAtan2(p.y, p.x);
