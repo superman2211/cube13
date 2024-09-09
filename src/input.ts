@@ -2,6 +2,7 @@ import { DEBUG } from "./debug";
 import { domDocument, dpr, getCanvas, hasTouch } from "./utils/browser";
 import { screen } from "./screen";
 import { point, Point } from "./geom/point";
+import { initSound } from "./resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
 
@@ -27,11 +28,17 @@ export const initInput = () => {
         // }
 
         keys[e.keyCode] = true;
+
+        initSound();
     }
 
     domDocument.onkeyup = (e) => {
         delete keys[e.keyCode];
+
+        initSound();
     }
+
+    const screenCanvas = getCanvas(screen);
 
     if (hasTouch) {
         const forTouch = (e: TouchEvent, handler: (id: number, t: Point) => void) => {
@@ -40,18 +47,21 @@ export const initInput = () => {
                 const { clientX, clientY, identifier } = changedTouches[i];
                 handler(identifier, point(clientX * dpr, clientY * dpr));
             }
+
+            initSound();
         };
 
         const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
         const removeTouch = (e: TouchEvent) => forTouch(e, (id, t) => { delete touches[id]; });
 
-        const screenCanvas = getCanvas(screen);
-
         screenCanvas.ontouchstart = addTouch;
         screenCanvas.ontouchmove = addTouch;
         screenCanvas.ontouchend = removeTouch;
         screenCanvas.ontouchcancel = removeTouch;
-    } else {
-
     }
+
+    screenCanvas.onmousedown = () => initSound();
+    screenCanvas.onmousemove = () => initSound();
+    screenCanvas.onmouseup = () => initSound();
+    screenCanvas.onmouseleave = () => initSound();
 }

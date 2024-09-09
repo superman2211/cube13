@@ -1,5 +1,3 @@
-export const audioContext = new AudioContext();
-
 // Wave shapes
 
 const SQUARE = 0;
@@ -267,7 +265,7 @@ function render(ps: Float32Array): Float32Array {
 	return new Float32Array(normalized);
 }
 
-export function createAudioBuffer(params: Float32Array): AudioBuffer {
+export function createAudioBuffer(audioContext: AudioContext, params: Float32Array): AudioBuffer {
 	const samples = render(params);
 	const audioBuffer = audioContext.createBuffer(1, samples.length, 44100);
 	audioBuffer.copyToChannel(samples, 0, 0);

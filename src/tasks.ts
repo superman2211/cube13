@@ -42,8 +42,8 @@ export const runNextTask = () => {
     if (task) {
         task.run();
 
-        if (DEBUG) {
-            console.log(`tasks ${tasks.length}`);
+        if (DEBUG && !tasks.length) {
+            console.log('tasks finished');
         }
     }
 }

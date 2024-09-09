@@ -46,8 +46,7 @@ export const updatePlayer = () => {
             let angle = pointAngle(joystickDirection);
             if (angle < 0) angle += mathPI2;
             const step = mathFloor((angle + mathPI / 8) / (mathPI / 4));
-            console.log(step);
-
+            
             if (step == 0) {
                 direction = point(1, 0);
             } else if (step == 1) {
