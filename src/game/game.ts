@@ -29,14 +29,14 @@ export const enum GameState {
 
 export const game: Game = {
     level: 0,
-    state: GameState.Game,
+    state: GameState.MainMenu,
     timeS: 0,
     lives: 0,
 }
 
 export const startGame = () => {
     game.level = 0;
-    game.lives = 13;
+    game.lives = levels.length;
 }
 
 export const startLevel = () => {
@@ -50,7 +50,6 @@ export const startLevel = () => {
 
 export const nextLevel = () => {
     game.level++;
-    game.level = game.level % levels.length;
 }
 
 export const checkGameTimer = () => {

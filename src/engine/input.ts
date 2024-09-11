@@ -6,12 +6,19 @@ import { initSound } from "../resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
 
-export const touches: { [key: string]: Point } = {};
+export interface TouchState {
+    start: boolean,
+}
 
-export function getFirstTouch(): Point | undefined {
+export const touches: { [key: string]: Point } = {};
+export const touch: TouchState = { start: false };
+
+export function getTouchesCount(): number {
+    let count = 0;
     for (const t in touches) {
-        return touches[t];
+        count++;
     }
+    return count;
 }
 
 export const enum Key {
@@ -27,6 +34,7 @@ export const enum Key {
 }
 
 export const isKeyPressed = (code: Key): boolean | undefined => keys[code];
+export const unpressKey = (code: Key) => delete keys[code];
 
 export const initInput = () => {
     domDocument.onkeydown = (e) => {
@@ -38,7 +46,7 @@ export const initInput = () => {
     }
 
     domDocument.onkeyup = (e) => {
-        delete keys[e.keyCode];
+        unpressKey(e.keyCode);
     }
 
     const screenCanvas = getCanvas(screen);
@@ -55,9 +63,15 @@ export const initInput = () => {
         const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
         const removeTouch = (e: TouchEvent) => forTouch(e, (id, t) => { delete touches[id]; });
 
-        screenCanvas.ontouchstart = addTouch;
+        screenCanvas.ontouchstart = (e) => {
+            addTouch(e);
+            touch.start = true;
+        };
         screenCanvas.ontouchmove = addTouch;
-        screenCanvas.ontouchend = removeTouch;
+        screenCanvas.ontouchend = (e) => {
+            removeTouch(e);
+            touch.start = false;
+        };
         screenCanvas.ontouchcancel = removeTouch;
     }
 

@@ -41,31 +41,35 @@ export const render = () => {
 
     switch (game.state) {
         case GameState.MainMenu:
-            drawWindow(0xbb999999, 'CUBE 13');
+            drawWindow(0xff000000, ['CUBE 13', continueText()]);
             break;
 
         case GameState.LevelFail:
-            drawWindow(0xbb660000, 'LEVEL FAIL TRY AGAIN');
+            drawWindow(0xbb660000, ['LEVEL FAIL', 'TRY AGAIN', continueText()]);
             break;
 
         case GameState.LevelWin:
-            drawWindow(0xbb006600, `NEXT LEVEL ${game.level} OF ${levels.length}`);
+            drawWindow(0xbb006600, ['LEVEL PASSED', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, continueText()]);
             break;
 
         case GameState.GameOver:
-            drawWindow(0xbb330000, `GAME OVER`);
+            drawWindow(0xbb330000, ['GAME OVER', continueText()]);
             break;
 
         case GameState.GameWin:
-            drawWindow(0xbb009900, `CONGRATULATIONS`);
+            drawWindow(0xbb009900, ['CONGRATULATIONS', continueText()]);
             break;
     }
+
+    drawFPS(worldHeight);
 
     clear(screen);
     screen.setTransform(gameScale, 0, 0, gameScale, 0, 0);
     screen.imageSmoothingEnabled = false;
     drawImage(screen, getCanvas(world), 0, 0);
 }
+
+const continueText = (): string => hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
 
 function drawCubes(offsetX: number, offsetY: number) {
     cubes.sort(sortCubes);
@@ -105,7 +109,9 @@ const drawIndicators = (offsetX: number, worldHeight: number) => {
 
     const levelsText = 'LEVEL ' + (game.level + 1);
     drawText(world, mathFloor(offsetX + (cellSize * 15 - levelsText.length * 8) / 2), 1, levelsText, 0xffffff);
+}
 
+const drawFPS = (worldHeight: number) => {
     if (FPS) {
         const frameTime = (now() - time.nowMS).toFixed();
         const fps = (1 / time.deltaS).toFixed();
@@ -176,32 +182,49 @@ const updateCubesShading = () => {
     }
 }
 
-function drawWindow(color: number, text: string) {
-    const width = cellSize * 14;
-    const height = cellSize * 10;
-    const x = mathFloor((getWidth(world) - width) / 2);
-    const y = mathFloor((getHeight(world) - height) / 2);
+function drawWindow(color: number, texts: string[]) {
+    const width = getWidth(world);//cellSize * 14;
+    const height = getHeight(world);//cellSize * 10;
+    const x = 0;//mathFloor((getWidth(world) - width) / 2);
+    const y = 0;//mathFloor((getHeight(world) - height) / 2);
 
     resetTransform(world);
 
     world.fillStyle = colorToString(color);
     world.fillRect(x, y, width, height);
 
-    drawText(
-        world,
-        mathFloor(x + (width - text.length * 8) / 2),
-        y + cellSize * 3,
-        text,
-        0xffffff
-    );
+    const textsHeight = (texts.length * 3 - 2) * 8;
+    const textsWidth = texts.reduce((p, c) => mathMax(p, c.length), 0) * 8;
 
-    const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+    const textX = x + (width - textsWidth) / 2;
+    const textY = y + (height - textsHeight) / 2;
 
-    drawText(
-        world,
-        mathFloor(x + (width - continueText.length * 8) / 2),
-        y + cellSize * 6,
-        continueText,
-        0xffffff
-    );
+    for (let i = 0; i < texts.length; i++) {
+        const text = texts[i]
+        drawText(
+            world,
+            mathFloor(textX + (textsWidth - text.length * 8) / 2),
+            mathFloor(textY + i * 3 * 8),
+            text,
+            0xffffff
+        );
+    }
+
+    // drawText(
+    //     world,
+    //     mathFloor(x + (width - text.length * 8) / 2),
+    //     y + cellSize * 3,
+    //     text,
+    //     0xffffff
+    // );
+
+    // const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+
+    // drawText(
+    //     world,
+    //     mathFloor(x + (width - continueText.length * 8) / 2),
+    //     y + cellSize * 6,
+    //     continueText,
+    //     0xffffff
+    // );
 }

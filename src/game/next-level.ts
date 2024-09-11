@@ -6,6 +6,7 @@ import { sound_next_level } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { getCube } from "../engine/stage"
 import { mathAbs } from "../utils/math";
+import { levels } from "../levels/builder";
 
 export const checkNextLevel = () => {
     const player = getCube(Id.Player);
@@ -17,11 +18,13 @@ export const checkNextLevel = () => {
                 console.log('win!');
             }
 
-            nextLevel();
-
             playSound(sound_next_level);
 
-            game.state = GameState.LevelWin;
+            if (game.level == levels.length - 1) {
+                game.state = GameState.GameWin;
+            } else {
+                game.state = GameState.LevelWin;
+            }
         }
     }
 }

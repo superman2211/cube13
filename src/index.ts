@@ -12,7 +12,7 @@ import { checkNextLevel } from "./game/next-level";
 import { runNextTask } from "./engine/tasks";
 import { updateJoystick } from "./engine/joystick";
 import { updateScreen } from "./engine/screen";
-import { checkContinue as checkStartGame } from "./game/start-game";
+import { checkContinue as checkStartGame } from "./game/check-continue";
 
 function update() {
 	calculateTime();
@@ -38,8 +38,6 @@ function update() {
 async function main() {
 	await loadResources();
 	initInput();
-	startGame();
-	startLevel();
 	update();
 }
 
