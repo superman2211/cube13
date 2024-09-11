@@ -5,21 +5,12 @@ import { point, Point } from "../geom/point";
 import { initSound } from "../resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
-
-export interface TouchState {
-    start: boolean,
-}
+let click = false;
 
 export const touches: { [key: string]: Point } = {};
-export const touch: TouchState = { start: false };
 
-export function getTouchesCount(): number {
-    let count = 0;
-    for (const t in touches) {
-        count++;
-    }
-    return count;
-}
+export const isClicked = (): boolean => click;
+export const resetClick = () => click = false;
 
 export const enum Key {
     Up = 38,
@@ -63,17 +54,14 @@ export const initInput = () => {
         const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
         const removeTouch = (e: TouchEvent) => forTouch(e, (id, t) => { delete touches[id]; });
 
-        screenCanvas.ontouchstart = (e) => {
-            addTouch(e);
-            touch.start = true;
-        };
+        screenCanvas.ontouchstart = addTouch
         screenCanvas.ontouchmove = addTouch;
-        screenCanvas.ontouchend = (e) => {
-            removeTouch(e);
-            touch.start = false;
-        };
+        screenCanvas.ontouchend = removeTouch;
         screenCanvas.ontouchcancel = removeTouch;
     }
 
-    screenCanvas.onclick = () => initSound();
+    screenCanvas.onclick = () => {
+        click = true;
+        initSound();
+    }
 }

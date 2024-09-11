@@ -1,11 +1,9 @@
-import { touch, isKeyPressed, Key, touches, unpressKey } from "../engine/input"
-import { hasTouch } from "../utils/browser"
+import { isClicked, resetClick, isKeyPressed, Key, unpressKey } from "../engine/input"
 import { game, GameState, nextLevel, startGame, startLevel } from "./game"
 
 export const checkContinue = () => {
-    console.log("wasTouch", touch.start);
-    if (touch.start || isKeyPressed(Key.Space)) {
-        touch.start = false;
+    if (isClicked() || isKeyPressed(Key.Space)) {
+        resetClick();
         unpressKey(Key.Space);
 
         switch (game.state) {

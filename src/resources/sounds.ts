@@ -1,4 +1,5 @@
 import { DEBUG } from "../debug";
+import { hasTouch } from "../utils/browser";
 import { createAudioBuffer } from "./sfxr";
 
 let audioContext: AudioContext | undefined = undefined;
@@ -7,6 +8,12 @@ export const soundsBuffers: ArrayBuffer[] = [];
 const sounds: AudioBuffer[] = [];
 
 const masterVolume = 0.5;
+
+const initSoundOnStart = () => {
+    if (!hasTouch) {
+        initSound();
+    }
+}
 
 export function initSound() {
     if (!audioContext) {
@@ -35,3 +42,5 @@ export function playSound(id: number, volume: number = 1.0) {
         source.start();
     }
 }
+
+initSoundOnStart();
