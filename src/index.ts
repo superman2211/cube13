@@ -9,7 +9,7 @@ import { updatePlayer } from "./game/player";
 import { loadResources } from "./resources/loader";
 import { calculateTime } from "./engine/time";
 import { checkNextLevel } from "./game/next-level";
-import { runNextTask } from "./engine/tasks";
+import { runTasks } from "./engine/tasks";
 import { updateJoystick } from "./engine/joystick";
 import { updateScreen } from "./engine/screen";
 import { checkContinue as checkStartGame } from "./game/check-continue";
@@ -31,7 +31,7 @@ function update() {
 
 	updateShacking();
 	checkStartGame();
-	runNextTask();
+	runTasks();
 	updateAnimations();
 	render();
 	requestAnimationFrame(update);

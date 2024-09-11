@@ -17,6 +17,7 @@ import { levels } from "../levels/builder";
 import { colorToString } from "../utils/color";
 import { point, Point } from "../geom/point";
 import { shackingOffset } from "./shaking";
+import { tasksCount } from "./tasks";
 
 export const world: CanvasRenderingContext2D = createContext();
 
@@ -126,7 +127,7 @@ const drawFPS = (worldHeight: number) => {
             world,
             1,
             worldHeight - 9,
-            `FPS ${fps}  TIME ${frameTime}  ${mode}`,
+            `FPS ${fps} TIME ${frameTime} TASK ${tasksCount()} ${mode}`,
             0xffffff
         );
     }

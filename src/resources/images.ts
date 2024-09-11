@@ -5,7 +5,7 @@ export const images: HTMLCanvasElement[] = [];
 
 const cache: { [key: string]: { [key: string]: HTMLCanvasElement } } = {};
 
-export const brightnessQuality = 32;
+export const brightnessQuality = 16;
 
 export const getImage = (id: number, brightness?: number): HTMLCanvasElement => {
     if (brightness === undefined || brightness === 1) {

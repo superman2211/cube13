@@ -2,6 +2,7 @@ import { cellSize } from "../config";
 import { DEBUG } from "../debug";
 import { isFloorCube } from "../game/fall-cubes";
 import { brightnessQuality, getImage } from "../resources/images";
+import { now } from "../utils/browser";
 import { cubes } from "./stage";
 
 export interface Task {
@@ -10,6 +11,7 @@ export interface Task {
 
 export interface GetImageBrightnessTask extends Task {
     id: number,
+    brightness: number,
 }
 
 const tasks: Task[] = [];
@@ -19,15 +21,16 @@ export const prepareImagesTasks = () => {
         if (isFloorCube(cube)) {
             const info = cube.info;
             if (info.front) {
-                const task: GetImageBrightnessTask = {
-                    id: info.front.id,
-                    run() {
-                        for (let i = 0; i < brightnessQuality; i++) {
-                            getImage(this.id, i / brightnessQuality);
+                for (let i = 0; i < brightnessQuality; i++) {
+                    const task: GetImageBrightnessTask = {
+                        id: info.front.id,
+                        brightness: i / brightnessQuality,
+                        run() {
+                            getImage(this.id, this.brightness);
                         }
-                    }
-                };
-                tasks.push(task);
+                    };
+                    tasks.push(task);
+                }
             }
         }
     }
@@ -37,13 +40,30 @@ export const prepareImagesTasks = () => {
     }
 }
 
-export const runNextTask = () => {
-    const task = tasks.shift();
-    if (task) {
+export const runTasks = () => {
+    // const task = tasks.shift();
+    // if (task) {
+    //     task.run();
+
+    //     if (DEBUG && !tasks.length) {
+    //         console.log('all tasks finished');
+    //     }
+    // }
+
+    const startTime = now();
+
+    while (tasks.length) {
+        const task = tasks.shift()!;
         task.run();
 
         if (DEBUG && !tasks.length) {
             console.log('all tasks finished');
         }
+
+        if (now() - startTime > 1) {
+            break;
+        }
     }
 }
+
+export const tasksCount = (): number => tasks.length;
