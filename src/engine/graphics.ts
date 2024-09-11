@@ -72,7 +72,7 @@ export const render = () => {
     drawImage(screen, getCanvas(world), 0, 0);
 }
 
-const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS ANY KEY TO CONTINUE';
 
 function drawCubes(offsetX: number, offsetY: number) {
     const worldX = shackingOffset.x + offsetX;
@@ -106,8 +106,9 @@ const drawIndicators = (offsetX: number, worldHeight: number) => {
     }
     drawText(world, offsetX, 1, 'LIVES ' + game.lives, 0xFF2600);
 
-    const times = mathRound(13 - game.timeS);
-    for (let i = 0; i < times; i++) {
+    const times = mathRound(game.timeS);
+    const timesToDraw = mathMin(mathRound(game.timeS), 13);
+    for (let i = 0; i < timesToDraw; i++) {
         drawImage(world, images[icon1], offsetX + cellSize * 14 + 8 - i * 8, 10);
     }
     const timesText = mathMax(0, times) + ' TIME';
@@ -173,7 +174,7 @@ const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, 
 }
 
 const updateCubesShading = () => {
-    const start = -cellSize * 3;
+    const start = -cellSize * 2;
     const end = -cellSize * 0;
     const range = end - start;
     for (let cube of cubes) {
@@ -189,10 +190,10 @@ const updateCubesShading = () => {
 }
 
 function drawWindow(color: number, texts: string[]) {
-    const width = getWidth(world);//cellSize * 14;
-    const height = getHeight(world);//cellSize * 10;
-    const x = 0;//mathFloor((getWidth(world) - width) / 2);
-    const y = 0;//mathFloor((getHeight(world) - height) / 2);
+    const width = getWidth(world);
+    const height = getHeight(world);
+    const x = 0;
+    const y = 0;
 
     resetTransform(world);
 

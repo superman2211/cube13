@@ -9,6 +9,10 @@ import { playSound } from "../resources/sounds";
 import { getCube, removeCube } from "../engine/stage";
 
 export const checkMagicCubePlace = () => {
+    if (door.open) {
+        return;
+    }
+
     const magicCubes: Cube[] = [];
 
     checkMagicCube(magicCubes, Id.SunCube, Id.SunFloor, floor4);
@@ -18,7 +22,7 @@ export const checkMagicCubePlace = () => {
     let completedCubes = 0;
 
     for (const cube of magicCubes) {
-        if (!cube.info.body) {
+        if (cube.z == 0) {
             completedCubes++;
         }
     }

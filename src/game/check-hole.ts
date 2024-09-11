@@ -3,6 +3,8 @@ import { fallCube } from "../engine/physics";
 import { cubes, getCube, getCubes } from "../engine/stage"
 import { boxesIntersects } from "../geom/box";
 import { defaultBox } from "../levels/infos";
+import { sound_cube_fall } from "../resources/ids";
+import { playSound } from "../resources/sounds";
 import { Id } from "./cube"
 
 export const checkHole = () => {
@@ -20,6 +22,8 @@ export const checkHole = () => {
             if (hole.z == 0) {
                 if (boxesIntersects(playerBox, player, defaultBox, hole)) {
                     fallCube(hole);
+
+                    playSound(sound_cube_fall);
                 }
             }
         }

@@ -37,7 +37,7 @@ export const startGame = () => {
 }
 
 export const startLevel = () => {
-    game.timeS = 0;
+    game.timeS = 130;
 
     buildLevel(game.level);
     updateBodies();
@@ -50,27 +50,25 @@ export const nextLevel = () => {
 }
 
 export const checkGameTimer = () => {
-    if (game.timeS >= 13) {
+    if (game.timeS <= 0) {
         return;
     }
 
-    const delta = time.deltaS;
-
     const oldTime = mathFloor(game.timeS);
 
-    game.timeS += delta;
+    game.timeS -= time.deltaS;
 
     const newTime = mathFloor(game.timeS);
 
     if (oldTime != newTime && newTime <= 13) {
         const start = 5;
-        const total = 13;
+        const end = 0;
 
-        const volume = 0.1 + 0.5 * limit(0, 1, (newTime - start) / (total - start));
+        const volume = 0.1 + 0.5 * limit(0, 1, (newTime - start) / (end - start));
         playSound(sound_timer, volume);
     }
 
-    if (game.timeS >= 13) {
+    if (game.timeS <= 0) {
         fallCubes();
         playSound(sound_explosion);
         startShacking();
