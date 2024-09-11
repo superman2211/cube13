@@ -22,7 +22,6 @@ function update() {
 
 	if (game.state == GameState.Game) {
 		updatePlayer();
-		updatePhysics();
 		checkCubePlace();
 		updateDoor();
 		checkNextLevel();
@@ -30,6 +29,7 @@ function update() {
 		checkPlayerDie();
 	}
 
+	updatePhysics();
 	updateShacking();
 	checkStartGame();
 	runTasks();

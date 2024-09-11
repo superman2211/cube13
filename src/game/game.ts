@@ -1,14 +1,11 @@
-import { DEBUG } from "../debug";
 import { resetDoor } from "./door";
-import { fallCubes } from "./fall-cubes";
 import { buildLevel, levels } from "../levels/builder"
-import { updateBodies } from "../engine/physics";
+import { fallCubes, updateBodies } from "../engine/physics";
 import { sound_explosion, sound_timer } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
-import { limit, mathFloor, mathMin } from "../utils/math";
-import { timeout } from "../utils/browser";
+import { limit, mathFloor } from "../utils/math";
 import { startShacking } from "../engine/shaking";
 
 export interface Game {

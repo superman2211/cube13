@@ -1,13 +1,12 @@
 import { Cube, isFloorCube, isObjectCube } from "../game/cube";
-import { DEBUG } from "../debug";
 import { box, Box, boxesIntersects } from "../geom/box";
 import { pointNormalize, vector } from "../geom/point";
-import { cubes } from "./stage"
-import { mathAbs, mathFloor, mathRound } from "../utils/math";
+import { cubes, removeCube } from "./stage"
+import { mathAbs, mathFloor, randomRange } from "../utils/math";
 import { cellSize } from "../config";
-import { time } from "./time";
-import { animate } from "./animation";
-import { fallCube } from "../game/fall-cubes";
+import { animate, quadraticIn } from "./animation";
+import { timeout } from "../utils/browser";
+import { DEBUG } from "../debug";
 
 const bodies: Cube[] = [];
 const floor: Cube[] = [];
@@ -49,9 +48,21 @@ const updateBodiesArrays = () => {
         }
     }
 
-    // if (DEBUG) {
-    //     console.log('bodies', bodies.length, 'objects', objects.length, 'floor', floor.length);
-    // }
+    if (DEBUG) {
+        console.log('cubes', cubes.length, 'bodies', bodies.length, 'objects', objects.length, 'floor', floor.length);
+
+        if (floor.length < 5) {
+            for (const f of floor) {
+                console.log(f);
+            }
+        }
+
+        if (objects.length < 5) {
+            for (const o of objects) {
+                console.log(o);
+            }
+        }
+    }
 }
 
 export const updatePhysics = () => {
@@ -102,8 +113,6 @@ function updateZCollisions() {
             }
 
             if (!hasCollision) {
-                objectCube.z -= 1;
-                delete objectCube.info.body;
                 fallCube(objectCube);
             }
         }
@@ -147,4 +156,24 @@ function update2dCollisions() {
             break;
         }
     }
+}
+
+export const fallCubes = async () => {
+    for (const cube of cubes) {
+        if (isFloorCube(cube)) {
+            fallCubeTimeout(cube, randomRange(0, 1));
+        }
+    }
+}
+
+export const fallCubeTimeout = async (cube: Cube, offset: number) => {
+    await timeout(offset * 1000);
+    fallCube(cube);
+}
+
+export const fallCube = (cube: Cube) => {
+    cube.z -= 1;
+    delete cube.info.body;
+    updateBodies();
+    animate(cube, 'z', cube.z - cellSize * 6, 0.0, 0.5, quadraticIn, () => removeCube(cube));
 }
