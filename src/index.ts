@@ -14,6 +14,7 @@ import { updateJoystick } from "./engine/joystick";
 import { updateScreen } from "./engine/screen";
 import { checkContinue as checkStartGame } from "./game/check-continue";
 import { updateShacking } from "./engine/shaking";
+import { checkHole } from "./game/check-hole";
 
 function update() {
 	calculateTime();
@@ -23,6 +24,7 @@ function update() {
 	if (game.state == GameState.Game) {
 		updatePlayer();
 		checkCubePlace();
+		checkHole();
 		updateDoor();
 		checkNextLevel();
 		checkGameTimer();

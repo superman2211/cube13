@@ -5,8 +5,9 @@ import { Body } from "../engine/physics";
 import { CubeInfo, Id } from "../game/cube";
 import { rotate180, rotate270, rotate90 } from "../geom/transform";
 
-const staticBody: Body = { isStatic: true, box: box(0, 0, cellSize, cellSize) };
-const dynamicBody: Body = { box: box(0, 0, cellSize, cellSize) };
+export const defaultBox = box(0, 0, cellSize, cellSize);
+const staticBody: Body = { isStatic: true, box: defaultBox };
+const dynamicBody: Body = { box: defaultBox };
 const playerBody: Body = { box: box(3, 10, cellSize - 7, cellSize - 9) };
 
 export const infos: { [key: string]: CubeInfo } = {
@@ -21,7 +22,7 @@ export const infos: { [key: string]: CubeInfo } = {
 
     F: { top: { id: floor0 }, front: { id: wall12 } }, // floor
     G: { top: { id: floor1 }, front: { id: wall12 } }, // floor
-    P: { top: { id: floor2 }, front: { id: wall12 } }, // floor
+    P: { top: { id: floor2 }, front: { id: wall12 }, id: Id.Hole }, // floor
     S: { top: { id: floor5 }, front: { id: wall12 } }, // floor
     W: { front: { id: wall12 } }, // floor
 

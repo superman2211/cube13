@@ -23,6 +23,7 @@ export const enum Id {
     SunCube,
     Door,
     DoorExit,
+    Hole,
 }
 
 export const isRoomCube = (cube: Cube): boolean => cube.x > 0 && cube.x < cellSize * 14 && cube.y > 0 && cube.y < cellSize * 14;

@@ -7,6 +7,7 @@ import { cellSize } from "../config";
 import { animate, quadraticIn } from "./animation";
 import { timeout } from "../utils/browser";
 import { DEBUG } from "../debug";
+import { defaultBox } from "../levels/infos";
 
 const bodies: Cube[] = [];
 const floor: Cube[] = [];
@@ -50,18 +51,6 @@ const updateBodiesArrays = () => {
 
     if (DEBUG) {
         console.log('cubes', cubes.length, 'bodies', bodies.length, 'objects', objects.length, 'floor', floor.length);
-
-        if (floor.length < 5) {
-            for (const f of floor) {
-                console.log(f);
-            }
-        }
-
-        if (objects.length < 5) {
-            for (const o of objects) {
-                console.log(o);
-            }
-        }
     }
 }
 
@@ -97,8 +86,6 @@ const checkCollision = (body0: Cube, body1: Cube, reaction0: number, reaction1: 
 }
 
 function updateZCollisions() {
-    let defaultBox = box(0, 0, cellSize, cellSize);
-
     for (const objectCube of objects) {
         if (objectCube.z == cellSize) {
             const box = objectCube.info.body ? objectCube.info.body.box : defaultBox;
