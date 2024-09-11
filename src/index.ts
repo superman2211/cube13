@@ -5,7 +5,7 @@ import { checkGameTimer, game, GameState, startGame, startLevel } from "./game/g
 import { render } from "./engine/graphics";
 import { initInput } from "./engine/input";
 import { updatePhysics } from "./engine/physics";
-import { updatePlayer } from "./game/player";
+import { checkPlayerDie, updatePlayer } from "./game/player";
 import { loadResources } from "./resources/loader";
 import { calculateTime } from "./engine/time";
 import { checkNextLevel } from "./game/next-level";
@@ -27,6 +27,7 @@ function update() {
 		updateDoor();
 		checkNextLevel();
 		checkGameTimer();
+		checkPlayerDie();
 	}
 
 	updateShacking();

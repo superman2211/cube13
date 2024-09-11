@@ -1,4 +1,4 @@
-import { playerAnimationSpeed, playerSpeed } from "../config";
+import { cellSize, playerAnimationSpeed, playerSpeed } from "../config";
 import { Id } from "./cube";
 import { point, pointAdd, pointAngle, pointLength, pointNormalize, vector } from "../geom/point";
 import { isKeyPressed, Key, touches } from "../engine/input";
@@ -7,6 +7,7 @@ import { man0, man1, man10, man11, man12, man13, man14, man15, man2, man3, man4,
 import { getCube } from "../engine/stage";
 import { time } from "../engine/time";
 import { mathFloor, mathPI, mathPI2 } from "../utils/math";
+import { checkGameOver, game, GameState } from "./game";
 
 const animationDown = [man0, man1, man2, man3];
 const animationRight = [man4, man5, man6, man7];
@@ -90,5 +91,13 @@ export const updatePlayer = () => {
             pointNormalize(direction, delta * playerSpeed);
             pointAdd(cube, direction);
         }
+    }
+}
+
+export const checkPlayerDie = () => {
+    const cube = getCube(Id.Player);
+    if (cube && cube.z < -cellSize * 3) {
+        game.lives--;
+        checkGameOver();
     }
 }

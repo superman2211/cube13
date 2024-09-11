@@ -3,12 +3,13 @@ import { resetDoor } from "./door";
 import { fallCubes } from "./fall-cubes";
 import { buildLevel, levels } from "../levels/builder"
 import { updateBodies } from "../engine/physics";
-import { sound_timer } from "../resources/ids";
+import { sound_explosion, sound_timer } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
 import { limit, mathFloor, mathMin } from "../utils/math";
 import { timeout } from "../utils/browser";
+import { startShacking } from "../engine/shaking";
 
 export interface Game {
     level: number,
@@ -20,7 +21,6 @@ export interface Game {
 export const enum GameState {
     MainMenu,
     Game,
-    Fall,
     LevelWin,
     LevelFail,
     GameOver,
@@ -53,6 +53,10 @@ export const nextLevel = () => {
 }
 
 export const checkGameTimer = () => {
+    if (game.timeS >= 13) {
+        return;
+    }
+
     const delta = time.deltaS;
 
     const oldTime = mathFloor(game.timeS);
@@ -70,22 +74,13 @@ export const checkGameTimer = () => {
     }
 
     if (game.timeS >= 13) {
-        game.state = GameState.Fall;
-        game.lives--;
-
-        if (DEBUG) {
-            console.log("level fail");
-        }
-
         fallCubes();
-
-        checkGameOver();
+        playSound(sound_explosion);
+        startShacking();
     }
 }
 
-async function checkGameOver() {
-    await timeout(2500);
-
+export async function checkGameOver() {
     game.state = game.lives > 0 ? GameState.LevelFail : GameState.GameOver;
 }
 

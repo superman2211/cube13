@@ -28,7 +28,6 @@ export const updateDoor = () => {
                 cube.info.front!.id = doorOpenAnimation[frame];
             } else {
                 cube.info.front = undefined;
-
                 cube.info.body = undefined;
                 updateBodies();
 

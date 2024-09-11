@@ -16,7 +16,7 @@ export const checkCubePlace = () => {
         if (pointDistance(cube, floor) < 2.0) {
             pointCopy(floor, cube);
 
-            cube.info.body = undefined;
+            delete cube.info.body;
             updateBodies();
 
             animate(cube, 'z', cellSizeHalf, 0, 0.4, bounceOut, () => {

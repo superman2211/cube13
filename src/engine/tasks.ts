@@ -1,6 +1,5 @@
-import { cellSize } from "../config";
 import { DEBUG } from "../debug";
-import { isFloorCube } from "../game/fall-cubes";
+import { isObjectCube } from "../game/cube";
 import { brightnessQuality, getImage } from "../resources/images";
 import { now } from "../utils/browser";
 import { cubes } from "./stage";
@@ -18,7 +17,7 @@ const tasks: Task[] = [];
 
 export const prepareImagesTasks = () => {
     for (const cube of cubes) {
-        if (isFloorCube(cube)) {
+        if (isObjectCube(cube)) {
             const info = cube.info;
             if (info.front) {
                 for (let i = 0; i < brightnessQuality; i++) {
