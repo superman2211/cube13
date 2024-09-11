@@ -15,6 +15,8 @@ import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./scre
 import { icon0, icon1 } from "../resources/ids";
 import { levels } from "../levels/builder";
 import { colorToString } from "../utils/color";
+import { point, Point } from "../geom/point";
+import { shackingOffset } from "./shaking";
 
 export const world: CanvasRenderingContext2D = createContext();
 
@@ -41,23 +43,23 @@ export const render = () => {
 
     switch (game.state) {
         case GameState.MainMenu:
-            drawWindow(0xff000000, ['CUBE 13', continueText()]);
+            drawWindow(0xff000000, ['CUBE 13', continueText]);
             break;
 
         case GameState.LevelFail:
-            drawWindow(0xbb660000, ['LEVEL FAIL', 'TRY AGAIN', continueText()]);
+            drawWindow(0xbb660000, ['LEVEL FAIL', 'TRY AGAIN', continueText]);
             break;
 
         case GameState.LevelWin:
-            drawWindow(0xbb006600, ['LEVEL PASSED', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, continueText()]);
+            drawWindow(0xbb006600, ['LEVEL PASSED', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, continueText]);
             break;
 
         case GameState.GameOver:
-            drawWindow(0xbb330000, ['GAME OVER', continueText()]);
+            drawWindow(0xbb330000, ['GAME OVER', continueText]);
             break;
 
         case GameState.GameWin:
-            drawWindow(0xbb009900, ['CONGRATULATIONS', continueText()]);
+            drawWindow(0xbb009900, ['CONGRATULATIONS', continueText]);
             break;
     }
 
@@ -69,16 +71,19 @@ export const render = () => {
     drawImage(screen, getCanvas(world), 0, 0);
 }
 
-const continueText = (): string => hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
 
 function drawCubes(offsetX: number, offsetY: number) {
+    const worldX = shackingOffset.x + offsetX;
+    const worldY = shackingOffset.y + offsetY;
+
     cubes.sort(sortCubes);
 
     updateCubesShading();
 
     for (let cube of cubes) {
-        const x = mathFloor(cube.x + offsetX);
-        const y = mathFloor(cube.y + offsetY - cube.z);
+        const x = mathFloor(worldX + cube.x);
+        const y = mathFloor(worldY + cube.y - cube.z);
         const info = cube.info;
         const height = info.cubeHeight || cellSize;
         drawCubeImage(world, x, y, info.front);

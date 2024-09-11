@@ -6,3 +6,4 @@ export const playerAnimationSpeed = 10;
 export const doorAnimationSpeed = 5;
 export const joystickBaseRadius = 30;
 export const joystickStickRadius = 10;
+export const shackingTime = 0.5;

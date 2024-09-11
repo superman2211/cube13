@@ -9,7 +9,7 @@ const sounds: AudioBuffer[] = [];
 
 const masterVolume = 0.5;
 
-const initSoundOnStart = () => {
+const start = () => {
     if (!hasTouch) {
         initSound();
     }
@@ -43,4 +43,4 @@ export function playSound(id: number, volume: number = 1.0) {
     }
 }
 
-initSoundOnStart();
+start();

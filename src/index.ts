@@ -13,6 +13,7 @@ import { runNextTask } from "./engine/tasks";
 import { updateJoystick } from "./engine/joystick";
 import { updateScreen } from "./engine/screen";
 import { checkContinue as checkStartGame } from "./game/check-continue";
+import { updateShacking } from "./engine/shaking";
 
 function update() {
 	calculateTime();
@@ -28,6 +29,7 @@ function update() {
 		checkGameTimer();
 	}
 
+	updateShacking();
 	checkStartGame();
 	runNextTask();
 	updateAnimations();

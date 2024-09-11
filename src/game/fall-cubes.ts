@@ -6,6 +6,7 @@ import { sound_explosion } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { cubes } from "../engine/stage"
 import { mathFloor, randomRange } from "../utils/math";
+import { startShacking } from "../engine/shaking";
 
 export const fallCubes = async () => {
     const offsets = [];
@@ -30,6 +31,7 @@ export const fallCubes = async () => {
     }
 
     playSound(sound_explosion);
+    startShacking();
 }
 
 export const isFloorCube = (cube: Cube): boolean => cube.x > 0 && cube.x < cellSize * 14 && cube.y > 0 && cube.y < cellSize * 14;
