@@ -41,15 +41,6 @@ export const prepareImagesTasks = () => {
 }
 
 export const runTasks = () => {
-    // const task = tasks.shift();
-    // if (task) {
-    //     task.run();
-
-    //     if (DEBUG && !tasks.length) {
-    //         console.log('all tasks finished');
-    //     }
-    // }
-
     const startTime = now();
 
     while (tasks.length) {
