@@ -1,5 +1,5 @@
 import { updateAnimations } from "./engine/animation";
-import { checkCubePlace } from "./game/cube-place";
+import { checkMagicCubePlace } from "./game/magic-cubes";
 import { updateDoor } from "./game/door";
 import { checkGameTimer, game, GameState, startGame, startLevel } from "./game/game";
 import { render } from "./engine/graphics";
@@ -23,7 +23,7 @@ function update() {
 
 	if (game.state == GameState.Game) {
 		updatePlayer();
-		checkCubePlace();
+		checkMagicCubePlace();
 		checkHole();
 		updateDoor();
 		checkNextLevel();

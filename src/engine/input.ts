@@ -6,6 +6,7 @@ import { initSound } from "../resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
 let click = false;
+export let anyKey = false;
 
 export const touches: { [key: string]: Point } = {};
 
@@ -32,11 +33,12 @@ export const initInput = () => {
         // if (DEBUG) {
         //     console.log('keyCode', e.keyCode);
         // }
-
+        anyKey = true;
         keys[e.keyCode] = true;
     }
 
     domDocument.onkeyup = (e) => {
+        anyKey = false;
         unpressKey(e.keyCode);
     }
 

@@ -1,8 +1,8 @@
-import { isClicked, resetClick, isKeyPressed, Key, unpressKey } from "../engine/input"
+import { isClicked, resetClick, isKeyPressed, Key, unpressKey, anyKey } from "../engine/input"
 import { game, GameState, nextLevel, startGame, startLevel } from "./game"
 
 export const checkContinue = () => {
-    if (isClicked() || isKeyPressed(Key.Space)) {
+    if (isClicked() || anyKey) {
         resetClick();
         unpressKey(Key.Space);
 
