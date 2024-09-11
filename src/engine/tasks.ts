@@ -33,7 +33,7 @@ export const prepareImagesTasks = () => {
     }
 
     if (DEBUG) {
-        console.log(`prepareImagesTasks ${tasks.length}`);
+        console.log(`add images tasks ${tasks.length}`);
     }
 }
 
@@ -43,7 +43,7 @@ export const runNextTask = () => {
         task.run();
 
         if (DEBUG && !tasks.length) {
-            console.log('tasks finished');
+            console.log('all tasks finished');
         }
     }
 }
