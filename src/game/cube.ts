@@ -23,6 +23,8 @@ export const enum Id {
     SunCube,
     WaterFloor,
     WaterCube,
+    FireFloor,
+    FireCube,
     Door,
     DoorExit,
     Hole,
