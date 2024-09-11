@@ -27,14 +27,14 @@ export const updateJoystick = () => {
             if (touches[joystick.id]) {
                 joystick.stick = touches[joystick.id];
 
-                const direction = vector(joystick.stick, joystick.base);
+                const direction = vector(joystick.base, joystick.stick);
                 const distance = pointLength(direction);
                 const radius = joystickBaseRadius * gameScale;
 
                 if (distance > radius) {
                     pointNormalize(direction, radius);
-                    joystick.base.x = joystick.stick.x + direction.x;
-                    joystick.base.y = joystick.stick.y + direction.y;
+                    joystick.stick.x = joystick.base.x + direction.x;
+                    joystick.stick.y = joystick.base.y + direction.y;
                 }
             } else {
                 joystick = undefined;
