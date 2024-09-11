@@ -14,6 +14,7 @@ import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
 import { icon0, icon1 } from "../resources/ids";
 import { levels } from "../levels/builder";
+import { colorToString } from "../utils/color";
 
 export const world: CanvasRenderingContext2D = createContext();
 
@@ -38,10 +39,26 @@ export const render = () => {
     drawIndicators(offsetX, worldHeight);
     drawJoystick();
 
-    if (game.state == GameState.LevelFail) {
-        drawWindow(0x660000, 'LEVEL FAIL TRY AGAIN');
-    } else if (game.state == GameState.LevelWin) {
-        drawWindow(0x006600, `NEXT LEVEL ${game.level} OF ${levels.length}`);
+    switch (game.state) {
+        case GameState.MainMenu:
+            drawWindow(0xbb999999, 'CUBE 13');
+            break;
+
+        case GameState.LevelFail:
+            drawWindow(0xbb660000, 'LEVEL FAIL TRY AGAIN');
+            break;
+
+        case GameState.LevelWin:
+            drawWindow(0xbb006600, `NEXT LEVEL ${game.level} OF ${levels.length}`);
+            break;
+
+        case GameState.GameOver:
+            drawWindow(0xbb330000, `GAME OVER`);
+            break;
+
+        case GameState.GameWin:
+            drawWindow(0xbb009900, `CONGRATULATIONS`);
+            break;
     }
 
     clear(screen);
@@ -67,8 +84,8 @@ function drawCubes(offsetX: number, offsetY: number) {
 
 function drawJoystick() {
     if (joystick) {
-        drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 'rgba(255,255,255,0.3)');
-        drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 'rgba(255,255,255,0.5)');
+        drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 0x55ffffff);
+        drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 0x99ffffff);
     }
 }
 
@@ -116,7 +133,7 @@ const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text:
     }
 }
 
-const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) => {
+const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, radius: number, color: number) => {
     resetTransform(context);
 
     context.beginPath();
@@ -127,7 +144,7 @@ const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, rad
         0, mathPI2, false
     );
     context.lineWidth = 2;
-    context.strokeStyle = color;
+    context.strokeStyle = colorToString(color);
     context.stroke();
 }
 
@@ -167,11 +184,7 @@ function drawWindow(color: number, text: string) {
 
     resetTransform(world);
 
-    const r = (color >> 16) & 0xff;
-    const g = (color >> 8) & 0xff;
-    const b = color & 0xff;
-
-    world.fillStyle = `rgba(${r},${g},${b},0.8)`;
+    world.fillStyle = colorToString(color);
     world.fillRect(x, y, width, height);
 
     drawText(
