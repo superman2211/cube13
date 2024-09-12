@@ -18,10 +18,12 @@ export interface Game {
     state: GameState,
     timeS: number,
     lives: number,
+    totalTime: number,
 }
 
 export const enum GameState {
     MainMenu,
+    Intro,
     Game,
     LevelWin,
     LevelFail,
@@ -34,11 +36,13 @@ export const game: Game = {
     state: GameState.MainMenu,
     timeS: 0,
     lives: 0,
+    totalTime: 0,
 }
 
 export const startGame = () => {
     game.level = 0;
     game.lives = levels.length;
+    game.totalTime = 0;
 }
 
 export const startLevel = () => {
@@ -66,6 +70,8 @@ export const checkGameTimer = () => {
         return;
     }
 
+    game.totalTime += time.deltaS;
+
     const oldTime = mathFloor(game.timeS);
 
     game.timeS -= time.deltaS;
@@ -90,6 +96,7 @@ export const checkGameTimer = () => {
     if (DEBUG) {
         if (isKeyPressed(Key.Space)) {
             game.timeS = 13;
+            game.level = 11;
         }
     }
 }

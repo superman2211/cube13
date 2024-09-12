@@ -2,17 +2,24 @@ import { isClicked, resetClick, isKeyPressed, Key, unpressKey, anyKey } from "..
 import { game, GameState, nextLevel, startGame, startLevel } from "./game"
 
 let anyKeyOld = false;
+let intro = false;
 
 export const checkContinue = () => {
     if (isClicked() || (anyKey && !anyKeyOld)) {
         resetClick();
-        unpressKey(Key.Space);
 
         switch (game.state) {
             case GameState.MainMenu:
-                startGame();
-                startLevel();
-                game.state = GameState.Game;
+                if (!intro) {
+                    intro = true;
+                    game.state = GameState.Intro;
+                } else {
+                    setToGame();
+                }
+                break;
+
+            case GameState.Intro:
+                setToGame();
                 break;
 
             case GameState.LevelFail:
@@ -37,4 +44,10 @@ export const checkContinue = () => {
     }
 
     anyKeyOld = anyKey;
+}
+
+function setToGame() {
+    startGame();
+    startLevel();
+    game.state = GameState.Game;
 }

@@ -44,23 +44,27 @@ export const render = () => {
 
     switch (game.state) {
         case GameState.MainMenu:
-            drawWindow(0xff000000, ['CUBE 13', continueText]);
+            drawWindow(0xff000000, ['CUBE 13', '', '', continueText('START')]);
+            break;
+
+        case GameState.Intro:
+            drawWindow(0xff333333, ['13 LEVELS', '13 LIVES', '130 SECONDS', '', '', continueText('START')]);
             break;
 
         case GameState.LevelFail:
-            drawWindow(0xbb660000, ['LEVEL FAIL', 'TRY AGAIN', continueText]);
+            drawWindow(0xbb660000, ['YOU ARE DEAD!', `REMAINING LIVES ${game.lives}`, '', '', continueText('TRY AGAIN')]);
             break;
 
         case GameState.LevelWin:
-            drawWindow(0xbb006600, ['LEVEL PASSED', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, continueText]);
+            drawWindow(0xbb006600, ['LEVEL PASSED!', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, '', '', continueText('CONTINUE')]);
             break;
 
         case GameState.GameOver:
-            drawWindow(0xbb330000, ['GAME OVER', continueText]);
+            drawWindow(0xbb330000, ['GAME OVER!', '', '', continueText('GO HOME')]);
             break;
 
         case GameState.GameWin:
-            drawWindow(0xbb009900, ['CONGRATULATIONS', continueText]);
+            drawWindow(0xbb009900, ['CONGRATULATIONS!', 'YOU ARE THE BEST!', `YOUR TIME ${game.totalTime.toFixed(1)}`, '', '', continueText('GO HOME')]);
             break;
     }
 
@@ -72,7 +76,7 @@ export const render = () => {
     drawImage(screen, getCanvas(world), 0, 0);
 }
 
-const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS ANY KEY TO CONTINUE';
+const continueText = (action: string) => hasTouch ? `TAP TO CONTINUE ${action}` : `PRESS ANY KEY TO ${action}`;
 
 function drawCubes(offsetX: number, offsetY: number) {
     const worldX = shackingOffset.x + offsetX;
