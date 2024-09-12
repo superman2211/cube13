@@ -52,9 +52,6 @@ export const updateLasers = () => {
 }
 
 const updateLaser = (id: Id, direction: number) => {
-    if (id == Id.LaserRight) {
-        console.log();
-    }
     const laserBases = getCubes(id);
 
     for (const laserBase of laserBases) {

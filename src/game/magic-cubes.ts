@@ -7,6 +7,7 @@ import { updateBodies } from "../engine/physics";
 import { floor4, floor7, floor9, sound_cube_place } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { getCube, removeCube } from "../engine/stage";
+import { DEBUG } from "../debug";
 
 export const checkMagicCubePlace = () => {
     if (door.open) {
@@ -32,7 +33,9 @@ export const checkMagicCubePlace = () => {
             delete cube.info.id;
         }
         door.open = true;
-        console.log("door open");
+        if (DEBUG) {
+            console.log("door open");
+        }
     }
 }
 
