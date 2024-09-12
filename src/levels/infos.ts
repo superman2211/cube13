@@ -1,6 +1,6 @@
 import { cellSize, cellSizeHalf } from "../config";
 import { box, } from "../geom/box";
-import { box0, box1, box2, box3, box4, box5, box6, box7, door0, floor0, floor1, floor10, floor2, floor3, floor5, floor6, floor8, laser0, laser1, man8, roof0, roof1, roof2, wall0, wall1, wall11, wall12, wall2, wall3, wall8, wall9 } from "../resources/ids";
+import { box0, box1, box2, box3, box4, box5, box6, box7, door0, floor0, floor1, floor10, floor11, floor2, floor3, floor5, floor6, floor8, laser0, laser1, man8, roof0, roof1, roof2, wall0, wall1, wall11, wall12, wall2, wall3, wall8, wall9 } from "../resources/ids";
 import { Body } from "../engine/physics";
 import { CubeInfo, Id } from "../game/cube";
 import { rotate180, rotate270, rotate90 } from "../geom/transform";
@@ -25,7 +25,9 @@ export const infos: { [key: string]: CubeInfo } = {
     P: { top: { id: floor2 }, front: { id: wall12 }, id: Id.Hole }, // floor
     S: { top: { id: floor5 }, front: { id: wall12 } }, // floor
     W: { front: { id: wall12 } }, // floor
-    Z: { top: { id: floor10 }, front: { id: wall12 }, id: Id.Teleport }, // teleport
+
+    Z: { top: { id: floor10 }, front: { id: wall12 }, id: Id.Teleport1 }, // teleport
+    Q: { top: { id: floor11 }, front: { id: wall12 }, id: Id.Teleport2 }, // teleport
 
     U: { front: { id: wall11 }, body: staticBody }, // left-right bottom
     H: { front: { id: wall11 }, top: { id: roof0, transformation: rotate270 } }, // left bottom 2

@@ -31,7 +31,8 @@ export const enum Id {
     LaserLeft,
     LaserRight,
     LaserLine,
-    Teleport,
+    Teleport1,
+    Teleport2,
 }
 
 export const isRoomCube = (cube: Cube): boolean => cube.x > 0 && cube.x < cellSize * 14 && cube.y > 0 && cube.y < cellSize * 14;

@@ -18,21 +18,28 @@ export const updateTeleport = () => {
                 player.info.front.alpha = undefined;
             }
         }
+
         if (last) {
             if (pointDistance(last, player) > cellSize) {
                 last = undefined;
             }
         } else {
-            const teleports = getCubes(Id.Teleport);
-            if (teleports.length == 2) {
-                checkTeleport(player, teleports[0], teleports[1]);
-                checkTeleport(player, teleports[1], teleports[0]);
-            }
+            checkGroup(player, Id.Teleport1);
+            checkGroup(player, Id.Teleport2);
+
         }
     }
 }
 
-const checkTeleport = (player: Cube, source: Cube, target: Cube) => {
+const checkGroup = (player: Cube, id: Id) => {
+    const teleports = getCubes(id);
+    if (teleports.length == 2) {
+        checkTransition(player, teleports[0], teleports[1]);
+        checkTransition(player, teleports[1], teleports[0]);
+    }
+}
+
+const checkTransition = (player: Cube, source: Cube, target: Cube) => {
     if (last) {
         return;
     }
