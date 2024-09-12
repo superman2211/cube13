@@ -35,6 +35,11 @@ const properties = [
 	'stick',
 	'base',
 	'lives',
+	'brigthness',
+	'laserId',
+	'totalTime',
+	'alpha',
+	'deadTime',
 ];
 
 const regex = new RegExp(properties.join('|'));
