@@ -1,7 +1,7 @@
 import { resetDoor } from "./door";
 import { buildLevel, levels } from "../levels/builder"
 import { fallCubes, updateBodies } from "../engine/physics";
-import { sound_explosion, sound_timer } from "../resources/ids";
+import { sound_explosion, sound_fail, sound_timer } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
@@ -9,6 +9,8 @@ import { limit, mathFloor } from "../utils/math";
 import { startShacking } from "../engine/shaking";
 import { player, resetPlayer } from "./player";
 import { playerDeadTime } from "../config";
+import { DEBUG } from "../debug";
+import { isKeyPressed, Key } from "../engine/input";
 
 export interface Game {
     level: number,
@@ -82,10 +84,18 @@ export const checkGameTimer = () => {
         playSound(sound_explosion);
         startShacking();
     }
+
+    if (DEBUG) {
+        if (isKeyPressed(Key.Space)) {
+            game.timeS = 13;
+        }
+    }
 }
 
 export async function checkGameOver() {
     game.state = game.lives > 0 ? GameState.LevelFail : GameState.GameOver;
+
+    playSound(sound_fail);
 }
 
 

@@ -16,6 +16,7 @@ import { checkContinue as checkStartGame } from "./game/check-continue";
 import { updateShacking } from "./engine/shaking";
 import { checkHole } from "./game/check-hole";
 import { updateLasers } from "./game/laser";
+import { updateBackgroundSound } from "./game/background-sound";
 
 function update() {
 	calculateTime();
@@ -39,6 +40,7 @@ function update() {
 	checkStartGame();
 	runTasks();
 	updateAnimations();
+	updateBackgroundSound();
 	render();
 	requestAnimationFrame(update);
 }
