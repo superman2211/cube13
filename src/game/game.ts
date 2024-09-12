@@ -11,6 +11,7 @@ import { player, resetPlayer } from "./player";
 import { playerDeadTime } from "../config";
 import { DEBUG } from "../debug";
 import { isKeyPressed, Key } from "../engine/input";
+import { removeLasers } from "./laser";
 
 export interface Game {
     level: number,
@@ -83,6 +84,7 @@ export const checkGameTimer = () => {
         fallCubes();
         playSound(sound_explosion);
         startShacking();
+        removeLasers();
     }
 
     if (DEBUG) {

@@ -1,9 +1,9 @@
 import { cellSize, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
-import { Id } from "./cube";
+import { Cube, Id } from "./cube";
 import { point, pointAdd, pointAngle, pointLength, pointNormalize, vector } from "../geom/point";
 import { isKeyPressed, Key } from "../engine/input";
 import { joystick } from "../engine/joystick";
-import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man18, man19, man2, man3, man4, man5, man6, man7, man8, man9, sound_laser } from "../resources/ids";
+import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man18, man19, man2, man20, man21, man3, man4, man5, man6, man7, man8, man9, sound_laser } from "../resources/ids";
 import { getCube, getCubes } from "../engine/stage";
 import { time } from "../engine/time";
 import { mathFloor, mathPI, mathPI2 } from "../utils/math";
@@ -16,7 +16,8 @@ const animationRight = [man4, man5, man6, man7];
 const animationUp = [man8, man9, man10, man11];
 const animationLeft = [man12, man13, man14, man15];
 const animationLaserDie = [man16, man17];
-const animationFall = [man18, man19];
+const animationFallDown = [man18, man19];
+const animationFallUp = [man20, man21];
 
 export interface Player {
     frame: number,
@@ -40,15 +41,11 @@ export const updatePlayer = () => {
 
     if (cube) {
         if (player.deadTime > 0) {
-            let animation = animationLaserDie;
-            player.frame += delta * playerAnimationSpeed;
-            let frame = mathFloor((player.frame) % animation.length);
-            cube.info.front!.id = animation[frame];
+            updatePlayerAnimation(cube, animationLaserDie);
         } else if (cube.z < cellSize) {
-            let animation = animationFall;
-            player.frame += delta * playerAnimationSpeed;
-            let frame = mathFloor((player.frame) % animation.length);
-            cube.info.front!.id = animation[frame];
+            const isUp = animationUp.includes(cube.info.front!.id) || animationFallUp.includes(cube.info.front!.id);
+            const animation = isUp ? animationFallUp : animationFallDown;
+            updatePlayerAnimation(cube, animation);
         } else {
             let direction = point();
 
@@ -106,10 +103,7 @@ export const updatePlayer = () => {
                     animation = animationDown;
                 }
 
-                player.frame += delta * playerAnimationSpeed;
-                let frame = mathFloor((player.frame) % animation.length);
-                cube.info.front!.id = animation[frame];
-
+                updatePlayerAnimation(cube, animation);
                 pointNormalize(direction, delta * playerSpeed);
                 pointAdd(cube, direction);
             }
@@ -140,3 +134,9 @@ export const updatePlayerDeadTime = () => {
         player.deadTime += time.deltaS;
     }
 }
+function updatePlayerAnimation(cube: Cube, animation: number[]) {
+    player.frame += time.deltaS * playerAnimationSpeed;
+    let frame = mathFloor((player.frame) % animation.length);
+    cube.info.front!.id = animation[frame];
+}
+

@@ -19,6 +19,22 @@ export const laserBox: Box = { minX: 0, minY: cellSizeHalf - 1, maxX: cellSize, 
 
 let timeS = 0;
 
+export function removeLasers() {
+    for (let i = 0; i < cubes.length; i++) {
+        const cube = cubes[i];
+        if (cube.info.id === Id.LaserLine ||
+            cube.info.id === Id.LaserRight ||
+            cube.info.id === Id.LaserLeft
+        ) {
+            cubes.splice(i, 1);
+            i--;
+        }
+    }
+
+    lines.splice(0, lines.length);
+}
+
+
 export const updateLasers = () => {
     updateLaser(Id.LaserLeft, -1);
     updateLaser(Id.LaserRight, 1);
