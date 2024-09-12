@@ -119,20 +119,24 @@ export const updatePlayer = () => {
 
 export const updatePlayerDeadTime = () => {
     const cube = getCube(Id.Player);
-    if (cube) {
-        if (cube.info.body) {
-            const laserLines = getCubes(Id.LaserLine);
-            for (const laserLine of laserLines) {
-                if (boxesIntersects(laserBox, laserLine, cube.info.body.box, cube)) {
-                    if (player.deadTime == 0) {
-                        playSound(sound_laser);
-                    }
 
-                    player.deadTime += time.deltaS;
+    if (player.deadTime == 0) {
+        if (cube) {
+            if (cube.info.body) {
+                const laserLines = getCubes(Id.LaserLine);
+                for (const laserLine of laserLines) {
+                    if (boxesIntersects(laserBox, laserLine, cube.info.body.box, cube)) {
+                        if (player.deadTime == 0) {
+                            playSound(sound_laser);
+                        }
+                        player.deadTime += 0.001;
+                    }
                 }
             }
+        } else {
+            player.deadTime = playerDeadTime;
         }
     } else {
-        player.deadTime = playerDeadTime;
+        player.deadTime += time.deltaS;
     }
 }

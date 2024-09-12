@@ -1,6 +1,6 @@
 import { cellSize, cellSizeHalf } from "../config";
 import { bodies } from "../engine/physics";
-import { cubes, getCube, getCubes, removeCube } from "../engine/stage"
+import { cubes, getCubes, removeCube } from "../engine/stage"
 import { time } from "../engine/time";
 import { Box, boxesIntersects } from "../geom/box";
 import { Point, pointAdd } from "../geom/point";
@@ -20,7 +20,26 @@ export const laserBox: Box = { minX: 0, minY: cellSizeHalf - 1, maxX: cellSize, 
 let timeS = 0;
 
 export const updateLasers = () => {
-    const laserBases = getCubes(Id.LaserLeft);
+    updateLaser(Id.LaserLeft, -1);
+    updateLaser(Id.LaserRight, 1);
+
+    timeS -= time.deltaS;
+    if (timeS < 0) {
+        timeS = 0.1;
+
+        for (const laserLines of lines) {
+            for (const laserLine of laserLines) {
+                laserLine.info.front!.id = randomSelect(linesImages);
+            }
+        }
+    }
+}
+
+const updateLaser = (id: Id, direction: number) => {
+    if (id == Id.LaserRight) {
+        console.log();
+    }
+    const laserBases = getCubes(id);
 
     for (const laserBase of laserBases) {
         if (laserBase) {
@@ -42,15 +61,19 @@ export const updateLasers = () => {
             }
 
             const first = laserLines[0];
-            first.x = laserBase.x;
-            rayCast(first, { x: -1, y: 0 });
+            first.x = direction < 0 ? laserBase.x : laserBase.x;
+            rayCast(first, direction);
 
             let x = first.x;
 
             for (const laserLine of laserLines) {
                 laserLine.x = x;
 
-                if (x < laserBase.x + cellSize) {
+                const visible = direction < 0 ? x < laserBase.x + cellSize : x > laserBase.x - cellSize;
+
+                x -= cellSize * direction;
+
+                if (visible) {
                     if (!cubes.includes(laserLine)) {
                         cubes.push(laserLine);
                     }
@@ -59,27 +82,15 @@ export const updateLasers = () => {
                         removeCube(laserLine);
                     }
                 }
-
-                x += cellSize;
-            }
-        }
-    }
-
-    timeS -= time.deltaS;
-    if (timeS < 0) {
-        timeS = 0.1;
-
-        for (const laserLines of lines) {
-            for (const laserLine of laserLines) {
-                laserLine.info.front!.id = randomSelect(linesImages);
             }
         }
     }
 }
 
-const rayCast = (laserLine: Cube, direction: Point) => {
-    while (laserLine.x > cellSize) {
-        pointAdd(laserLine, direction);
+const rayCast = (laserLine: Cube, direction: number) => {
+    let i = 13 * cellSize;
+    while (i--) {
+        laserLine.x += direction;
         if (hasIntersection(laserLine)) {
             break;
         }

@@ -29,6 +29,7 @@ export const enum Id {
     DoorExit,
     Hole,
     LaserLeft,
+    LaserRight,
     LaserLine,
 }
 

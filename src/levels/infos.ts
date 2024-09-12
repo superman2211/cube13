@@ -1,6 +1,6 @@
 import { cellSize, cellSizeHalf } from "../config";
 import { box, } from "../geom/box";
-import { box0, box1, box2, box3, box4, box5, box6, box7, door0, floor0, floor1, floor2, floor3, floor5, floor6, floor8, laser0, man8, roof0, roof1, roof2, wall0, wall1, wall11, wall12, wall2, wall3, wall8, wall9 } from "../resources/ids";
+import { box0, box1, box2, box3, box4, box5, box6, box7, door0, floor0, floor1, floor2, floor3, floor5, floor6, floor8, laser0, laser1, man8, roof0, roof1, roof2, wall0, wall1, wall11, wall12, wall2, wall3, wall8, wall9 } from "../resources/ids";
 import { Body } from "../engine/physics";
 import { CubeInfo, Id } from "../game/cube";
 import { rotate180, rotate270, rotate90 } from "../geom/transform";
@@ -51,6 +51,7 @@ export const infos: { [key: string]: CubeInfo } = {
     y: { top: { id: floor8 }, front: { id: wall12 }, id: Id.FireFloor }, // fire floor
 
     l: { front: { id: laser0 }, id: Id.LaserLeft }, // laser
+    i: { front: { id: laser1 }, id: Id.LaserRight }, // laser
 
     t: { front: { id: wall9 }, top: { id: roof0 }, id: Id.DoorExit }, // top exit
     d: { front: { id: door0 }, top: { id: roof0 }, body: staticBody, id: Id.Door }, // door
