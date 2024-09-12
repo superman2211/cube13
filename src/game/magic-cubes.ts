@@ -45,7 +45,7 @@ const checkMagicCube = (magicCubes: Cube[], cubeId: Id, floorId: Id, floorImageI
             const floor = getCube(floorId);
 
             if (floor) {
-                if (pointDistance(cube, floor) < 2.0) {
+                if (pointDistance(cube, floor) < 3.0) {
                     pointCopy(floor, cube);
 
                     delete cube.info.body;
