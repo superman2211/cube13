@@ -1,4 +1,4 @@
-import { Cube, isFloorCube, isObjectCube } from "../game/cube";
+import { Cube, Id, isFloorCube, isObjectCube } from "../game/cube";
 import { box, Box, boxesIntersects } from "../geom/box";
 import { pointNormalize, vector } from "../geom/point";
 import { cubes, removeCube } from "./stage"
@@ -8,6 +8,8 @@ import { animate, quadraticIn } from "./animation";
 import { timeout } from "../utils/browser";
 import { DEBUG } from "../debug";
 import { defaultBox } from "../levels/infos";
+import { playSound } from "../resources/sounds";
+import { sound_man_fall } from "../resources/ids";
 
 export const bodies: Cube[] = [];
 const floor: Cube[] = [];
@@ -163,4 +165,8 @@ export const fallCube = (cube: Cube) => {
     delete cube.info.body;
     updateBodies();
     animate(cube, 'z', cube.z - cellSize * 6, 0.0, 0.5, quadraticIn, () => removeCube(cube));
+
+    if (cube.info.id === Id.Player) {
+        playSound(sound_man_fall, 0.7);
+    }
 }
