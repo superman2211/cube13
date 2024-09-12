@@ -1,9 +1,5 @@
 # Cube13
-Game for [js13kgames competition 2023](https://js13kgames.com/)
-
-[PLAY on js13kgames!]()
-
-[PLAY LAST VERSION on GitHub!]()
+Game for [js13kgames competition 2024](https://js13kgames.com/)
 
 ## Development
 Install
