@@ -7,7 +7,7 @@ import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man
 import { getCube, getCubes } from "../engine/stage";
 import { time } from "../engine/time";
 import { mathFloor, mathPI, mathPI2 } from "../utils/math";
-import { checkGameOver, game, GameState } from "./game";
+import { checkGameOver, game } from "./game";
 import { boxesIntersects } from "../geom/box";
 import { laserBox } from "./laser";
 import { playSound } from "../resources/sounds";
@@ -27,11 +27,6 @@ export interface Player {
 export const player: Player = {
     frame: 0,
     deadTime: 0,
-}
-
-export const resetPlayer = () => {
-    player.frame = 0;
-    player.deadTime = 0;
 }
 
 export const updatePlayer = () => {

@@ -7,7 +7,7 @@ import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
 import { limit, mathFloor } from "../utils/math";
 import { startShacking } from "../engine/shaking";
-import { resetPlayer } from "./player";
+import { player } from "./player";
 
 export interface Game {
     level: number,
@@ -39,10 +39,10 @@ export const startGame = () => {
 
 export const startLevel = () => {
     game.timeS = 130;
+    player.deadTime = 0;
 
     buildLevel(game.level);
     updateBodies();
-    resetPlayer();
     resetDoor();
     prepareImagesTasks();
 }
