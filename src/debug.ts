@@ -1,2 +1,2 @@
 export const DEBUG = false;
-export const FPS = true;
+export const FPS = false;
