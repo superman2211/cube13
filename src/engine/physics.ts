@@ -9,7 +9,7 @@ import { timeout } from "../utils/browser";
 import { DEBUG } from "../debug";
 import { defaultBox } from "../levels/infos";
 
-const bodies: Cube[] = [];
+export const bodies: Cube[] = [];
 const floor: Cube[] = [];
 const objects: Cube[] = [];
 

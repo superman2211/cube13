@@ -15,6 +15,7 @@ import { updateScreen } from "./engine/screen";
 import { checkContinue as checkStartGame } from "./game/check-continue";
 import { updateShacking } from "./engine/shaking";
 import { checkHole } from "./game/check-hole";
+import { updateLasers } from "./game/laser";
 
 function update() {
 	calculateTime();
@@ -23,6 +24,7 @@ function update() {
 
 	if (game.state == GameState.Game) {
 		updatePlayer();
+		updateLasers();
 		checkMagicCubePlace();
 		checkHole();
 		updateDoor();
