@@ -17,6 +17,7 @@ import { updateShacking } from "./engine/shaking";
 import { checkHole } from "./game/check-hole";
 import { updateLasers } from "./game/laser";
 import { updateBackgroundSound } from "./game/background-sound";
+import { updateTeleport } from "./game/teleport";
 
 function update() {
 	calculateTime();
@@ -29,6 +30,7 @@ function update() {
 		checkMagicCubePlace();
 		checkHole();
 		updateDoor();
+		updateTeleport();
 		checkNextLevel();
 		checkGameTimer();
 		updatePlayerDeadTime();

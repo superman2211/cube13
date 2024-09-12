@@ -164,12 +164,20 @@ const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, rad
 const drawCubeImage = (context: CanvasRenderingContext2D, x: number, y: number, image?: Image) => {
     if (image) {
         const canvas = getImage(image.id, image.brigthness);
+
         const transform = image.transformation || identity;
         context.setTransform(
             transform.a, transform.b, transform.c, transform.d,
             transform.e + x, transform.f + y
         );
+
+        if (image.alpha !== undefined) {
+            context.globalAlpha = image.alpha;
+        }
+
         drawImage(context, canvas, 0, 0);
+
+        context.globalAlpha = 1;
     }
 }
 
