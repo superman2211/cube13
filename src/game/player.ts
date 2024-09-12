@@ -1,4 +1,4 @@
-import { cellSize, playerAnimationSpeed, playerLaserTime as playerDeadTime, playerSpeed } from "../config";
+import { cellSize, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
 import { Id } from "./cube";
 import { point, pointAdd, pointAngle, pointLength, pointNormalize, vector } from "../geom/point";
 import { isKeyPressed, Key } from "../engine/input";
@@ -7,7 +7,6 @@ import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man
 import { getCube, getCubes } from "../engine/stage";
 import { time } from "../engine/time";
 import { mathFloor, mathPI, mathPI2 } from "../utils/math";
-import { checkGameOver, game } from "./game";
 import { boxesIntersects } from "../geom/box";
 import { laserBox } from "./laser";
 import { playSound } from "../resources/sounds";
@@ -27,6 +26,11 @@ export interface Player {
 export const player: Player = {
     frame: 0,
     deadTime: 0,
+}
+
+export const resetPlayer = () => {
+    player.frame = 0;
+    player.deadTime = 0;
 }
 
 export const updatePlayer = () => {
@@ -113,7 +117,7 @@ export const updatePlayer = () => {
     }
 }
 
-export const checkPlayerDie = () => {
+export const updatePlayerDeadTime = () => {
     const cube = getCube(Id.Player);
     if (cube) {
         if (cube.info.body) {
@@ -130,10 +134,5 @@ export const checkPlayerDie = () => {
         }
     } else {
         player.deadTime = playerDeadTime;
-    }
-
-    if (player.deadTime >= playerDeadTime) {
-        game.lives--;
-        checkGameOver();
     }
 }

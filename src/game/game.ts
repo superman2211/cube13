@@ -7,7 +7,8 @@ import { prepareImagesTasks } from "../engine/tasks";
 import { time } from "../engine/time";
 import { limit, mathFloor } from "../utils/math";
 import { startShacking } from "../engine/shaking";
-import { player } from "./player";
+import { player, resetPlayer } from "./player";
+import { playerDeadTime } from "../config";
 
 export interface Game {
     level: number,
@@ -39,11 +40,11 @@ export const startGame = () => {
 
 export const startLevel = () => {
     game.timeS = 130;
-    player.deadTime = 0;
 
     buildLevel(game.level);
     updateBodies();
     resetDoor();
+    resetPlayer();
     prepareImagesTasks();
 }
 
@@ -51,6 +52,12 @@ export const nextLevel = () => {
     game.level++;
 }
 
+export const checkPlayerDie = () => {
+    if (player.deadTime >= playerDeadTime) {
+        game.lives--;
+        checkGameOver();
+    }
+}
 export const checkGameTimer = () => {
     if (game.timeS <= 0) {
         return;

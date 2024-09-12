@@ -1,11 +1,11 @@
 import { updateAnimations } from "./engine/animation";
 import { checkMagicCubePlace } from "./game/magic-cubes";
 import { updateDoor } from "./game/door";
-import { checkGameTimer, game, GameState, startGame, startLevel } from "./game/game";
+import { checkGameTimer, checkPlayerDie, game, GameState, startGame, startLevel } from "./game/game";
 import { render } from "./engine/graphics";
 import { initInput } from "./engine/input";
 import { updatePhysics } from "./engine/physics";
-import { checkPlayerDie, updatePlayer } from "./game/player";
+import { updatePlayerDeadTime, updatePlayer } from "./game/player";
 import { loadResources } from "./resources/loader";
 import { calculateTime } from "./engine/time";
 import { checkNextLevel } from "./game/next-level";
@@ -30,6 +30,7 @@ function update() {
 		updateDoor();
 		checkNextLevel();
 		checkGameTimer();
+		updatePlayerDeadTime();
 		checkPlayerDie();
 	}
 
