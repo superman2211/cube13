@@ -1,6 +1,5 @@
 node_modules
 dist/esm
-dist/cube13.zip
 temp
 *.blend1
 .DS_Store
