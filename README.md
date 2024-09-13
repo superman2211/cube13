@@ -1,6 +1,8 @@
 # Cube13
 Game for [js13kgames competition 2024](https://js13kgames.com/)
 
+[Play game on js13kgames](https://dev.js13kgames.com/2024/games/cube-13)
+
 ## Decription
 You have to find a way out of the cube.  Traps and puzzles will be on your way.
 
