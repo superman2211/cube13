@@ -12,7 +12,7 @@ import { getIdByCharCode } from "../resources/font";
 import { game, GameState } from "../game/game";
 import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
-import { icon0, icon1, icon2 } from "../resources/ids";
+import { icon0, icon1, icon2, man0, man17, man22 } from "../resources/ids";
 import { levels } from "../levels/builder";
 import { colorToString } from "../utils/color";
 import { point, Point } from "../geom/point";
@@ -44,7 +44,7 @@ export const render = () => {
 
     switch (game.state) {
         case GameState.MainMenu:
-            drawWindow(0xff000000, ['CUBE 13', '', scoreTimeText(), '', continueText('START')]);
+            drawWindow(0xff000000, ['CUBE 13', man0, '', scoreTimeText(), '', continueText('START')]);
             break;
 
         case GameState.Intro:
@@ -52,19 +52,19 @@ export const render = () => {
             break;
 
         case GameState.LevelFail:
-            drawWindow(0xbb660000, ['YOU ARE DEAD!', `LIVES @ ${game.lives}`, '', '', continueText('TRY AGAIN')]);
+            drawWindow(0xdd660000, ['YOU ARE DEAD!', man17, '', `LIVES @ ${game.lives}`, '', '', continueText('TRY AGAIN')]);
             break;
 
         case GameState.LevelWin:
-            drawWindow(0xbb006600, ['LEVEL PASSED!', `NEXT LEVEL % ${game.level + 2}`, `TOTAL LEVELS % ${levels.length}`, '', '', continueText('CONTINUE')]);
+            drawWindow(0xdd006600, ['LEVEL PASSED!', man22, '', `NEXT LEVEL % ${game.level + 2}`, `TOTAL LEVELS % ${levels.length}`, '', '', continueText('CONTINUE')]);
             break;
 
         case GameState.GameOver:
-            drawWindow(0xbb330000, ['GAME OVER!', '', '', continueText('GO HOME')]);
+            drawWindow(0xdd330000, ['GAME OVER!', man17, '', '', continueText('GO HOME')]);
             break;
 
         case GameState.GameWin:
-            drawWindow(0xbb009900, ['YOU WIN!!!', 'CONGRATULATIONS!', 'YOU ARE THE BEST!', scoreTimeText(), '', '', continueText('GO HOME')]);
+            drawWindow(0xdd009900, ['YOU WIN!!!', man22, '', 'CONGRATULATIONS!', 'YOU ARE THE BEST!', scoreTimeText(), '', '', continueText('GO HOME')]);
             break;
     }
 
@@ -209,7 +209,7 @@ const updateCubesShading = () => {
     }
 }
 
-function drawWindow(color: number, texts: string[]) {
+function drawWindow(color: number, content: (string | number)[]) {
     const width = getWidth(world);
     const height = getHeight(world);
     const x = 0;
@@ -220,38 +220,56 @@ function drawWindow(color: number, texts: string[]) {
     world.fillStyle = colorToString(color);
     world.fillRect(x, y, width, height);
 
-    const textsHeight = (texts.length * 3 - 2) * 8;
-    const textsWidth = texts.reduce((p, c) => mathMax(p, c.length), 0) * 8;
+    const border = cellSize;
 
-    const textX = x + (width - textsWidth) / 2;
-    const textY = y + (height - textsHeight) / 2;
+    let textsHeight = border * content.length;//(content.length * 3 - 2) * 8;
+    let textsWidth = 0; //content.reduce((p, c) => mathMax(p, c.length), 0) * 8;
 
-    for (let i = 0; i < texts.length; i++) {
-        const text = texts[i]
-        drawText(
-            world,
-            mathFloor(textX + (textsWidth - text.length * 8) / 2),
-            mathFloor(textY + i * 3 * 8),
-            text,
-            0xffffff
-        );
+    for (let i = 0; i < content.length; i++) {
+        const c = content[i];
+        switch (typeof c) {
+            case 'string':
+                const text = c;
+                textsHeight += 8;
+                textsWidth = mathMax(textsWidth, text.length * 8);
+                break;
+
+            case 'number':
+                const image = images[c];
+                textsHeight += image.height;
+                textsWidth = mathMax(textsWidth, image.width);
+                break;
+        }
     }
 
-    // drawText(
-    //     world,
-    //     mathFloor(x + (width - text.length * 8) / 2),
-    //     y + cellSize * 3,
-    //     text,
-    //     0xffffff
-    // );
+    const contentX = x + (width - textsWidth) / 2;
+    let contentY = y + (height - textsHeight) / 2;
 
-    // const continueText = hasTouch ? 'TAP TO CONTINUE' : 'PRESS SPACE TO CONTINUE';
+    for (let i = 0; i < content.length; i++) {
+        const c = content[i];
+        switch (typeof c) {
+            case 'string':
+                const text = c;
+                drawText(
+                    world,
+                    mathFloor(contentX + (textsWidth - text.length * 8) / 2),
+                    mathFloor(contentY),
+                    text,
+                    0xffffff
+                );
+                contentY += 8 + border;
+                break;
 
-    // drawText(
-    //     world,
-    //     mathFloor(x + (width - continueText.length * 8) / 2),
-    //     y + cellSize * 6,
-    //     continueText,
-    //     0xffffff
-    // );
+            case 'number':
+                const image = images[c];
+                drawImage(
+                    world,
+                    image,
+                    mathFloor(contentX + (textsWidth - image.width) / 2),
+                    mathFloor(contentY)
+                );
+                contentY += image.height + border;
+                break;
+        }
+    }
 }
