@@ -36,11 +36,13 @@ export const initInput = () => {
         // }
         anyKey = true;
         keys[e.keyCode] = true;
+        e.preventDefault();
     }
 
     domDocument.onkeyup = (e) => {
         anyKey = false;
         unpressKey(e.keyCode);
+        e.preventDefault();
     }
 
     const screenCanvas = getCanvas(screen);
@@ -52,6 +54,7 @@ export const initInput = () => {
                 const { clientX, clientY, identifier } = changedTouches[i];
                 handler(identifier, point(clientX * dpr, clientY * dpr));
             }
+            e.preventDefault();
         };
 
         const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
