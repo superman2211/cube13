@@ -12,7 +12,7 @@ import { getIdByCharCode } from "../resources/font";
 import { game, GameState } from "../game/game";
 import { joystick } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
-import { icon0, icon1 } from "../resources/ids";
+import { icon0, icon1, icon2 } from "../resources/ids";
 import { levels } from "../levels/builder";
 import { colorToString } from "../utils/color";
 import { point, Point } from "../geom/point";
@@ -44,19 +44,19 @@ export const render = () => {
 
     switch (game.state) {
         case GameState.MainMenu:
-            drawWindow(0xff000000, ['CUBE 13', '', '', continueText('START')]);
+            drawWindow(0xff000000, ['CUBE 13', '', scoreTimeText(), '', continueText('START')]);
             break;
 
         case GameState.Intro:
-            drawWindow(0xff333333, ['13 LEVELS', '13 LIVES', '130 SECONDS', '', '', continueText('START')]);
+            drawWindow(0xff333333, ['13 LEVELS %', '13 LIVES @', '130 SECONDS #', '', '', continueText('START')]);
             break;
 
         case GameState.LevelFail:
-            drawWindow(0xbb660000, ['YOU ARE DEAD!', `REMAINING LIVES ${game.lives}`, '', '', continueText('TRY AGAIN')]);
+            drawWindow(0xbb660000, ['YOU ARE DEAD!', `LIVES @ ${game.lives}`, '', '', continueText('TRY AGAIN')]);
             break;
 
         case GameState.LevelWin:
-            drawWindow(0xbb006600, ['LEVEL PASSED!', `NEXT LEVEL ${game.level + 2}`, `TOTAL LEVELS ${levels.length}`, '', '', continueText('CONTINUE')]);
+            drawWindow(0xbb006600, ['LEVEL PASSED!', `NEXT LEVEL % ${game.level + 2}`, `TOTAL LEVELS % ${levels.length}`, '', '', continueText('CONTINUE')]);
             break;
 
         case GameState.GameOver:
@@ -64,7 +64,7 @@ export const render = () => {
             break;
 
         case GameState.GameWin:
-            drawWindow(0xbb009900, ['CONGRATULATIONS!', 'YOU ARE THE BEST!', `YOUR TIME ${game.totalTime.toFixed(1)}`, '', '', continueText('GO HOME')]);
+            drawWindow(0xbb009900, ['YOU WIN!!!', 'CONGRATULATIONS!', 'YOU ARE THE BEST!', scoreTimeText(), '', '', continueText('GO HOME')]);
             break;
     }
 
@@ -76,6 +76,7 @@ export const render = () => {
     drawImage(screen, getCanvas(world), 0, 0);
 }
 
+const scoreTimeText = () => game.scoreTime > 0 ? `YOUR TIME # ${game.scoreTime.toFixed(1)} SECONDS` : '';
 const continueText = (action: string) => hasTouch ? `TAP TO CONTINUE ${action}` : `PRESS ANY KEY TO ${action}`;
 
 function drawCubes(offsetX: number, offsetY: number) {
@@ -138,14 +139,21 @@ const drawFPS = (worldHeight: number) => {
     }
 }
 
+const textSymbols: { [key: string]: number } = { 35: icon1, 64: icon0, 37: icon2 };
+
 const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text: string, color: number) => {
     resetTransform(context);
     for (let i = 0; i < text.length; i++) {
         const code = text.charCodeAt(i);
-        const id = getIdByCharCode(code);
-        if (id !== undefined) {
-            const char = getColoredImage(id, color);
-            drawImage(context, char, x + i * 8, y);
+        if (textSymbols[code] !== undefined) {
+            const symbol = images[textSymbols[code]];
+            drawImage(context, symbol, x + i * 8, y);
+        } else {
+            const id = getIdByCharCode(code);
+            if (id !== undefined) {
+                const char = getColoredImage(id, color);
+                drawImage(context, char, x + i * 8, y);
+            }
         }
     }
 }

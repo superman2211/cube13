@@ -19,6 +19,7 @@ export interface Game {
     timeS: number,
     lives: number,
     totalTime: number,
+    scoreTime: number,
 }
 
 export const enum GameState {
@@ -37,6 +38,7 @@ export const game: Game = {
     timeS: 0,
     lives: 0,
     totalTime: 0,
+    scoreTime: 0,
 }
 
 export const startGame = () => {
@@ -96,7 +98,10 @@ export const checkGameTimer = () => {
     if (DEBUG) {
         if (isKeyPressed(Key.Space)) {
             game.timeS = 13;
-            game.level = 11;
+        }
+
+        if (isKeyPressed(Key.Enter)) {
+            game.level = 12;
         }
     }
 }

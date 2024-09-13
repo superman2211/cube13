@@ -22,6 +22,7 @@ export const checkNextLevel = () => {
 
             if (game.level == levels.length - 1) {
                 game.state = GameState.GameWin;
+                game.scoreTime = game.totalTime;
             } else {
                 game.state = GameState.LevelWin;
             }
