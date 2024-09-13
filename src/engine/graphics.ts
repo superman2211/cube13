@@ -77,7 +77,7 @@ export const render = () => {
 }
 
 const scoreTimeText = () => game.scoreTime > 0 ? `YOUR TIME # ${game.scoreTime.toFixed(1)} SECONDS` : '';
-const continueText = (action: string) => hasTouch ? `TAP TO CONTINUE ${action}` : `PRESS ANY KEY TO ${action}`;
+const continueText = (action: string) => hasTouch ? `TAP TO ${action}` : `PRESS ANY KEY TO ${action}`;
 
 function drawCubes(offsetX: number, offsetY: number) {
     const worldX = shackingOffset.x + offsetX;
