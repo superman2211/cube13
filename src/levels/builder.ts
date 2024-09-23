@@ -88,8 +88,6 @@ if (DEBUG) {
             Id.Player,
             Id.Door,
             Id.DoorExit,
-            // Id.SunCube,
-            // Id.SunFloor,
         ];
 
         for (const layer of layers) {

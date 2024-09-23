@@ -3,7 +3,6 @@ import { bodies } from "../engine/physics";
 import { cubes, getCubes, removeCube } from "../engine/stage"
 import { time } from "../engine/time";
 import { Box, boxesIntersects } from "../geom/box";
-import { Point, pointAdd } from "../geom/point";
 import { laser2, laser3, laser4, laser5 } from "../resources/ids";
 import { cloneObject } from "../utils/browser";
 import { randomSelect } from "../utils/math";

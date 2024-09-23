@@ -1,5 +1,5 @@
 import { Cube, Id, isFloorCube, isObjectCube } from "../game/cube";
-import { box, Box, boxesIntersects } from "../geom/box";
+import { Box, boxesIntersects } from "../geom/box";
 import { pointNormalize, vector } from "../geom/point";
 import { cubes, removeCube } from "./stage"
 import { mathAbs, mathFloor, randomRange } from "../utils/math";

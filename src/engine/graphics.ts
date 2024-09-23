@@ -1,4 +1,4 @@
-import { cells, cellSize, joystickBaseRadius, joystickStickRadius } from "../config";
+import { cellSize, joystickBaseRadius, joystickStickRadius } from "../config";
 import { Cube } from "../game/cube";
 import { DEBUG, FPS } from "../debug";
 import { identity } from "../geom/transform";
@@ -6,7 +6,7 @@ import { getColoredImage, getImage, images } from "../resources/images";
 import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "../resources/image";
-import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, hasTouch, now, resetTransform, setHeight, setWidth } from "../utils/browser";
+import { clear, createContext, drawImage, getCanvas, getHeight, getWidth, hasTouch, now, resetTransform, setHeight, setWidth } from "../utils/browser";
 import { limit, mathFloor, mathMax, mathMin, mathPI, mathPI2, mathRound } from "../utils/math";
 import { getIdByCharCode } from "../resources/font";
 import { game, GameState } from "../game/game";
@@ -15,7 +15,7 @@ import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./scre
 import { icon0, icon1, icon2, man0, man17, man22 } from "../resources/ids";
 import { levels } from "../levels/builder";
 import { colorToString } from "../utils/color";
-import { point, Point } from "../geom/point";
+import { Point } from "../geom/point";
 import { shackingOffset } from "./shaking";
 import { tasksCount } from "./tasks";
 

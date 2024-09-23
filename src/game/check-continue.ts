@@ -1,4 +1,4 @@
-import { isClicked, resetClick, isKeyPressed, Key, unpressKey, anyKey } from "../engine/input"
+import { isClicked, resetClick, anyKey } from "../engine/input"
 import { game, GameState, nextLevel, startGame, startLevel } from "./game"
 
 let anyKeyOld = false;

@@ -1,4 +1,3 @@
-import { DEBUG } from "../debug";
 import { domDocument, dpr, getCanvas, hasTouch, now } from "../utils/browser";
 import { screen } from "./screen";
 import { point, Point } from "../geom/point";
@@ -32,9 +31,6 @@ export const unpressKey = (code: Key) => delete keys[code];
 
 export const initInput = () => {
     domDocument.onkeydown = (e) => {
-        // if (DEBUG) {
-        //     console.log('keyCode', e.keyCode);
-        // }
         anyKey = true;
         keys[e.keyCode] = true;
         e.preventDefault();

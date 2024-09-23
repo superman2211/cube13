@@ -1,4 +1,4 @@
-import { animate, bounceIn, bounceOut, linear } from "../engine/animation";
+import { animate, bounceOut } from "../engine/animation";
 import { cellSizeHalf } from "../config";
 import { Cube, Id } from "./cube";
 import { door } from "./door";

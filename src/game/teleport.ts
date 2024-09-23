@@ -1,7 +1,7 @@
 import { cellSize, cellSizeHalf } from "../config";
 import { getCube, getCubes } from "../engine/stage"
 import { time } from "../engine/time";
-import { pointCopy, pointDistance } from "../geom/point";
+import { pointDistance } from "../geom/point";
 import { sound_teleport } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { Cube, Id } from "./cube";

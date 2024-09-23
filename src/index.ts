@@ -1,7 +1,7 @@
 import { updateAnimations } from "./engine/animation";
 import { checkMagicCubePlace } from "./game/magic-cubes";
 import { updateDoor } from "./game/door";
-import { checkGameTimer, checkPlayerDie, game, GameState, startGame, startLevel } from "./game/game";
+import { checkGameTimer, checkPlayerDie, game, GameState } from "./game/game";
 import { render } from "./engine/graphics";
 import { initInput } from "./engine/input";
 import { updatePhysics } from "./engine/physics";

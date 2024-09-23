@@ -5,7 +5,7 @@ import { door0, door1, door2, door3, sound_door_open, wall10 } from "../resource
 import { playSound } from "../resources/sounds";
 import { getCube } from "../engine/stage";
 import { time } from "../engine/time";
-import { mathFloor, mathMax, mathMin } from "../utils/math";
+import { mathFloor } from "../utils/math";
 
 export interface Door {
     open: boolean,

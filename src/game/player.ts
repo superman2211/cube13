@@ -1,16 +1,15 @@
-import { cellSize, joystickBaseRadius, joystickPower, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
+import { cellSize, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
 import { Cube, Id } from "./cube";
-import { point, pointAdd, pointAngle, pointLength, pointNormalize, vector } from "../geom/point";
+import { point, pointAdd, pointLength, pointNormalize } from "../geom/point";
 import { isKeyPressed, Key } from "../engine/input";
-import { joystick, joystickStep } from "../engine/joystick";
+import { joystickStep } from "../engine/joystick";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man18, man19, man2, man20, man21, man3, man4, man5, man6, man7, man8, man9, sound_laser } from "../resources/ids";
 import { getCube, getCubes } from "../engine/stage";
 import { time } from "../engine/time";
-import { mathFloor, mathPI, mathPI2 } from "../utils/math";
+import { mathFloor } from "../utils/math";
 import { boxesIntersects } from "../geom/box";
 import { laserBox } from "./laser";
 import { playSound } from "../resources/sounds";
-import { gameScale } from "../engine/screen";
 
 const animationDown = [man0, man1, man2, man3];
 const animationRight = [man4, man5, man6, man7];

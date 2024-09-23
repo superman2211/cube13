@@ -1,7 +1,7 @@
 import { cellSizeHalf } from "../config";
 import { Id } from "./cube"
 import { DEBUG } from "../debug";
-import { game, GameState, nextLevel } from "./game";
+import { game, GameState } from "./game";
 import { sound_win } from "../resources/ids";
 import { playSound } from "../resources/sounds";
 import { getCube } from "../engine/stage"
