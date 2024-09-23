@@ -1,8 +1,8 @@
-import { cellSize, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
+import { cellSize, joystickBaseRadius, joystickPower, playerAnimationSpeed, playerDeadTime, playerSpeed } from "../config";
 import { Cube, Id } from "./cube";
 import { point, pointAdd, pointAngle, pointLength, pointNormalize, vector } from "../geom/point";
 import { isKeyPressed, Key } from "../engine/input";
-import { joystick } from "../engine/joystick";
+import { joystick, joystickStep } from "../engine/joystick";
 import { man0, man1, man10, man11, man12, man13, man14, man15, man16, man17, man18, man19, man2, man20, man21, man3, man4, man5, man6, man7, man8, man9, sound_laser } from "../resources/ids";
 import { getCube, getCubes } from "../engine/stage";
 import { time } from "../engine/time";
@@ -10,6 +10,7 @@ import { mathFloor, mathPI, mathPI2 } from "../utils/math";
 import { boxesIntersects } from "../geom/box";
 import { laserBox } from "./laser";
 import { playSound } from "../resources/sounds";
+import { gameScale } from "../engine/screen";
 
 const animationDown = [man0, man1, man2, man3];
 const animationRight = [man4, man5, man6, man7];
@@ -61,27 +62,22 @@ export const updatePlayer = () => {
                 direction.y = 1;
             }
 
-            if (joystick) {
-                const joystickDirection = vector(joystick.base, joystick.stick);
-                let angle = pointAngle(joystickDirection);
-                if (angle < 0) angle += mathPI2;
-                const step = mathFloor((angle + mathPI / 8) / (mathPI / 4));
-
-                if (step == 0) {
+            if (joystickStep != -1) {
+                if (joystickStep == 0) {
                     direction = point(1, 0);
-                } else if (step == 1) {
+                } else if (joystickStep == 1) {
                     direction = point(1, 1);
-                } else if (step == 2) {
+                } else if (joystickStep == 2) {
                     direction = point(0, 1);
-                } else if (step == 3) {
+                } else if (joystickStep == 3) {
                     direction = point(-1, 1);
-                } else if (step == 4) {
+                } else if (joystickStep == 4) {
                     direction = point(-1, 0);
-                } else if (step == 5) {
+                } else if (joystickStep == 5) {
                     direction = point(-1, -1);
-                } else if (step == 6) {
+                } else if (joystickStep == 6) {
                     direction = point(0, -1);
-                } else if (step == 7) {
+                } else if (joystickStep == 7) {
                     direction = point(1, -1);
                 } else {
                     direction = point(1, 0);

@@ -7,10 +7,10 @@ import { cubes } from "./stage";
 import { time } from "./time";
 import { Image } from "../resources/image";
 import { clear, createContext, domDocument, dpr, drawImage, getCanvas, getContext, getHeight, getWidth, hasTouch, now, resetTransform, setHeight, setWidth } from "../utils/browser";
-import { limit, mathFloor, mathMax, mathMin, mathPI2, mathRound } from "../utils/math";
+import { limit, mathFloor, mathMax, mathMin, mathPI, mathPI2, mathRound } from "../utils/math";
 import { getIdByCharCode } from "../resources/font";
 import { game, GameState } from "../game/game";
-import { joystick } from "./joystick";
+import { joystick, joystickStep } from "./joystick";
 import { gameScale, windowHeight, windowWidth, stageWidth, screen } from "./screen";
 import { icon0, icon1, icon2, man0, man17, man22 } from "../resources/ids";
 import { levels } from "../levels/builder";
@@ -99,8 +99,19 @@ function drawCubes(offsetX: number, offsetY: number) {
 
 function drawJoystick() {
     if (joystick) {
-        drawCircle(world, joystick.base.x / gameScale, joystick.base.y / gameScale, joystickBaseRadius, 0x55ffffff);
-        drawCircle(world, joystick.stick.x / gameScale, joystick.stick.y / gameScale, joystickStickRadius, 0x99ffffff);
+        drawCircle(world, joystick.base, joystickBaseRadius, 0x55ffffff);
+        drawCircle(world, joystick.stick, joystickStickRadius, 0x99ffffff);
+
+        if (joystickStep != -1) {
+            const angleStart = joystickStep * mathPI / 4 - mathPI / 8;
+            const angleEnd = angleStart + mathPI / 4;
+
+            drawArc(world, joystick.base, joystickBaseRadius * 1.1, angleStart, angleEnd, 0x55ffffff);
+            drawArc(world, joystick.base, joystickBaseRadius * 1.2, angleStart, angleEnd, 0x44ffffff);
+            drawArc(world, joystick.base, joystickBaseRadius * 1.3, angleStart, angleEnd, 0x33ffffff);
+            drawArc(world, joystick.base, joystickBaseRadius * 1.4, angleStart, angleEnd, 0x22ffffff);
+            drawArc(world, joystick.base, joystickBaseRadius * 1.5, angleStart, angleEnd, 0x11ffffff);
+        }
     }
 }
 
@@ -158,15 +169,20 @@ const drawText = (context: CanvasRenderingContext2D, x: number, y: number, text:
     }
 }
 
-const drawCircle = (context: CanvasRenderingContext2D, x: number, y: number, radius: number, color: number) => {
+const drawCircle = (context: CanvasRenderingContext2D, center: Point, radius: number, color: number) => {
+    drawArc(context, center, radius, 0, mathPI2, color);
+}
+
+const drawArc = (context: CanvasRenderingContext2D, center: Point, radius: number, angleStart: number, angleEnd: number, color: number) => {
     resetTransform(context);
 
     context.beginPath();
     context.arc(
-        mathFloor(x),
-        mathFloor(y),
+        mathFloor(center.x),
+        mathFloor(center.y),
         mathFloor(radius),
-        0, mathPI2, false
+        angleStart, angleEnd,
+        false
     );
     context.lineWidth = 2;
     context.strokeStyle = colorToString(color);
