@@ -1,11 +1,12 @@
 import { DEBUG } from "../debug";
-import { domDocument, dpr, getCanvas, hasTouch } from "../utils/browser";
+import { domDocument, dpr, getCanvas, hasTouch, now } from "../utils/browser";
 import { screen } from "./screen";
 import { point, Point } from "../geom/point";
 import { initSound } from "../resources/sounds";
 
 const keys: { [key: string]: boolean } = {};
 let click = false;
+let touchStartTime = 0;
 export let anyKey = false;
 
 export const touches: { [key: string]: Point } = {};
@@ -42,7 +43,7 @@ export const initInput = () => {
     domDocument.onkeyup = (e) => {
         anyKey = false;
         unpressKey(e.keyCode);
-        //e.preventDefault();
+        e.preventDefault();
     }
 
     const screenCanvas = getCanvas(screen);
@@ -54,20 +55,37 @@ export const initInput = () => {
                 const { clientX, clientY, identifier } = changedTouches[i];
                 handler(identifier, point(clientX * dpr, clientY * dpr));
             }
-            //e.preventDefault();
+            e.preventDefault();
         };
 
-        const addTouch = (e: TouchEvent) => forTouch(e, (id, t) => { touches[id] = t; });
-        const removeTouch = (e: TouchEvent) => forTouch(e, (id, t) => { delete touches[id]; });
+        screenCanvas.ontouchstart = (e) => {
+            forTouch(e, (id, t) => { touches[id] = t; });
+            touchStartTime = now();
+        };
 
-        screenCanvas.ontouchstart = addTouch
-        screenCanvas.ontouchmove = addTouch;
-        screenCanvas.ontouchend = removeTouch;
-        screenCanvas.ontouchcancel = removeTouch;
-    }
+        screenCanvas.ontouchmove = (e) => {
+            forTouch(e, (id, t) => { touches[id] = t; });
+        };
 
-    screenCanvas.onclick = () => {
-        click = true;
-        initSound();
+        screenCanvas.ontouchend = (e) => {
+            forTouch(e, (id, t) => { delete touches[id]; });
+
+            if (touchStartTime != 0) {
+                if (now() - touchStartTime < 500) {
+                    click = true;
+                    initSound();
+                }
+                touchStartTime = 0;
+            }
+        };
+
+        screenCanvas.ontouchcancel = (e) => {
+            forTouch(e, (id, t) => { delete touches[id]; });
+        };
+
+        screenCanvas.onclick = () => {
+            click = true;
+            initSound();
+        }
     }
 }
