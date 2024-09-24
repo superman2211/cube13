@@ -3,6 +3,13 @@ Game for [js13kgames competition 2024](https://js13kgames.com/)
 
 [Play game on js13kgames](https://dev.js13kgames.com/2024/games/cube-13)
 
+[Play Director's cut version](https://superman2211.github.io/cube13/dist/build/)
+
+Director's cut improvements:
+- Bug fixes
+- Touch joystick improved
+- Man speed increased
+
 ## Decription
 You have to find a way out of the cube.  Traps and puzzles will be on your way.
 
