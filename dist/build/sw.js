@@ -33,4 +33,4 @@ self.addEventListener("fetch", (e) => {
     );
 });
 
-self.addEventListener('activate', function (event) { console.log('[Service Worker] activated', event); });
+self.addEventListener('activate', (event) => console.log('[Service Worker] activated', event));
