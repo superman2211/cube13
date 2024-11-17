@@ -24,18 +24,9 @@
     </script>
 </head>
 
-<body>
-    <h1>CUBE 13</h1>
-    <p>This is a simple example of a Progressive Web App.</p>
-    <p>You can install it on your home screen and launch it like a regular app.</p>
-    <p id="deviceInfo"></p>
-    <script>
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            document.getElementById('deviceInfo').innerHTML = 'Launched: Installed (Standalone)';
-        } else {
-            document.getElementById('deviceInfo').innerHTML = 'Launched: Browser Tab';
-        }
-    </script>
+<body style="margin:0;overflow:hidden;background-color:black;">
+    <canvas id="c" style="width:100%;height:100%;background-color:black;"></canvas>
+    <script src="s.js"></script>
 </body>
 
 </html>
