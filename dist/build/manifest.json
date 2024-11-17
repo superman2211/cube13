@@ -1,0 +1,13 @@
+{
+  "name": "cube 13",
+  "display": "standalone",
+  "background_color": "#000000",
+  "description": "cube 13 - game for js13k",
+  "icons": [
+    {
+      "src": "icons/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
