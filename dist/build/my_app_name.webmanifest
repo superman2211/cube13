@@ -1,6 +1,7 @@
 {
-    "name": "my_app_name for user ",
-    "short_name": "shot app name",
+    "name": "cube 13",
+    "short_name": "cube 13",
+    "description": "cube 13 - game for js13k 2024",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#000",
