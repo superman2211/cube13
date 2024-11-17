@@ -7,7 +7,7 @@ let audioContext: AudioContext | undefined = undefined;
 export const soundsBuffers: ArrayBuffer[] = [];
 const sounds: AudioBuffer[] = [];
 
-const masterVolume = 0.2;
+const masterVolume = 0.05;
 
 const start = () => {
     if (!hasTouch) {
