@@ -1,0 +1,16 @@
+{
+    "name": "cube 13",
+    "short_name": "cube 13",
+    "description": "cube 13 - game for js13k 2024",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#000",
+    "theme_color": "#000",
+    "icons": [
+        {
+            "src": "./512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
