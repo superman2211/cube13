@@ -1,15 +1,15 @@
 {
-  "name": "my_app_name for user ",
-  "short_name": "shot app name",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#000",
-  "theme_color": "#000",
-  "icons": [
-    {
-      "src": "./icons/512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+    "name": "my_app_name for user ",
+    "short_name": "shot app name",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#000",
+    "theme_color": "#000",
+    "icons": [
+        {
+            "src": "./app.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
 }
