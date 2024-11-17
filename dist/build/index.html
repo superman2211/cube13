@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Hello World! PWA</title>
-    <link rel="manifest" href="./my_app_name.webmanifest">
+    <title>cube 13</title>
+    <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./512.png">
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js')
-            .then(function(registration) {
-                console.log('Service worker registration succeeded:', registration);
-            }).catch(function(error) {
-                console.log('Service worker registration failed:', error);
-            });
+                .then(function (registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                }).catch(function (error) {
+                    console.log('Service worker registration failed:', error);
+                });
         } else {
             console.log('Service workers are not supported.');
         }
     </script>
 </head>
+
 <body>
     <h1>CUBE 13</h1>
     <p>This is a simple example of a Progressive Web App.</p>
@@ -30,4 +32,5 @@
         }
     </script>
 </body>
+
 </html>
