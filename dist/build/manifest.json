@@ -5,6 +5,7 @@
   "display": "standalone",
   "background_color": "#000000",
   "description": "cube 13 - game for js13k",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icons/512.png",
